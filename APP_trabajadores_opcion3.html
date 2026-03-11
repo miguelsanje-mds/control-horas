@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Control Horas">
+<meta name="theme-color" content="#0f0f1a">
+<title>Control de Horas</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #0f0f1a;
+  color: #f0f0f8;
+  min-height: 100vh;
+}
+
+/* PANTALLA TRABAJADORES */
+#pantallaWorker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 30px 20px;
+  gap: 20px;
+}
+
+.titulo-app {
+  font-size: 36px;
+  font-weight: 900;
+  color: #f5a623;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+.subtitulo {
+  font-size: 15px;
+  color: #8888aa;
+  text-align: center;
+}
+
+.grid-workers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+  max-width: 340px;
+}
+
+.btn-worker {
+  background: #1a1a2e;
+  border: 2px solid #2e2e50;
+  border-radius: 14px;
+  padding: 20px 10px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  color: #f0f0f8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.15s, border-color 0.15s;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.btn-worker:active {
+  background: #252540;
+  border-color: #f5a623;
+  color: #f5a623;
+}
+.btn-worker .ico { font-size: 28px; }
+
+/* PANTALLA PRINCIPAL */
+#pantallaApp { display: none; }
+
+.header {
+  background: #1a1a2e;
+  padding: 16px 18px 12px;
+  border-bottom: 1px solid #2e2e50;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.header-fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.app-nombre {
+  font-size: 20px;
+  font-weight: 900;
+  color: #f5a623;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.badge-worker {
+  background: #252540;
+  border: 1px solid #2e2e50;
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #8888aa;
+  cursor: pointer;
+}
+.fecha-texto {
+  font-size: 12px;
+  color: #8888aa;
+  margin-top: 3px;
+}
+
+.contenido { padding: 14px 16px; max-width: 480px; margin: 0 auto; padding-bottom: 90px; }
+
+/* FECHA */
+.caja {
+  background: #1a1a2e;
+  border: 1px solid #2e2e50;
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+.caja-titulo {
+  font-size: 11px;
+  font-weight: 700;
+  color: #f5a623;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+.fila-fecha {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.fila-fecha label { font-size: 13px; color: #8888aa; font-weight: 600; }
+input[type="date"] {
+  background: transparent;
+  border: none;
+  color: #f0f0f8;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: inherit;
+  outline: none;
+  flex: 1;
+}
+input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.6); cursor: pointer; }
+
+/* TOTAL DIA */
+.total-dia {
+  background: #1a2e1e;
+  border: 1px solid #2e5040;
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.total-label { font-size: 13px; color: #7ab89a; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+.total-entradas { font-size: 11px; color: #7ab89a; margin-top: 2px; }
+.total-numero {
+  font-size: 42px;
+  font-weight: 900;
+  color: #4caf82;
+  line-height: 1;
+}
+.total-numero span { font-size: 16px; font-weight: 400; color: #7ab89a; }
+
+/* TIPO JORNADA */
+.grid-tipos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.btn-tipo {
+  background: #252540;
+  border: 1.5px solid #2e2e50;
+  border-radius: 10px;
+  padding: 10px 4px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 700;
+  color: #8888aa;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  -webkit-user-select: none;
+  user-select: none;
+  transition: all 0.15s;
+}
+.btn-tipo .ico2 { font-size: 20px; display: block; margin-bottom: 4px; }
+.btn-tipo.activo { border-color: #f5a623; color: #f5a623; background: rgba(245,166,35,0.1); }
+.btn-tipo:active { transform: scale(0.95); }
+
+/* CAMPOS OBRA */
+#camposObra { display: block; }
+
+select {
+  width: 100%;
+  background: #252540;
+  border: 1.5px solid #2e2e50;
+  border-radius: 10px;
+  color: #f0f0f8;
+  font-family: inherit;
+  font-size: 15px;
+  padding: 12px 14px;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+select:focus { border-color: #f5a623; }
+
+.fila-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.fila-2 select { margin-bottom: 0; }
+
+/* HORAS */
+.control-horas {
+  background: #252540;
+  border: 1.5px solid #2e2e50;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+.btn-h {
+  background: #1a1a2e;
+  border: none;
+  color: #f0f0f8;
+  font-size: 26px;
+  width: 54px;
+  height: 54px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.btn-h:active { background: #2e2e50; }
+.horas-val {
+  flex: 1;
+  text-align: center;
+  font-size: 28px;
+  font-weight: 900;
+  color: #f0f0f8;
+}
+.horas-val span { font-size: 14px; font-weight: 400; color: #8888aa; }
+
+.rapidas { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.btn-rapida {
+  background: #252540;
+  border: 1px solid #2e2e50;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #8888aa;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  transition: all 0.15s;
+}
+.btn-rapida.activo, .btn-rapida:active { background: #f5a623; border-color: #f5a623; color: #000; }
+
+/* BTN AÑADIR */
+.btn-anadir {
+  width: 100%;
+  background: linear-gradient(135deg, #f5a623, #e8824a);
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 17px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: #1a0a00;
+  text-transform: uppercase;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  transition: opacity 0.15s;
+}
+.btn-anadir:active { opacity: 0.85; }
+
+/* ENTRADAS */
+.titulo-seccion {
+  font-size: 12px;
+  font-weight: 700;
+  color: #8888aa;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 16px 0 8px;
+}
+
+.entrada {
+  background: #1a1a2e;
+  border: 1px solid #2e2e50;
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: 3px solid #f5a623;
+  animation: aparecer 0.2s ease;
+}
+.entrada.almacen { border-left-color: #6eb5ff; }
+.entrada.compras { border-left-color: #88ddff; }
+.entrada.vacaciones { border-left-color: #b088ff; }
+.entrada.enfermedad { border-left-color: #e85555; }
+.entrada.asuntos { border-left-color: #ffb088; }
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.entrada-info { flex: 1; padding-right: 10px; }
+.entrada-nombre { font-size: 15px; font-weight: 700; color: #f0f0f8; margin-bottom: 3px; }
+.entrada-sub { font-size: 12px; color: #8888aa; }
+.entrada-horas {
+  font-size: 30px;
+  font-weight: 900;
+  color: #f5a623;
+  white-space: nowrap;
+}
+.entrada-horas span { font-size: 13px; font-weight: 400; color: #8888aa; }
+.btn-borrar {
+  background: none;
+  border: none;
+  color: #e85555;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 6px;
+  margin-left: 6px;
+  opacity: 0.6;
+}
+.btn-borrar:active { opacity: 1; }
+
+.sin-entradas {
+  text-align: center;
+  color: #8888aa;
+  font-size: 14px;
+  padding: 24px 0;
+}
+
+/* BARRA INFERIOR */
+.barra-bottom {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: #1a1a2e;
+  border-top: 1px solid #2e2e50;
+  padding: 10px 16px;
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+.btn-sync {
+  flex: 1;
+  background: #252540;
+  border: 1.5px solid #2e2e50;
+  border-radius: 12px;
+  padding: 13px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #8888aa;
+  cursor: pointer;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.btn-sync.pendiente { border-color: #f5a623; color: #f5a623; }
+.btn-sync:active { opacity: 0.8; }
+.punto-sync {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #f5a623;
+  display: none;
+  animation: pulsar 1.5s infinite;
+}
+.btn-sync.pendiente .punto-sync { display: block; }
+@keyframes pulsar {
+  0%,100% { opacity:1; } 50% { opacity:0.3; }
+}
+.btn-hist {
+  background: #252540;
+  border: 1.5px solid #2e2e50;
+  border-radius: 12px;
+  padding: 13px 18px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #8888aa;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.btn-hist:active { opacity: 0.7; }
+
+/* PANEL HISTORIAL */
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 50;
+}
+.overlay.visible { display: block; }
+.panel {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: #1a1a2e;
+  border-radius: 20px 20px 0 0;
+  padding: 16px;
+  max-height: 80vh;
+  overflow-y: auto;
+  z-index: 51;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+.panel.visible { transform: translateY(0); }
+.panel-handle { width: 40px; height: 4px; background: #2e2e50; border-radius: 2px; margin: 0 auto 14px; }
+.panel-titulo { font-size: 18px; font-weight: 900; color: #f5a623; text-transform: uppercase; margin-bottom: 14px; }
+
+.hist-dia { background: #252540; border-radius: 12px; padding: 12px; margin-bottom: 10px; }
+.hist-dia-cabecera { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.hist-dia-fecha { font-size: 14px; font-weight: 700; color: #f0f0f8; }
+.hist-dia-total { font-size: 22px; font-weight: 900; color: #4caf82; }
+.hist-entrada { font-size: 12px; color: #8888aa; padding: 3px 0; border-top: 1px solid #2e2e50; }
+
+/* TOAST */
+.toast {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  background: #4caf82;
+  color: #fff;
+  padding: 10px 22px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 700;
+  opacity: 0;
+  transition: all 0.3s;
+  z-index: 100;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.toast.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast.error { background: #e85555; }
+
+/* BANNER INSTALAR */
+.banner-instalar {
+  background: #1e2a1e;
+  border: 1px solid #3a5a3a;
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  font-size: 13px;
+  color: #7ab89a;
+  display: none;
+}
+.banner-instalar strong { color: #4caf82; display: block; margin-bottom: 4px; font-size: 14px; }
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<!-- ===== PANTALLA SELECCIÓN TRABAJADOR ===== -->
+<div id="pantallaWorker">
+  <div>
+    <div style="font-size:52px;text-align:center">🏗️</div>
+    <div class="titulo-app">Control de Horas</div>
+    <div class="subtitulo">¿Quién eres?</div>
+  </div>
+  <div class="grid-workers">
+    <div class="btn-worker" onclick="entrar('Paco')"><span class="ico">👷</span>Paco</div>
+    <div class="btn-worker" onclick="entrar('Carlos')"><span class="ico">🔨</span>Carlos</div>
+    <div class="btn-worker" onclick="entrar('Andi')"><span class="ico">⚡</span>Andi</div>
+    <div class="btn-worker" onclick="entrar('José')"><span class="ico">🔧</span>José</div>
+    <div class="btn-worker" onclick="entrar('Jimy')"><span class="ico">🪚</span>Jimy</div>
+    <div class="btn-worker" onclick="entrar('Maynor')"><span class="ico">🏗️</span>Maynor</div>
+    <div class="btn-worker" onclick="entrar('Samanta')"><span class="ico">📋</span>Samanta</div>
+    <div class="btn-worker" onclick="entrar('Miguel')"><span class="ico">🪛</span>Miguel</div>
+  </div>
+  <div style="font-size:12px;color:#8888aa">Pulsa tu nombre para entrar</div>
+</div>
+
+<!-- ===== PANTALLA PRINCIPAL ===== -->
+<div id="pantallaApp">
+
+  <div class="header">
+    <div class="header-fila">
+      <div class="app-nombre">⚒ Horas</div>
+      <div class="badge-worker" id="badgeWorker" onclick="cambiarWorker()">—</div>
+    </div>
+    <div class="fecha-texto" id="textoFecha"></div>
+  </div>
+
+  <div class="contenido">
+
+    <!-- Banner instalar como app -->
+    <div class="banner-instalar" id="bannerInstalar">
+      <strong>📲 Instalar como app</strong>
+      <span id="textoInstalar"></span>
+    </div>
+
+    <!-- Fecha -->
+    <div class="caja">
+      <div class="caja-titulo">📅 Fecha</div>
+      <div class="fila-fecha">
+        <input type="date" id="inputFecha" onchange="cambiarFecha()">
+      </div>
+    </div>
+
+    <!-- Total día -->
+    <div class="total-dia">
+      <div>
+        <div class="total-label">Total horas del día</div>
+        <div class="total-entradas" id="textoEntradas">0 entradas</div>
+      </div>
+      <div class="total-numero" id="totalHoras">0<span>h</span></div>
+    </div>
+
+    <!-- Nueva entrada -->
+    <div class="caja">
+      <div class="caja-titulo">+ Nueva entrada</div>
+
+      <!-- Tipo jornada -->
+      <div class="grid-tipos">
+        <div class="btn-tipo activo" data-tipo="obra" onclick="setTipo(this,'obra')"><span class="ico2">🏗️</span>Obra</div>
+        <div class="btn-tipo" data-tipo="almacen" onclick="setTipo(this,'almacen')"><span class="ico2">🏪</span>Almacén</div>
+        <div class="btn-tipo" data-tipo="compras" onclick="setTipo(this,'compras')"><span class="ico2">🛒</span>Compras</div>
+        <div class="btn-tipo" data-tipo="vacaciones" onclick="setTipo(this,'vacaciones')"><span class="ico2">🏖️</span>Vacaciones</div>
+        <div class="btn-tipo" data-tipo="enfermedad" onclick="setTipo(this,'enfermedad')"><span class="ico2">🤒</span>Baja</div>
+        <div class="btn-tipo" data-tipo="asuntos" onclick="setTipo(this,'asuntos')"><span class="ico2">📋</span>Asuntos</div>
+      </div>
+
+      <!-- Campos obra -->
+      <div id="camposObra">
+        <select id="selObra">
+          <option value="">— Selecciona obra —</option>
+          <option>Reforma Vivienda C/ Mayor 12</option>
+          <option>Local Comercial Av. Constitución</option>
+          <option>Nave Industrial Polígono Norte</option>
+          <option>Chalet Urb. Los Pinos</option>
+          <option>Oficinas Edificio Centro</option>
+        </select>
+        <div class="fila-2">
+          <select id="selCapitulo" onchange="cargarPartidas()">
+            <option value="">— Capítulo —</option>
+            <option value="c01">01 - Demoliciones</option>
+            <option value="c02">02 - Albañilería</option>
+            <option value="c03">03 - Estructura</option>
+            <option value="c04">04 - Cubierta</option>
+            <option value="c05">05 - Eléctrica</option>
+            <option value="c06">06 - Fontanería</option>
+            <option value="c07">07 - Carpintería</option>
+            <option value="c08">08 - Revestimientos</option>
+            <option value="c09">09 - Pintura</option>
+            <option value="c10">10 - Varios</option>
+          </select>
+          <select id="selPartida">
+            <option value="">— Partida —</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Horas -->
+      <div class="control-horas">
+        <button class="btn-h" onclick="cambiarHoras(-0.5)">−</button>
+        <div class="horas-val" id="valHoras">8 <span>h</span></div>
+        <button class="btn-h" onclick="cambiarHoras(0.5)">+</button>
+      </div>
+      <div class="rapidas">
+        <div class="btn-rapida" onclick="setHoras(4,this)">4h</div>
+        <div class="btn-rapida activo" onclick="setHoras(8,this)">8h</div>
+        <div class="btn-rapida" onclick="setHoras(9,this)">9h</div>
+        <div class="btn-rapida" onclick="setHoras(10,this)">10h</div>
+        <div class="btn-rapida" onclick="setHoras(11,this)">11h</div>
+        <div class="btn-rapida" onclick="setHoras(12,this)">12h</div>
+      </div>
+
+      <button class="btn-anadir" onclick="anadir()">✓ Añadir entrada</button>
+    </div>
+
+    <!-- Lista entradas -->
+    <div class="titulo-seccion">Entradas del día</div>
+    <div id="listaEntradas"><div class="sin-entradas">📋 Aún no hay entradas para este día</div></div>
+
+  </div><!-- fin contenido -->
+
+  <div class="barra-bottom">
+    <button class="btn-sync" id="btnSync" onclick="sincronizar()">
+      <div class="punto-sync"></div>
+      <span id="textoSync">Sin pendientes</span>
+    </button>
+    <button class="btn-hist" onclick="abrirHistorial()">📊</button>
+  </div>
+
+</div><!-- fin pantallaApp -->
+
+<!-- Panel historial -->
+<div class="overlay" id="overlay" onclick="cerrarHistorial()">
+  <div class="panel" id="panel" onclick="event.stopPropagation()">
+    <div class="panel-handle"></div>
+    <div class="panel-titulo">📊 Historial</div>
+    <div id="contenidoHistorial"></div>
+  </div>
+</div>
+
+<script>
+var trabajador = '';
+var tipo = 'obra';
+var horas = 8;
+var fechaHoy = new Date().toISOString().split('T')[0];
+var fechaSel = fechaHoy;
+var entradas = [];
+var pendientes = [];
+
+try { entradas = JSON.parse(localStorage.getItem('ctrl_entradas') || '[]'); } catch(e){}
+try { pendientes = JSON.parse(localStorage.getItem('ctrl_pendientes') || '[]'); } catch(e){}
+
+var PARTIDAS = {
+  c01: ['Derribo tabiques','Demolición solados','Retirada escombros'],
+  c02: ['Tabiquería ladrillo','Trasdosado pladur','Enfoscado','Solera'],
+  c03: ['Pilar metálico','Viga metálica','Forjado'],
+  c04: ['Impermeabilización','Teja cerámica','Canalón'],
+  c05: ['Cableado','Cuadro eléctrico','Puntos de luz','Enchufes'],
+  c06: ['Tuberías','Sanitarios','Griferías','Caldera'],
+  c07: ['Puertas interiores','Ventanas','Armarios'],
+  c08: ['Alicatado','Solado','Falso techo'],
+  c09: ['Pintura paredes','Pintura techo','Pintura exterior'],
+  c10: ['Limpieza final','Varios','Transporte material']
+};
+
+// Detectar sistema
+var esIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+var esAndroid = /android/i.test(navigator.userAgent);
+var esPWA = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+function entrar(nombre) {
+  trabajador = nombre;
+  document.getElementById('pantallaWorker').style.display = 'none';
+  document.getElementById('pantallaApp').style.display = 'block';
+  document.getElementById('badgeWorker').textContent = nombre;
+  document.getElementById('inputFecha').value = fechaSel;
+  actualizarFechaTexto();
+  mostrarBannerInstalar();
+  renderEntradas();
+  actualizarTotal();
+  actualizarSync();
+}
+
+function cambiarWorker() {
+  document.getElementById('pantallaWorker').style.display = 'flex';
+  document.getElementById('pantallaApp').style.display = 'none';
+}
+
+function mostrarBannerInstalar() {
+  if (esPWA) return;
+  var banner = document.getElementById('bannerInstalar');
+  var texto = document.getElementById('textoInstalar');
+  if (esIOS) {
+    banner.style.display = 'block';
+    texto.textContent = 'Para instalarla como app: pulsa el botón compartir (⬆️) en Safari y elige "Añadir a pantalla de inicio"';
+  } else if (esAndroid) {
+    banner.style.display = 'block';
+    texto.textContent = 'Para instalarla como app: pulsa el menú (⋮) del navegador y elige "Añadir a pantalla de inicio"';
+  }
+}
+
+function actualizarFechaTexto() {
+  var d = new Date(fechaSel + 'T12:00:00');
+  var dias = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  var meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  document.getElementById('textoFecha').textContent = dias[d.getDay()] + ', ' + d.getDate() + ' de ' + meses[d.getMonth()] + ' de ' + d.getFullYear();
+}
+
+function cambiarFecha() {
+  fechaSel = document.getElementById('inputFecha').value;
+  actualizarFechaTexto();
+  renderEntradas();
+  actualizarTotal();
+}
+
+function setTipo(el, t) {
+  tipo = t;
+  document.querySelectorAll('.btn-tipo').forEach(function(b){ b.classList.remove('activo'); });
+  el.classList.add('activo');
+  document.getElementById('camposObra').style.display = (t === 'obra') ? 'block' : 'none';
+}
+
+function cambiarHoras(delta) {
+  horas = Math.max(0.5, Math.min(24, horas + delta));
+  mostrarHoras();
+  document.querySelectorAll('.btn-rapida').forEach(function(b){ b.classList.remove('activo'); });
+}
+
+function setHoras(h, el) {
+  horas = h;
+  mostrarHoras();
+  document.querySelectorAll('.btn-rapida').forEach(function(b){ b.classList.remove('activo'); });
+  if (el) el.classList.add('activo');
+}
+
+function mostrarHoras() {
+  var v = horas % 1 === 0 ? horas : horas.toFixed(1);
+  document.getElementById('valHoras').innerHTML = v + ' <span>h</span>';
+}
+
+function cargarPartidas() {
+  var capId = document.getElementById('selCapitulo').value;
+  var sel = document.getElementById('selPartida');
+  sel.innerHTML = '<option value="">— Partida —</option>';
+  if (capId && PARTIDAS[capId]) {
+    PARTIDAS[capId].forEach(function(p) {
+      var op = document.createElement('option');
+      op.value = p; op.textContent = p;
+      sel.appendChild(op);
+    });
+  }
+}
+
+function anadir() {
+  var etiqueta = '';
+  var subt = '';
+  if (tipo === 'obra') {
+    var obra = document.getElementById('selObra').value;
+    if (!obra) { toast('Selecciona una obra', true); return; }
+    etiqueta = obra;
+    var capEl = document.getElementById('selCapitulo');
+    var capText = capEl.options[capEl.selectedIndex].text;
+    var partida = document.getElementById('selPartida').value;
+    if (capEl.value) subt = capText;
+    if (partida) subt += (subt ? ' › ' : '') + partida;
+  } else {
+    var tipos = { almacen:'🏪 Almacén', compras:'🛒 Compras', vacaciones:'🏖️ Vacaciones', enfermedad:'🤒 Baja médica', asuntos:'📋 Asuntos propios' };
+    etiqueta = tipos[tipo] || tipo;
+  }
+
+  var entrada = {
+    id: Date.now(),
+    trabajador: trabajador,
+    fecha: fechaSel,
+    tipo: tipo,
+    etiqueta: etiqueta,
+    subt: subt,
+    horas: horas,
+    sync: false,
+    ts: new Date().toISOString()
+  };
+
+  entradas.push(entrada);
+  pendientes.push(entrada.id);
+  guardar();
+  renderEntradas();
+  actualizarTotal();
+  actualizarSync();
+  toast('✓ ' + horas + 'h añadidas');
+}
+
+function borrar(id) {
+  entradas = entradas.filter(function(e){ return e.id !== id; });
+  pendientes = pendientes.filter(function(i){ return i !== id; });
+  guardar();
+  renderEntradas();
+  actualizarTotal();
+  actualizarSync();
+}
+
+function renderEntradas() {
+  var lista = document.getElementById('listaEntradas');
+  var hoy = entradas.filter(function(e){ return e.trabajador === trabajador && e.fecha === fechaSel; });
+  if (hoy.length === 0) {
+    lista.innerHTML = '<div class="sin-entradas">📋 Aún no hay entradas para este día</div>';
+    return;
+  }
+  lista.innerHTML = hoy.map(function(e) {
+    var v = e.horas % 1 === 0 ? e.horas : e.horas.toFixed(1);
+    return '<div class="entrada ' + e.tipo + '">' +
+      '<div class="entrada-info">' +
+      '<div class="entrada-nombre">' + e.etiqueta + '</div>' +
+      (e.subt ? '<div class="entrada-sub">' + e.subt + '</div>' : '') +
+      '<div class="entrada-sub">' + (e.sync ? '✓ Sincronizado' : '⏳ Pendiente') + '</div>' +
+      '</div>' +
+      '<div style="display:flex;align-items:center">' +
+      '<div class="entrada-horas">' + v + '<span>h</span></div>' +
+      '<button class="btn-borrar" onclick="borrar(' + e.id + ')">✕</button>' +
+      '</div></div>';
+  }).join('');
+}
+
+function actualizarTotal() {
+  var hoy = entradas.filter(function(e){ return e.trabajador === trabajador && e.fecha === fechaSel; });
+  var total = hoy.reduce(function(s,e){ return s + e.horas; }, 0);
+  var v = total % 1 === 0 ? total : total.toFixed(1);
+  document.getElementById('totalHoras').innerHTML = v + '<span>h</span>';
+  document.getElementById('textoEntradas').textContent = hoy.length + (hoy.length === 1 ? ' entrada' : ' entradas');
+}
+
+function actualizarSync() {
+  var btn = document.getElementById('btnSync');
+  var txt = document.getElementById('textoSync');
+  if (pendientes.length > 0) {
+    btn.classList.add('pendiente');
+    txt.textContent = 'Sincronizar (' + pendientes.length + ')';
+  } else {
+    btn.classList.remove('pendiente');
+    txt.textContent = 'Sincronizado ✓';
+  }
+}
+
+function sincronizar() {
+  if (pendientes.length === 0) { toast('Todo sincronizado ✓'); return; }
+  toast('⏳ Conectando...');
+  setTimeout(function() {
+    entradas = entradas.map(function(e){ return Object.assign({}, e, {sync: true}); });
+    pendientes = [];
+    guardar();
+    renderEntradas();
+    actualizarSync();
+    toast('✓ Sincronizado');
+  }, 1500);
+}
+
+function abrirHistorial() {
+  document.getElementById('overlay').classList.add('visible');
+  setTimeout(function(){ document.getElementById('panel').classList.add('visible'); }, 10);
+  renderHistorial();
+}
+
+function cerrarHistorial() {
+  document.getElementById('panel').classList.remove('visible');
+  setTimeout(function(){ document.getElementById('overlay').classList.remove('visible'); }, 300);
+}
+
+function renderHistorial() {
+  var mias = entradas.filter(function(e){ return e.trabajador === trabajador; });
+  if (mias.length === 0) {
+    document.getElementById('contenidoHistorial').innerHTML = '<div style="text-align:center;color:#8888aa;padding:20px">No hay entradas guardadas</div>';
+    return;
+  }
+  var porFecha = {};
+  mias.forEach(function(e){
+    if (!porFecha[e.fecha]) porFecha[e.fecha] = [];
+    porFecha[e.fecha].push(e);
+  });
+  var fechas = Object.keys(porFecha).sort().reverse();
+  var html = fechas.map(function(f) {
+    var dia = porFecha[f];
+    var tot = dia.reduce(function(s,e){ return s+e.horas; },0);
+    var d = new Date(f+'T12:00:00');
+    var dias = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+    var fechaStr = dias[d.getDay()] + ' ' + d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear();
+    var tv = tot % 1 === 0 ? tot : tot.toFixed(1);
+    return '<div class="hist-dia">' +
+      '<div class="hist-dia-cabecera"><div class="hist-dia-fecha">' + fechaStr + '</div><div class="hist-dia-total">' + tv + 'h</div></div>' +
+      dia.map(function(e){ return '<div class="hist-entrada">' + e.etiqueta + (e.subt?' — '+e.subt:'') + ' · <strong>' + e.horas + 'h</strong></div>'; }).join('') +
+      '</div>';
+  }).join('');
+  document.getElementById('contenidoHistorial').innerHTML = html;
+}
+
+function guardar() {
+  try {
+    localStorage.setItem('ctrl_entradas', JSON.stringify(entradas));
+    localStorage.setItem('ctrl_pendientes', JSON.stringify(pendientes));
+  } catch(e){}
+}
+
+function toast(msg, error) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (error ? ' error' : '');
+  t.classList.add('visible');
+  setTimeout(function(){ t.classList.remove('visible'); }, 2500);
+}
+</script>
+</body>
+</html>
