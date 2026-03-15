@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Control Horas">
+<meta name="theme-color" content="#0f0f1a">
+<title>Control de Horas</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0f0f1a; color: #f0f0f8; min-height: 100vh; }
+
+/* ===== PANTALLA TRABAJADORES ===== */
+#pantallaWorker { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 30px 20px; gap: 20px; }
+.titulo-app { font-size: 34px; font-weight: 900; color: #f5a623; text-transform: uppercase; letter-spacing: 2px; text-align: center; }
+.subtitulo { font-size: 15px; color: #8888aa; text-align: center; }
+.grid-workers { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; max-width: 340px; }
+.btn-worker { background: #1a1a2e; border: 2px solid #2e2e50; border-radius: 14px; padding: 20px 10px; text-align: center; cursor: pointer; font-size: 16px; font-weight: 700; color: #f0f0f8; display: flex; flex-direction: column; align-items: center; gap: 6px; -webkit-user-select: none; user-select: none; transition: all 0.15s; }
+.btn-worker:active { background: #252540; border-color: #f5a623; color: #f5a623; }
+.btn-worker .ico { font-size: 28px; }
+
+/* ===== PANTALLA PIN ===== */
+#pantallaPin { display: none; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 30px 20px; gap: 0; background: #0f0f1a; }
+.pin-box { background: #1a1a2e; border: 1px solid #2e2e50; border-radius: 24px; padding: 32px 28px; width: 100%; max-width: 320px; text-align: center; }
+.pin-ico { font-size: 48px; margin-bottom: 10px; }
+.pin-nombre { font-size: 22px; font-weight: 900; color: #f5a623; margin-bottom: 4px; }
+.pin-subtitulo { font-size: 14px; color: #8888aa; margin-bottom: 24px; }
+.pin-dots { display: flex; justify-content: center; gap: 14px; margin-bottom: 28px; }
+.pin-dot { width: 16px; height: 16px; border-radius: 50%; background: #252540; border: 2px solid #2e2e50; transition: all 0.15s; }
+.pin-teclado { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px; }
+.pin-btn { background: #252540; border: 1.5px solid #2e2e50; border-radius: 14px; padding: 18px; font-size: 22px; font-weight: 700; color: #f0f0f8; cursor: pointer; -webkit-user-select: none; user-select: none; transition: all 0.1s; }
+.pin-btn:active { background: #f5a623; color: #000; border-color: #f5a623; transform: scale(0.93); }
+.pin-btn.borrar { font-size: 18px; color: #8888aa; }
+.pin-error { color: #e85555; font-size: 14px; font-weight: 700; height: 22px; margin-bottom: 6px; }
+.pin-cancelar { background: none; border: 1px solid #2e2e50; border-radius: 10px; padding: 10px 24px; color: #8888aa; font-size: 14px; cursor: pointer; margin-top: 8px; }
+.pin-cancelar:active { background: #252540; }
+
+/* ===== APP PRINCIPAL ===== */
+#pantallaApp { display: none; }
+.header { background: #1a1a2e; padding: 16px 18px 12px; border-bottom: 1px solid #2e2e50; position: sticky; top: 0; z-index: 10; }
+.header-fila { display: flex; justify-content: space-between; align-items: center; }
+.app-nombre { font-size: 20px; font-weight: 900; color: #f5a623; letter-spacing: 1px; text-transform: uppercase; }
+.badge-worker { background: #252540; border: 1px solid #2e2e50; border-radius: 20px; padding: 5px 14px; font-size: 13px; font-weight: 700; color: #8888aa; cursor: pointer; }
+.fecha-texto { font-size: 12px; color: #8888aa; margin-top: 3px; }
+.contenido { padding: 14px 16px; max-width: 480px; margin: 0 auto; padding-bottom: 90px; }
+
+.caja { background: #1a1a2e; border: 1px solid #2e2e50; border-radius: 14px; padding: 14px 16px; margin-bottom: 12px; }
+.caja-titulo { font-size: 11px; font-weight: 700; color: #f5a623; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+.fila-fecha { display: flex; align-items: center; gap: 10px; }
+input[type="date"] { background: transparent; border: none; color: #f0f0f8; font-size: 16px; font-weight: 700; font-family: inherit; outline: none; flex: 1; }
+input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.6); cursor: pointer; }
+
+.total-dia { background: #1a2e1e; border: 1px solid #2e5040; border-radius: 14px; padding: 14px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+.total-label { font-size: 13px; color: #7ab89a; font-weight: 700; text-transform: uppercase; }
+.total-entradas { font-size: 11px; color: #7ab89a; margin-top: 2px; }
+.total-numero { font-size: 42px; font-weight: 900; color: #4caf82; line-height: 1; }
+.total-numero span { font-size: 16px; font-weight: 400; color: #7ab89a; }
+
+.grid-tipos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 10px; }
+.btn-tipo { background: #252540; border: 1.5px solid #2e2e50; border-radius: 10px; padding: 10px 4px; text-align: center; cursor: pointer; font-size: 11px; font-weight: 700; color: #8888aa; text-transform: uppercase; -webkit-user-select: none; user-select: none; }
+.btn-tipo .ico2 { font-size: 20px; display: block; margin-bottom: 4px; }
+.btn-tipo.activo { border-color: #f5a623; color: #f5a623; background: rgba(245,166,35,0.1); }
+.btn-tipo:active { transform: scale(0.95); }
+
+select { width: 100%; background: #252540; border: 1.5px solid #2e2e50; border-radius: 10px; color: #f0f0f8; font-family: inherit; font-size: 15px; padding: 12px 14px; outline: none; -webkit-appearance: none; appearance: none; cursor: pointer; }
+select:focus { border-color: #f5a623; }
+.select-wrap { position: relative; margin-bottom: 10px; }
+.select-wrap::after { content: '▾'; position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: #8888aa; pointer-events: none; }
+.fila-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.campo-desc { margin-bottom: 10px; }
+.campo-desc label { display: block; font-size: 11px; color: #8888aa; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+.campo-desc textarea { width: 100%; background: #252540; border: 1.5px solid #2e2e50; border-radius: 10px; color: #f0f0f8; font-family: inherit; font-size: 14px; padding: 10px 14px; outline: none; resize: none; height: 70px; }
+.campo-desc textarea:focus { border-color: #f5a623; }
+.campo-desc textarea::placeholder { color: #555577; }
+
+.control-horas { background: #252540; border: 1.5px solid #2e2e50; border-radius: 10px; display: flex; align-items: center; margin-bottom: 8px; overflow: hidden; }
+.btn-h { background: #1a1a2e; border: none; color: #f0f0f8; font-size: 26px; width: 54px; height: 54px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; -webkit-user-select: none; user-select: none; }
+.btn-h:active { background: #2e2e50; }
+.horas-val { flex: 1; text-align: center; font-size: 28px; font-weight: 900; color: #f0f0f8; }
+.horas-val span { font-size: 14px; font-weight: 400; color: #8888aa; }
+.rapidas { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.btn-rapida { background: #252540; border: 1px solid #2e2e50; border-radius: 8px; padding: 6px 12px; font-size: 13px; font-weight: 700; color: #8888aa; cursor: pointer; -webkit-user-select: none; user-select: none; }
+.btn-rapida.activo, .btn-rapida:active { background: #f5a623; border-color: #f5a623; color: #000; }
+
+.btn-anadir { width: 100%; background: linear-gradient(135deg, #f5a623, #e8824a); border: none; border-radius: 12px; padding: 16px; font-size: 17px; font-weight: 900; letter-spacing: 1px; color: #1a0a00; text-transform: uppercase; cursor: pointer; -webkit-user-select: none; user-select: none; }
+.btn-anadir:active { opacity: 0.85; }
+
+.titulo-seccion { font-size: 12px; font-weight: 700; color: #8888aa; text-transform: uppercase; letter-spacing: 1px; margin: 16px 0 8px; }
+.entrada { background: #1a1a2e; border: 1px solid #2e2e50; border-radius: 14px; padding: 14px 16px; margin-bottom: 10px; border-left: 3px solid #f5a623; animation: aparecer 0.2s ease; }
+.entrada.almacen { border-left-color: #6eb5ff; }
+.entrada.gastos { border-left-color: #ff88cc; }
+.entrada.vacaciones { border-left-color: #b088ff; }
+.entrada.enfermedad { border-left-color: #e85555; }
+.entrada.asuntos { border-left-color: #ffb088; }
+@keyframes aparecer { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+.entrada-cabecera { display: flex; justify-content: space-between; align-items: flex-start; }
+.entrada-info { flex: 1; padding-right: 10px; }
+.entrada-nombre { font-size: 15px; font-weight: 700; color: #f0f0f8; margin-bottom: 3px; }
+.entrada-sub { font-size: 12px; color: #8888aa; margin-bottom: 2px; }
+.entrada-desc { font-size: 12px; color: #f5a623; font-style: italic; margin-top: 5px; background: rgba(245,166,35,0.08); border-radius: 6px; padding: 5px 8px; }
+.entrada-horas { font-size: 30px; font-weight: 900; color: #f5a623; white-space: nowrap; }
+.entrada-horas span { font-size: 13px; font-weight: 400; color: #8888aa; }
+.btn-borrar { background: none; border: none; color: #e85555; font-size: 18px; cursor: pointer; padding: 6px; margin-left: 6px; opacity: 0.6; }
+.btn-borrar:active { opacity: 1; }
+.sin-entradas { text-align: center; color: #8888aa; font-size: 14px; padding: 24px 0; }
+.aviso-gg { background: rgba(255,136,204,0.1); border: 1px solid rgba(255,136,204,0.3); border-radius: 10px; padding: 10px 14px; font-size: 12px; color: #ff88cc; margin-bottom: 10px; display: none; }
+.banner { background: #1e2a1e; border: 1px solid #3a5a3a; border-radius: 12px; padding: 12px 14px; margin-bottom: 12px; font-size: 13px; color: #7ab89a; display: none; }
+.banner strong { color: #4caf82; display: block; margin-bottom: 4px; }
+
+.barra-bottom { position: fixed; bottom: 0; left: 0; right: 0; background: #1a1a2e; border-top: 1px solid #2e2e50; padding: 10px 16px; display: flex; gap: 10px; z-index: 10; }
+.btn-sync { flex: 1; background: #252540; border: 1.5px solid #2e2e50; border-radius: 12px; padding: 13px; font-size: 15px; font-weight: 700; color: #8888aa; cursor: pointer; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 8px; -webkit-user-select: none; user-select: none; }
+.btn-sync.pendiente { border-color: #f5a623; color: #f5a623; }
+.btn-sync:active { opacity: 0.8; }
+.punto-sync { width: 8px; height: 8px; border-radius: 50%; background: #f5a623; display: none; animation: pulsar 1.5s infinite; }
+.btn-sync.pendiente .punto-sync { display: block; }
+@keyframes pulsar { 0%,100%{opacity:1;}50%{opacity:0.3;} }
+.btn-hist { background: #252540; border: 1.5px solid #2e2e50; border-radius: 12px; padding: 13px 18px; font-size: 20px; cursor: pointer; color: #8888aa; -webkit-user-select: none; user-select: none; }
+.btn-hist:active { opacity: 0.7; }
+
+/* ===== PANEL HISTORIAL ===== */
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 50; }
+.overlay.visible { display: block; }
+.panel { position: fixed; bottom: 0; left: 0; right: 0; background: #1a1a2e; border-radius: 20px 20px 0 0; padding: 16px; max-height: 85vh; overflow-y: auto; z-index: 51; transform: translateY(100%); transition: transform 0.3s ease; }
+.panel.visible { transform: translateY(0); }
+.panel-handle { width: 40px; height: 4px; background: #2e2e50; border-radius: 2px; margin: 0 auto 14px; }
+.panel-titulo { font-size: 18px; font-weight: 900; color: #f5a623; text-transform: uppercase; margin-bottom: 14px; }
+.cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.cal-mes { font-size: 16px; font-weight: 700; color: #f0f0f8; }
+.cal-nav { background: #252540; border: 1px solid #2e2e50; border-radius: 8px; padding: 6px 14px; color: #f0f0f8; cursor: pointer; font-size: 16px; font-weight: 700; }
+.cal-nav:active { background: #2e2e50; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 14px; }
+.cal-dia-nombre { text-align: center; font-size: 10px; font-weight: 700; color: #8888aa; padding: 4px 0; text-transform: uppercase; }
+.cal-dia { text-align: center; padding: 7px 2px; border-radius: 8px; font-size: 13px; font-weight: 600; min-height: 38px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
+.cal-dia.vacio { background: transparent; }
+.cal-dia.futuro { color: #444466; }
+.cal-dia.finde { color: #555577; background: #141428; }
+.cal-dia.apuntado { background: #1a2e1e; color: #4caf82; border: 1px solid #2e5040; }
+.cal-dia.falta { background: #2e1a1a; color: #e85555; border: 1px solid #502020; }
+.cal-dia.hoy { outline: 2px solid #f5a623; outline-offset: 1px; }
+.cal-h { font-size: 9px; font-weight: 700; }
+.cal-leyenda { display: flex; gap: 14px; margin-bottom: 14px; flex-wrap: wrap; }
+.cal-leyenda-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #8888aa; }
+.cal-leyenda-dot { width: 10px; height: 10px; border-radius: 3px; }
+.resumen-mes { background: #252540; border-radius: 12px; padding: 14px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
+.resumen-item { text-align: center; }
+.resumen-label { font-size: 10px; color: #8888aa; text-transform: uppercase; font-weight: 700; margin-bottom: 4px; }
+.resumen-num { font-size: 26px; font-weight: 900; }
+.hist-dia { background: #252540; border-radius: 12px; padding: 12px; margin-bottom: 10px; }
+.hist-dia-cabecera { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.hist-dia-fecha { font-size: 14px; font-weight: 700; color: #f0f0f8; }
+.hist-dia-total { font-size: 22px; font-weight: 900; color: #4caf82; }
+.hist-entrada { font-size: 12px; color: #8888aa; padding: 5px 0; border-top: 1px solid #2e2e50; display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.hist-entrada-izq { flex: 1; }
+.hist-entrada-desc { font-size: 11px; color: #f5a623; font-style: italic; margin-top: 2px; }
+
+.toast { position: fixed; top: 80px; left: 50%; transform: translateX(-50%) translateY(-20px); background: #4caf82; color: #fff; padding: 10px 22px; border-radius: 20px; font-size: 14px; font-weight: 700; opacity: 0; transition: all 0.3s; z-index: 200; white-space: nowrap; pointer-events: none; }
+.toast.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast.error { background: #e85555; }
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<!-- OVERLAY DESCRIPCIÓN TÉCNICA -->
+<div id="infoOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:200;align-items:flex-end;justify-content:center;">
+  <div style="background:#1a1a2e;border-radius:20px 20px 0 0;padding:24px 20px;width:100%;max-width:480px;max-height:75vh;overflow-y:auto;">
+    <div style="width:40px;height:4px;background:#2e2e50;border-radius:2px;margin:0 auto 16px;"></div>
+    <div style="font-size:11px;color:#f5a623;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Descripción técnica</div>
+    <div id="infoTitulo" style="font-size:17px;font-weight:900;color:#f0f0f8;margin-bottom:14px;"></div>
+    <div id="infoTexto" style="font-size:14px;color:#c0c0d8;line-height:1.6;margin-bottom:20px;"></div>
+    <button onclick="cerrarInfo()" style="width:100%;background:#252540;border:1.5px solid #2e2e50;border-radius:12px;padding:14px;color:#f0f0f8;font-size:15px;font-weight:700;cursor:pointer;">Cerrar</button>
+  </div>
+</div>
+
+<!-- PANTALLA SELECCIÓN TRABAJADOR -->
+<div id="pantallaWorker">
+  <div>
+    <div style="font-size:52px;text-align:center">🏗️</div>
+    <div class="titulo-app">Control de Horas</div>
+    <div class="subtitulo">¿Quién eres?</div>
+  </div>
+  <div class="grid-workers">
+    <div class="btn-worker" onclick="entrar('Paco')"><span class="ico">👷</span>Paco</div>
+    <div class="btn-worker" onclick="entrar('Carlos')"><span class="ico">🔨</span>Carlos</div>
+    <div class="btn-worker" onclick="entrar('Andi')"><span class="ico">⚡</span>Andi</div>
+    <div class="btn-worker" onclick="entrar('José')"><span class="ico">🔧</span>José</div>
+    <div class="btn-worker" onclick="entrar('Jimy')"><span class="ico">🪚</span>Jimy</div>
+    <div class="btn-worker" onclick="entrar('Mynor')"><span class="ico">🏗️</span>Mynor</div>
+    <div class="btn-worker" onclick="entrar('Samanta')"><span class="ico">📋</span>Samanta</div>
+    <div class="btn-worker" onclick="entrar('Miguel')"><span class="ico">🪛</span>Miguel</div>
+  </div>
+  <div style="font-size:12px;color:#8888aa">Pulsa tu nombre para entrar</div>
+</div>
+
+<!-- PANTALLA PIN -->
+<div id="pantallaPin">
+  <div class="pin-box">
+    <div class="pin-ico">🔒</div>
+    <div class="pin-nombre" id="pinNombreTexto"></div>
+    <div class="pin-subtitulo">Introduce tu PIN de 4 dígitos</div>
+    <div class="pin-dots">
+      <div class="pin-dot"></div>
+      <div class="pin-dot"></div>
+      <div class="pin-dot"></div>
+      <div class="pin-dot"></div>
+    </div>
+    <div class="pin-error" id="pinError"></div>
+    <div class="pin-teclado">
+      <button class="pin-btn" onclick="pulsarPin('1')">1</button>
+      <button class="pin-btn" onclick="pulsarPin('2')">2</button>
+      <button class="pin-btn" onclick="pulsarPin('3')">3</button>
+      <button class="pin-btn" onclick="pulsarPin('4')">4</button>
+      <button class="pin-btn" onclick="pulsarPin('5')">5</button>
+      <button class="pin-btn" onclick="pulsarPin('6')">6</button>
+      <button class="pin-btn" onclick="pulsarPin('7')">7</button>
+      <button class="pin-btn" onclick="pulsarPin('8')">8</button>
+      <button class="pin-btn" onclick="pulsarPin('9')">9</button>
+      <button class="pin-btn" style="visibility:hidden">.</button>
+      <button class="pin-btn" onclick="pulsarPin('0')">0</button>
+      <button class="pin-btn borrar" onclick="pulsarPin('⌫')">⌫</button>
+    </div>
+    <button class="pin-cancelar" onclick="cancelarPin()">← Volver</button>
+  </div>
+</div>
+
+<!-- APP PRINCIPAL -->
+<div id="pantallaApp">
+  <div class="header">
+    <div class="header-fila">
+      <div class="app-nombre">⚒ Horas</div>
+      <div class="badge-worker" id="badgeWorker" onclick="cambiarWorker()">—</div>
+    </div>
+    <div class="fecha-texto" id="textoFecha"></div>
+  </div>
+
+  <div class="contenido">
+    <div class="banner" id="bannerInstalar">
+      <strong>📲 Instalar como app</strong>
+      <span id="textoInstalar"></span>
+    </div>
+
+    <div class="caja">
+      <div class="caja-titulo">📅 Fecha</div>
+      <div class="fila-fecha">
+        <input type="date" id="inputFecha" onchange="cambiarFecha()">
+      </div>
+    </div>
+
+    <div class="total-dia">
+      <div>
+        <div class="total-label">Total horas del día</div>
+        <div class="total-entradas" id="textoEntradas">0 entradas</div>
+      </div>
+      <div class="total-numero" id="totalHoras">0<span>h</span></div>
+    </div>
+
+    <div class="caja">
+      <div class="caja-titulo">+ Nueva entrada</div>
+      <div class="grid-tipos">
+        <div class="btn-tipo activo" onclick="setTipo(this,'obra')"><span class="ico2">🏗️</span>Obra</div>
+        <div class="btn-tipo" onclick="setTipo(this,'otros')"><span class="ico2">🔧</span>Otros trabajos</div>
+        <div class="btn-tipo" onclick="setTipo(this,'vacaciones')"><span class="ico2">🏖️</span>Vacaciones</div>
+        <div class="btn-tipo" onclick="setTipo(this,'enfermedad')"><span class="ico2">🤒</span>Baja</div>
+        <div class="btn-tipo" onclick="setTipo(this,'asuntos')"><span class="ico2">📋</span>Asuntos</div>
+      </div>
+      <div id="camposObra">
+        <div class="select-wrap">
+          <select id="selObra" onchange="cargarCapitulos()">
+            <option value="">— Selecciona obra —</option>
+            <option value="paco_teruel">Obra Paco Teruel</option>
+            <option value="angeles_aldaya">Obra Ángeles Aldaya</option>
+          </select>
+        </div>
+        <div class="fila-2">
+          <div class="select-wrap">
+            <select id="selCapitulo" onchange="cargarPartidas()">
+              <option value="">— Capítulo —</option>
+            </select>
+          </div>
+          <div class="select-wrap">
+            <select id="selPartida">
+              <option value="">— Partida —</option>
+            </select>
+          </div>
+        </div>
+        <button id="btnInfoPartida" onclick="verDescripcion()" style="display:none;width:100%;background:#252540;border:1.5px solid #2e2e50;border-radius:10px;padding:10px 14px;color:#8888aa;font-size:13px;font-weight:700;cursor:pointer;align-items:center;gap:8px;margin-bottom:10px;">
+          <span style="font-size:16px">ℹ️</span> Ver descripción técnica de esta partida
+        </button>
+      </div>
+      <!-- Campo Otros trabajos (obligatorio) -->
+      <div id="campoOtros" style="display:none;margin-bottom:10px;">
+        <label style="display:block;font-size:11px;color:#e85555;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">📝 Descripción del trabajo <span style="color:#e85555">* obligatorio</span></label>
+        <textarea id="inputOtros" placeholder="Describe el trabajo realizado..." style="width:100%;background:#252540;border:1.5px solid #e85555;border-radius:10px;color:#f0f0f8;font-family:inherit;font-size:14px;padding:10px 14px;outline:none;resize:none;height:80px;"></textarea>
+      </div>
+
+      <!-- Campo descripción opcional (solo obra) -->
+      <div class="campo-desc" id="campoDescOpcional">
+        <label>📝 Descripción (opcional)</label>
+        <textarea id="inputDesc" placeholder="Si quieres explicar algo fuera de lo normal, escríbelo aquí..."></textarea>
+      </div>
+
+      <div class="control-horas" id="campoHoras">
+        <button class="btn-h" onclick="cambiarHoras(-0.5)">−</button>
+        <div class="horas-val" id="valHoras">8 <span>h</span></div>
+        <button class="btn-h" onclick="cambiarHoras(0.5)">+</button>
+      </div>
+      <div class="rapidas" id="campoRapidas">
+        <div class="btn-rapida" onclick="setHoras(4,this)">4h</div>
+        <div class="btn-rapida activo" onclick="setHoras(8,this)">8h</div>
+        <div class="btn-rapida" onclick="setHoras(9,this)">9h</div>
+        <div class="btn-rapida" onclick="setHoras(10,this)">10h</div>
+        <div class="btn-rapida" onclick="setHoras(11,this)">11h</div>
+        <div class="btn-rapida" onclick="setHoras(12,this)">12h</div>
+      </div>
+      <button class="btn-anadir" onclick="anadir()">✓ Añadir entrada</button>
+    </div>
+
+    <div class="titulo-seccion">Entradas del día</div>
+    <div id="listaEntradas"><div class="sin-entradas">📋 Aún no hay entradas para este día</div></div>
+  </div>
+
+  <div class="barra-bottom">
+    <button class="btn-sync" id="btnSync" onclick="sincronizar()">
+      <div class="punto-sync"></div>
+      <span id="textoSync">Sin pendientes</span>
+    </button>
+    <button class="btn-hist" onclick="exportarCSV()" title="Exportar mis datos">📤</button>
+    <button class="btn-hist" onclick="abrirHistorial()">📅</button>
+  </div>
+</div>
+
+<!-- PANEL HISTORIAL -->
+<div class="overlay" id="overlay" onclick="cerrarHistorial()">
+  <div class="panel" id="panel" onclick="event.stopPropagation()">
+    <div class="panel-handle"></div>
+    <div class="panel-titulo">📅 Mi registro</div>
+    <div class="cal-header">
+      <button class="cal-nav" onclick="cambiarMes(-1)">‹</button>
+      <div class="cal-mes" id="calMes"></div>
+      <button class="cal-nav" onclick="cambiarMes(1)">›</button>
+    </div>
+    <div class="cal-leyenda">
+      <div class="cal-leyenda-item"><div class="cal-leyenda-dot" style="background:#1a2e1e;border:1px solid #2e5040"></div>Apuntado</div>
+      <div class="cal-leyenda-item"><div class="cal-leyenda-dot" style="background:#2e1a1a;border:1px solid #502020"></div>Sin apuntar</div>
+      <div class="cal-leyenda-item"><div class="cal-leyenda-dot" style="background:#141428"></div>Fin de semana</div>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+    <div class="resumen-mes" id="resumenMes"></div>
+    <div id="contenidoHistorial"></div>
+  </div>
+</div>
+
+<script>
+var OBRAS_CAPITULOS = {
+  'angeles_aldaya': [
+    {id:'C001', nombre:'Reforma cocina', partidas:[
+      {n:'Demolición alicatado', d:'Demolición de alicatado, por medios manuales, incluyendo picado de morteros de cemento de agarre, retirada de escombros a pie de carga y medios auxiliares de obra.'},
+      {n:'Evacuación escombros en sacos', d:'Evacuación manual de escombros mediante sacos para distancias hasta 40 m desde el tajo de demolición al pie de carga o contenedor, incluido llenado y vaciado de sacos.'},
+      {n:'Transporte escombros a vertedero', d:'Transporte de escombros a vertedero en furgón, a una distancia menor de 10 km.'},
+      {n:'Instalación fontanería multicapa', d:'Instalación de red de agua fría y caliente con tubería multicapa y red de desagüe de PVC, incluyendo bote sifónico, manguetón hasta bajantes, sin aparatos sanitarios, según CTE/DB-HS 4.'},
+      {n:'Instalación eléctrica cocina', d:'Red eléctrica de distribución interior de cocina con electrificación media, compuesta de 5 a 7 puntos de luz, circuitos interiores con cableado bajo tubo protector C1, C2, C3, C4, C5, C7, mecanismos gama básica.'},
+      {n:'Alicatado azulejo gres', d:'Alicatado de plaqueta de gres 1ª calidad 20x20 cm, recibido con cemento cola Weber classic blanco sobre base de mortero de cemento, incluyendo piezas especiales, ingletes, rejuntado con mortero decorativo y limpieza.'},
+      {n:'Ayudas albañilería', d:'Ayuda de albañilería para correcta ejecución de instalaciones de fontanería, electricidad, techo, etc. Incluye regatas, encuentros, autonivelantes y pequeño material auxiliar.'},
+      {n:'Desmontaje mobiliario y electrodomésticos', d:'Desmontaje completo de mobiliario de cocina existente incluyendo muebles altos y bajos, zócalos, copetes, electrodomésticos (frigorífico, horno, microondas, placa, campana, lavavajillas), encimera y desconexión de instalaciones. Incluye retirada manual y acopio en zona designada.'},
+      {n:'Pintura techos', d:'Pintura plástica blanca en techos.'},
+      {n:'Mobiliario cocina nuevo', d:'Suministro e instalación de mobiliario completo de cocina nuevo según relación de módulos especificados, incluyendo muebles bajos, altos, columnas, cajones con autocierre, frentes, encimera laminada, zócalos e instalación de campana extractora y cocina de gas.'}
+    ]}
+  ],
+  'paco_teruel': [
+    {id:'A', nombre:'Actuaciones previas', partidas:[
+      {n:'Informe vigas de madera', d:'Informe técnico sobre el estado de las vigas de madera existentes en la estructura del edificio, con recomendaciones de tratamiento y actuación.'}
+    ]},
+    {id:'D', nombre:'Demoliciones', partidas:[
+      {n:'Demolición tabiques', d:'Demolición de partición interior de fábrica revestida formada por ladrillo macizo a panderete de 5 cm de espesor, con medios manuales, sin afectar a la estabilidad de los elementos constructivos contiguos. Incluye fragmentación de escombros, retirada, acopio y carga manual sobre camión o contenedor.'},
+      {n:'Demolición muros de piedra', d:'Demolición por medios manuales de fábrica de piedra ejecutada en seco o ligeramente recibida con morteros pobres. Incluye retirada de escombros a pie de carga. Afecta a pared separación salón-cocina, muro piedra cuadra, bebedero, parte muro entrada y huecos de puertas y ventanas.'},
+      {n:'Demolición escalera', d:'Demolición de escalera de fábrica con bóveda tabicada o catalana, peldañeado y revestimientos, con medios manuales. Incluye fragmentación de escombros, retirada, acopio y carga manual sobre camión o contenedor.'},
+      {n:'Levantado carpintería exterior', d:'Levantado de carpintería acristalada de madera de cualquier tipo situada en fachada, con medios manuales, sin deteriorar los elementos constructivos a los que está sujeta. Incluye levantado de hojas, marcos, tapajuntas y herrajes.'},
+      {n:'Desmontaje instalación eléctrica', d:'Desmontaje de red de instalación eléctrica interior fija en superficie en vivienda unifamiliar de 167 m², con medios manuales. Incluye desmontaje del cuadro eléctrico, cableado, mecanismos, cajas y accesorios superficiales.'},
+      {n:'Desmontaje instalación agua', d:'Desmontaje de red de instalación interior de agua colocada superficialmente, que da servicio a 167 m², desde la toma de cada aparato sanitario hasta el montante. Incluye desmontaje de válvulas, accesorios, soportes de fijación y obturación de conducciones.'},
+      {n:'Demolición alicatado', d:'Demolición de alicatado de azulejo con medios manuales. Incluye picado del material de agarre adherido al soporte, fragmentación de escombros y carga manual sobre camión o contenedor.'},
+      {n:'Desmontaje cocina', d:'Desmontaje de cocina en su estado actual. El alicatado existente se conserva.'},
+      {n:'Desmontaje lavabo', d:'Desmontaje de lavabo con pedestal con medios manuales, sin afectar a la estabilidad de los elementos constructivos. Incluye desmontaje de grifería, accesorios y obturación de conducciones conectadas.'},
+      {n:'Desmontaje inodoro', d:'Desmontaje de inodoro con tanque bajo con medios manuales, sin afectar a la estabilidad de los elementos constructivos. Incluye desmontaje de accesorios y obturación de conducciones conectadas.'},
+      {n:'Desmontaje bañera', d:'Desmontaje de bañera acrílica con medios manuales, sin afectar a la estabilidad de los elementos constructivos. Incluye desmontaje de grifería, accesorios y obturación de conducciones conectadas.'},
+      {n:'Desmontaje grifería', d:'Desmontaje de grifería de lavabo, bañera, fregadero, etc., con medios manuales. Incluye obturación de conducciones conectadas, retirada y acopio del material desmontado.'},
+      {n:'Desmontaje puertas interiores', d:'Desmontaje de hoja de puerta interior de carpintería de madera con medios manuales. Incluye desmontaje de galces, tapajuntas y herrajes.'},
+      {n:'Demolición losa hormigón', d:'Demolición de losa de hormigón armado hasta 25 cm de espesor y peldaños, con medios manuales, martillo neumático y equipo de oxicorte. Incluye corte de armaduras, fragmentación y carga manual sobre camión.'},
+      {n:'Demolición forjado madera', d:'Demolición de forjado de viguetas de madera y entrevigado de revoltón cerámico con martillo neumático y motosierra, previo levantado del pavimento. Incluye apeos, trabajos de estabilidad, fragmentación y retirada de escombros.'},
+      {n:'Quitar vigas madera', d:'Retirada de vigas de madera picando alrededor de cada viga para poder extraerlas con sumo cuidado para no perjudicar al vecino. Afecta a vigas de revoltones en 2ª planta zona fachada, hueco nueva escalera y 1ª planta.'},
+      {n:'Evacuación escombros', d:'Traslado y evacuación manual de escombros mediante capazo naranjero para distancias hasta 40 m desde el tajo de demolición al pie de carga o contenedor.'},
+      {n:'Demolición solera', d:'Demolición de solera de hormigón en masa de 15 cm de espesor con martillo compresor de 2.000 L/min. Incluye retirada de escombros a pie de carga y maquinaria auxiliar.'},
+      {n:'Apuntalamiento', d:'Apeo de estructura mediante sopandas y durmientes de madera y puntales metálicos hasta una altura máxima de 3 m. Incluye replanteo y apuntalamiento general de la casa.'},
+      {n:'Retirada muebles y enseres', d:'Retirada y transporte a lugar limpio de muebles y enseres de toda la casa. Incluye retirada de muebles, sofá, todo lo que había en la cuadra, somieres y colchones.'},
+      {n:'Demolición pilares', d:'Demolición de estructura de pilar de piedra con martillo compresor de 2.000 L/min, incluyendo anclaje previo y apuntalamientos necesarios. Afecta al pilar de fachada, pilar central de la casa y pilar soporte viga vecino en cocina nueva.'},
+      {n:'Picar suelos', d:'Demolición de solera o pavimento de mortero con cal en masa de hasta 10 cm de espesor de manera manual, con corte previo en puntos críticos. Para descubrir vigas de madera en 2ª y 1ª planta.'},
+      {n:'Apertura huecos', d:'Se abrieron huecos en la base del tabique de ladrillo panal para limpiar la parte de atrás del tabique y poder colocar el plástico correctamente. Los huecos se volvieron a tapar después.'},
+      {n:'Picado enlucidos', d:'Picado de todo el enlucido en la pared del salón que hace tripa. Se hicieron pruebas quitando piedras para ver qué había detrás.'},
+      {n:'Cortar pilar', d:'Cortar pilar central de la casa desde la 2ª planta hasta la planta baja, quitándole 20 cm al pilar. Cortado con radial con cuidado extremo para no producir vibraciones en la estructura general de la casa.'}
+    ]},
+    {id:'E', nombre:'Estructuras', partidas:[
+      {n:'Forjado viguetas madera', d:'Forjado tradicional con intereje de 50 cm compuesto por viguetas de madera aserrada de pino silvestre de 150x250 mm, clase resistente C24, con entrevigado de revoltón de ladrillo cerámico cara vista macizo, malla electrosoldada y capa de compresión de hormigón ligero HL-25 de 4 cm. Incluye apuntalamiento y desapuntalamiento.'},
+      {n:'Refuerzo forjado', d:'Refuerzo de forjado de viguetas de madera mediante conectores de acero galvanizado fijados con resina epoxi-acrilato, malla electrosoldada y capa de compresión de 5 cm de hormigón ligero. Incluye apuntalamiento y desapuntalamiento.'},
+      {n:'Hormigón ligero', d:'Hormigón HNE-15 con cemento CEM II/B-P 32,5R, árido ligero tipo Arlita F-3 y arena de río, confeccionado con hormigonera de 250 L. Para compensar diferencias de altura entre plantas.'},
+      {n:'Aislamiento poliestireno extruido', d:'Aislamiento térmico XPS de 40 mm de espesor, medidas 1,25x0,6 m, conductividad 0,034 W/mk. Colocado encima de capa de mortero para compensar niveles en planta baja, 1ª y 2ª planta.'},
+      {n:'Losa escalera', d:'Losa de escalera de hormigón armado de 15 cm de espesor con peldañeado de hormigón, realizada con HA-25/F/20/XC2 y acero B 500 S con cuantía aproximada de 18 kg/m². Incluye montaje y desmontaje de encofrado.'},
+      {n:'Solera hormigón', d:'Solera de hormigón con malla electrosoldada de 10 cm de espesor realizada con HM-20/B/20/X0, malla electrosoldada superior ME 20x20, vibrado manual mediante regla vibrante y acabado con fratasadora mecánica. Incluye juntas de retracción.'},
+      {n:'Losa maciza', d:'Losa maciza de hormigón armado inclinada de 15 cm de canto, realizada con HA-25/F/20/XC2 y acero B 500 S con cuantía aproximada de 21 kg/m². Incluye encofrado continuo con tableros de madera y puntales metálicos.'},
+      {n:'Zapatas y zunchos hormigón', d:'Hormigón armado HA-25/P/40/XC3 para relleno de zapatas de cimentación con armadura B-500 S (50 kg/m³), vertido por medios manuales y vibrado. Incluye zapata para pilar en cocina nueva y zunchos soporte tabiques de carga.'},
+      {n:'Tabique de carga ladrillo', d:'Fábrica de 7 cm de espesor de ladrillo macizo de 24x12x7 cm sentado con mortero de cemento Portland M7,5. Para soporte de vigas de cocina, salón y escalón subida cocina a salón.'},
+      {n:'Reconstrucción pilar', d:'Reconstrucción de pilar en cocina, base y parte de arriba, tras la demolición del pilar original.'},
+      {n:'Zunchos escalera', d:'Zunchos de unión con forjado de 2ª planta, ejecutados de menos a más para alinear la escalera recta. Incluye encofrado y hormigón armado con acero necesario, cogiendo la viga de madera lateral.'},
+      {n:'Hormigón limpieza', d:'Hormigón en masa HL-150/P/20 de dosificación 150 kg/m³ para limpieza y nivelado. Echado detrás de las paredes de tabique de panal por fases (60-80 cm por día) para no volcar el tabique por el peso.'},
+      {n:'Dinteles prefabricados', d:'Dintel prefabricado de hormigón pretensado 200x11x7 cm con tres barras de acero de 8 mm, apoyado sobre capa de mortero M-7,5. Para puerta baño planta baja, puerta de entrada y ventana salón.'},
+      {n:'Zuncho ventana salón', d:'Zuncho armado para soporte de ventana del salón a la calle.'},
+      {n:'Zuncho ventana habitación', d:'Zuncho armado en habitación de pilar a pilar, fabricado montando andamios para poder hacer huecos en fachada y echar el hormigón. Incluye tratamiento previo de la viga de madera con 2 manos de fungicida y 2 manos de pulimento de PVC.'}
+    ]},
+    {id:'F', nombre:'Fachadas y particiones', partidas:[
+      {n:'Tabique pladur 2 placas normal', d:'Tabique sencillo (15+48+15)/600 con dos placas de yeso laminado tipo normal de 15 mm en cada cara, estructura simple de perfiles de acero galvanizado de 48 mm, montantes separados 600 mm. Espesor total 78 mm, nivel de acabado Q2.'},
+      {n:'Tabique pladur 1 normal + 1 hidrofugada', d:'Tabique sencillo (15+48+15)/600 con una placa tipo normal de 15 mm en una cara y una placa tipo hidrofugada de 15 mm en la otra cara, estructura simple de perfiles de acero galvanizado de 48 mm. Espesor total 78 mm.'},
+      {n:'Tabique pladur 2 placas hidrofugadas', d:'Tabique sencillo (15+48+15)/600 con dos placas de yeso laminado tipo hidrofugado de 15 mm en cada cara, estructura simple de perfiles de acero galvanizado de 48 mm. Espesor total 78 mm, nivel de acabado Q2.'},
+      {n:'Apertura huecos en muro', d:'Apertura de hueco en muro de fábrica de ladrillo cerámico hueco con medios manuales, sin afectar a la estabilidad del muro. Incluye corte previo del contorno, demolición, fragmentación y carga manual. No incluye montaje de apeo ni colocación de dinteles.'},
+      {n:'Cosido pared medianera', d:'Cosido de pared medianera con vecina y otros cosidos en paredes para garantizar la estabilidad y unión entre elementos constructivos.'},
+      {n:'Regularizar paredes con mortero', d:'Regularización de paredes con mortero para obtener una superficie plana y apta para recibir los acabados o la perfilería de pladur.'},
+      {n:'Regularizar pilar cortado', d:'Regularización del pilar cortado rellenando los huecos con ladrillo panal o mortero según lo necesario, dejando la superficie apta para recibir acabados.'}
+    ]},
+    {id:'L', nombre:'Carpintería y PVC', partidas:[
+      {n:'Puerta entrada blindada', d:'Puerta interior blindada de entrada a vivienda 203x82,5x4,5 cm con dos chapas de acero galvanizado de 0,80 mm, hoja de tablero aglomerado chapado con nogal barnizada, precerco de pino de 130x40 mm, galces y tapajuntas de MDF rechapado de nogal. Incluye herrajes de colgar, cierre y manivela de latón color negro.'},
+      {n:'Puertas interiores madera', d:'Puerta interior abatible ciega de una hoja 203x82,5x3,5 cm de tablero aglomerado chapado con sapeli barnizada, precerco de pino de 90x35 mm, galces y tapajuntas de MDF rechapado de sapeli. Incluye bisagras, herrajes de colgar, cierre y manivela de latón color negro.'},
+      {n:'Puertas PVC', d:'Puerta de PVC una hoja practicable 700x1400 mm, acabado foliado en dos caras, perfiles de 70 mm con cinco cámaras interiores, transmitancia térmica Uh,m=1,3 W/(m²K), con persiana enrollable de lamas de PVC con accionamiento manual. Clasificación: aire clase 4, agua E750, viento C3.'},
+      {n:'Ventanas PVC fijo inferior', d:'Ventana de PVC una hoja practicable con fijo inferior 700x1400 mm (altura fijo 500 mm), perfiles de 70 mm con cinco cámaras, transmitancia Uh,m=1,3 W/(m²K), con persiana enrollable de lamas de PVC. Clasificación: aire clase 4, agua E750, viento C5.'},
+      {n:'Ventanas PVC abatible pequeña', d:'Ventana de PVC una hoja abatible 500x800 mm, perfiles de 70 mm con cinco cámaras interiores, transmitancia Uh,m=1,3 W/(m²K), con persiana enrollable de lamas de PVC. Clasificación: aire clase 4, agua clase 9A, viento C5.'},
+      {n:'Ventanas PVC 2 hojas', d:'Ventana de PVC dos hojas practicables 800x1000 mm, perfiles de 70 mm con cinco cámaras interiores, transmitancia Uh,m=1,3 W/(m²K), con persiana enrollable de lamas de PVC. Clasificación: aire clase 4, agua clase 9A, viento C5.'},
+      {n:'Ventanas PVC grande 2 hojas', d:'Ventana de PVC dos hojas practicables 1400x1100 mm, perfiles de 70 mm con cinco cámaras interiores, transmitancia Uh,m=1,3 W/(m²K), con persiana enrollable de lamas de PVC. Clasificación: aire clase 4, agua clase 9A, viento C5.'}
+    ]},
+    {id:'H', nombre:'Remates y ayudas', partidas:[
+      {n:'Ayudas albañilería instalaciones', d:'Ayuda por vivienda unifamiliar de los trabajos conjuntos de albañilería necesarios para la correcta ejecución y montaje de las instalaciones de electricidad, fontanería, calefacción o climatización y especiales. Incluye porcentaje estimado para consumo de pequeño material y medios auxiliares.'}
+    ]},
+    {id:'I', nombre:'Instalaciones', partidas:[
+      {n:'Instalación eléctrica completa', d:'Red eléctrica completa de distribución interior de vivienda unifamiliar con electrificación elevada: acceso, 2 escaleras, comedor 30 m², 4 dormitorios dobles, 4 baños, cocina 12 m², terraza 25 m². Incluye cuadro general de mando y protección con IGA, diferenciales, magnetotérmicos y circuitos C1 a C13. Mecanismos gama básica.'},
+      {n:'Instalación fontanería baños', d:'Instalación interior de fontanería para cuarto de baño con dotación para inodoro, lavabo sencillo, bañera y bidé, con tubo de polietileno reticulado PE-X para red de agua fría y caliente. Incluye llaves de paso, material auxiliar y accesorios de derivaciones.'},
+      {n:'Instalación fontanería cocina', d:'Instalación interior de fontanería para cocina con dotación para fregadero, toma y llave para lavavajillas y toma y llave para lavadora, con tubo de polietileno reticulado PE-X. Incluye llaves de paso de cuarto húmedo y accesorios de derivaciones.'},
+      {n:'Colector PVC', d:'Colector con tubería insonorizada Phonoblack de 200 mm de diámetro y 5,5 mm de espesor, con alto grado de reducción de sonoridad 13 dB, resistente al fuego Euroclase B s1 d0. Unión mediante juntas EPDM y abrazaderas fonoabsorbentes Phonoklip.'}
+    ]},
+    {id:'N', nombre:'Aislamientos', partidas:[
+      {n:'Aislamiento lana mineral entre montantes', d:'Aislamiento térmico intermedio en tabique de placas con panel semirrígido de lana mineral de 45 mm de espesor según UNE-EN 13162, colocado entre los montantes de la estructura portante del pladur.'}
+    ]},
+    {id:'R', nombre:'Revestimientos y trasdosados', partidas:[
+      {n:'Mortero de cal humedades', d:'Capa de mortero a base de conglomerantes hidráulicos, áridos seleccionados, aditivos porógenos e inhibidores de eflorescencias salinas (Morcemrest MUR R CSII o similar). Mortero de renovación para tratamiento de humedades por capilaridad, de 20 mm de espesor, maestreado con acabado fratasado.'},
+      {n:'Trasdosado autoportante pladur', d:'Trasdosado autoportante libre de 63 mm de espesor, nivel de calidad Q2, formado por placa de yeso laminado tipo normal de 15 mm atornillada a estructura autoportante de acero galvanizado con canales horizontales y montantes verticales de 48 mm modulación 600 mm.'},
+      {n:'Trasdosado directo pladur', d:'Trasdosado directo de 30 mm de espesor total, nivel de calidad Q2, formado por placa de yeso laminado tipo normal de 15 mm atornillada a estructura metálica de maestras de 90x50 mm anclada al paramento cada 600 mm.'},
+      {n:'Alicatado gres baños', d:'Revestimiento interior con piezas de gres porcelánico esmaltado acabado pulido 60x30 mm, gama media, absorción E<0,5%, grupo BIa. Colocación en capa fina con adhesivo en dispersión normal D1. Rejuntado con mortero cementoso mejorado CG 2 W A color blanco juntas 3 mm.'},
+      {n:'Falso techo pladur baños', d:'Falso techo continuo suspendido liso 12,5+27+27, altura menor de 4 m, nivel Q2. Estructura metálica de maestras primarias 60/27 mm modulación 1000 mm suspendidas con cuelgues combinados cada 900 mm y maestras secundarias con conectores tipo caballete modulación 500 mm.'},
+      {n:'Pavimento gres porcelánico', d:'Pavimento interior de gres porcelánico técnico 600x600x10 mm, gama media, absorción E<0,1%, grupo BIa, resistencia al deslizamiento 35<Rd<=45, carga de rotura >3000 N. Colocación en capa fina con adhesivo cementoso C1 TE. Rejuntado con mortero tipo L color blanco juntas 2 mm.'},
+      {n:'Rodapié cerámico', d:'Rodapié de gres esmaltado de 80 cm, gama básica. Colocación en capa fina con adhesivo cementoso de fraguado normal C1. Rejuntado con mortero cementoso mejorado CG 2 W A color blanco para juntas de 2 a 15 mm.'},
+      {n:'Mortero monocapa fachada', d:'Revestimiento continuo de fachada de 12 mm de espesor impermeable al agua de lluvia, con mortero monocapa hidrófobo OC CSIII W2, acabado liso color arena. Aplicado manualmente sobre ladrillo cerámico con capa previa de mortero impermeable. Incluye malla de fibra de vidrio en encuentros.'},
+      {n:'Revestimiento escalera cerámica', d:'Revestimiento de escalera con piezas de gres porcelánico acabado pulido 420x180 mm con zanquín lateral, recibido con mortero M-5 y rejuntado con mortero CG 2 W A color blanco. Incluye revestimiento de mesetas.'},
+      {n:'Enfoscado regularización', d:'Enfoscado sin maestrear de 10 mm de espesor para regularización de soporte con mortero de cemento M-5. Para enlucidos en 2ª planta, paredes picadas, pilar, paredes medianeras y paredes vecino.'},
+      {n:'Regularización suelo', d:'Regularización del suelo para poder colocar los paneles de poliestireno extruido de aislamiento térmico.'},
+      {n:'Falso techo entre vigas hormigón', d:'Falso techo de placas de yeso laminado PYL instalado entre vigas estructurales de hormigón existentes, con estructura auxiliar metálica galvanizada anclada mecánicamente a las vigas. Incluye tramos independientes entre vigas, cortes especiales en geometrías en punta, planos inclinados y huecos para instalaciones eléctricas.'}
+    ]},
+    {id:'S', nombre:'Sanitarios y equipamiento', partidas:[
+      {n:'Lavabos', d:'Lavabo de porcelana sanitaria sobre encimera, gama media, color blanco, 500x250 mm con desagüe acabado cromado. Incluye juego de fijación y silicona. No incluye encimera ni grifería.'},
+      {n:'Inodoros', d:'Inodoro de porcelana sanitaria con tanque bajo, gama básica, color blanco, con asiento y tapa lacados, mecanismo de descarga 3/6 litros. Incluye llave de regulación, enlace de alimentación flexible y silicona.'},
+      {n:'Platos de ducha', d:'Plato de ducha acrílico gama media color, de 160x80 cm (cambiado a 0,80 de ancho), con juego de desagüe. No incluye grifería.'},
+      {n:'Bañera', d:'Bañera rectangular acrílica con hidromasaje Total, jets de agua y aire, panel digital, modelo Vythos ROCA, color blanco, 1800x900x420 mm, con desagüe, faldón frontal y grifería monomando mural Thesis acabado cromado.'},
+      {n:'Grifería lavabos', d:'Grifo mezclador monomando de repisa para lavabo, gama media, latón acabado cromado, con cartucho cerámico, aireador y desagüe automático. Incluye conexiones, enlaces flexibles 3/8, válvula antirretorno y dos llaves de paso.'},
+      {n:'Grifería bañera', d:'Grifo mezclador termostático mural para baño/ducha de 1/2, acabado cromado, con mandos, cartucho compacto con termoelemento de cera, limitador de caudal, limitador de temperatura a 43°C con tope de seguridad a 38°C, filtros e inversor.'},
+      {n:'Grifería duchas', d:'Grifo mezclador monomando mural para ducha, gama básica, latón acabado cromado, con cartucho cerámico, aireador, inversor y equipo de ducha con mango y flexible de latón. Incluye válvula antirretorno y dos llaves de paso.'},
+      {n:'Termo eléctrico 150L', d:'Termo eléctrico vertical/horizontal 150L COINTRA horizontal, potencia 2,4 kW, ajuste de temperatura en intervalos de 10°C, tensión 230V, tiempo de calentamiento 207 minutos. Depósito de acero vitrificado, aislamiento de espuma de poliuretano sin CFC, resistencia envainada para aguas duras, presión máxima 8 bar.'}
+    ]},
+    {id:'TJD', nombre:'Tejado', partidas:[
+      {n:'Demolición teja curva', d:'Demolición de cubierta de teja curva vieja con aprovechamiento 100% de las piezas, por medios manuales. Incluye desmontado de cumbreras, limahoyas, canalones y encuentros con paramentos, apilado y traslado de teja válida a planta baja.'},
+      {n:'Demolición cubierta madera', d:'Demolición completa de cubierta de vigas de madera con tableros y cañizo, por medios manuales, con acopio de material aprovechable y retirada de material desechable.'},
+      {n:'Zuncho perimetral soporte cubierta', d:'Formación de hueco de encofrado para colocación de zuncho perimetral como recercado y apoyo de viguetas, con encofrado necesario y elementos auxiliares. Incluye encofrados aéreos para soporte del tejado en ambas partes.'},
+      {n:'Muro hormigón soporte vigas', d:'Muro de carga de 20 cm de espesor de fábrica de bloque de hormigón liso estándar color gris 40x20x20 cm, resistencia normalizada R10, para revestir. Murete de hormigón soporte vigas.'},
+      {n:'Vigas soporte tejado', d:'Colocación de vigas transversales y vigas soporte para tejado y suelo, incluyendo vigas de soporte en parte alta e inferior y viga soporte suelo donde se tiró la pared.'},
+      {n:'Tabique ladrillo doble hueco', d:'Tabicón de ladrillo doble hueco de 29x14x10 cm para revestir, recibido con mortero de cemento M-5. Incluye tabique separación vecino y soporte tejado, subida de tabique separación, tabique entre las 2 alturas del tejado, terminación última viga y tabique balcón.'},
+      {n:'Reconstrucción pilares', d:'Reconstrucción de pilares con ladrillo macizo para soporte de polares del tejado.'},
+      {n:'Recolocación vigas madera', d:'Recolocación de vigas de madera para tejado según las medidas necesarias como estaban anteriormente, haciéndoles cama de soporte a cada una en parte superior e inferior.'},
+      {n:'Panel sándwich poliuretano', d:'Cubierta formada por panel autoportante de 50 mm con capacidad portante hasta 2,55 m entre luces para 100 kg/m², con 50 mm de poliuretano inyectado densidad 41 kg/m³ y cabrios laterales de 80x25 mm, fijado sobre correas de madera.'},
+      {n:'Lámina asfáltica', d:'Lámina asfáltica de 4 kg/m² acabado de pizarra roja. Lámina bituminosa autoprotegida tipo LBM-40/G-FV (APP -15°C) con armadura de fieltro de fibra de vidrio, recubierta en ambas caras con mástico de betún modificado con plastómeros.'},
+      {n:'Capa mortero regularización', d:'Capa de mortero de cemento industrial M-5 de 2-3 cm de espesor, acabado fratasado, para regularización de faldón en cubierta inclinada.'},
+      {n:'Limpieza tejas viejas', d:'Limpieza de tejas viejas con moho, musgo y otras incrustaciones como tierra y polvo, lavándolas para su reutilización.'},
+      {n:'Cobertura teja curva recuperada', d:'Cobertura de teja curva vieja recuperada aportada en su totalidad, recibida con mortero de cemento M-2,5. Incluye piezas especiales, caballetes y limatesas.'},
+      {n:'Claraboya', d:'Claraboya de polimetacrilato de metilo (PMMA) color blanco 70x90 cm con zócalo de poliéster h=15 cm, practicable con sistema de apertura mediante mecanismo telescópico para manivela. Precio incluye ventana de tejado 70x90 (497€), kit tapajuntas/impermeabilización (115€) y mano de obra instalación (250€).'},
+      {n:'Línea de vida', d:'Sistema de anclaje horizontal permanente instalado sobre cubierta para trabajo seguro en altura de 13 metros. Cumple normativa EN 795 Clase C. Compuesto por cable de acero, tensores, soportes, puntos intermedios, carro de traslación y anclajes extremos.'},
+      {n:'Bloque termoarcilla', d:'Fábrica de bloques de arcilla expansiva TermOARCILLA 40x20x20 cm para posterior terminación, con relleno de hormigón HNE-20/P/20 y armadura en zona según normativa, recibido con mortero M-7,5.'},
+      {n:'Cerramiento entre vigas', d:'Cerramiento entre vigas con bloque o cerámico para cerrar los espacios entre las vigas del tejado.'}
+    ]},
+    {id:'G', nombre:'Gestión de residuos', partidas:[
+      {n:'Contenedor escombros', d:'Cambio de contenedor para escombros de 3,5 m³ de capacidad, colocado en obra a pie de carga. Incluye servicio de entrega, alquiler y tasas por ocupación de vía pública.'}
+    ]},
+    {id:'Y', nombre:'Seguridad y salud', partidas:[
+      {n:'Plan de seguridad y salud', d:'Ejecución del Plan de Seguridad y Salud o estudio básico por m² construido de vivienda unifamiliar de tamaño medio (aproximadamente 200 m²) con nivel de exigencia alto. Incluye instalaciones provisionales de obra, señalizaciones, protecciones personales y colectivas.'}
+    ]},
+    {id:'EXT', nombre:'Partidas varias', partidas:[
+      {n:'Localizar desagüe', d:'Para encontrar la salida de desagüe de la casa se abrió un hueco fuera del baño de 1,8x0,5 m y otro hueco dentro del baño hasta localizar la salida general de desagüe de la casa.'},
+      {n:'Andamios', d:'Montaje, desmontaje, transporte y alquiler en obra (30 días) de andamio metálico tubular homologado para trabajos mayores de 12 m de altura, con malla de protección de tejido sintético y ejecución de apoyos y arriostramiento.'},
+      {n:'Dintel baño', d:'Colocación de dintel con viga de hormigón sobre puerta de baño de planta inferior. Incluye apuntalamiento de techos y formación del hueco. La viga sujeta 3 vigas de madera.'},
+      {n:'Colector cocina', d:'Colector de cocina con tubería de PVC de 90 mm para recibir todas las aguas producidas por la cocina y sacarlas hasta el patio.'},
+      {n:'Reparación grietas', d:'Reparación de grietas no profundas en paredes de 1º y 2º piso para poder atornillar la perfilería y que no se descascarille en el futuro después de poner el pladur.'},
+      {n:'Reparación paredes', d:'Reparación de paredes en 1º y 2º piso donde se estaba cayendo el enlucido y otras donde estaba la piedra vista. Se reforzaron todas esas paredes y enlucieron de forma que queden fuertes para poder atornillar la perfilería.'},
+      {n:'Huecos ventanas', d:'Formación de huecos de ventanas, cerrando los huecos anteriores y formando nuevo hueco. Incluye demolición de pared, reconstrucción con doble tabique, dintel de viga de hormigón, dintel exterior de zuncho de hormigón armado y remates enlucidos para carpintería.'},
+      {n:'Cerrar ventana', d:'Cerrar ventana de 1ª planta de medidas 1,20x1,20 m con ladrillo del 7 y enlucida por la parte interior.'},
+      {n:'Regularización huecos muros', d:'Regularización de los huecos de piedra rellenando con ladrillo o mortero según lo necesario, dejando los huecos perfectamente hechos. Incluye tapar espacios de suelo hasta la altura indicada para ventanales. Los huecos se tapan con ladrillos de panal.'},
+      {n:'Pletina refuerzo viga', d:'Refuerzo de viga en zona cocina con acero A-42B en perfil plano de 5 m de largo, 10 cm de ancho y 1 cm de grueso. Colocado con una pletina por cada lado de la viga sujeta con tornillos pasantes, anclada a pared 10 cm por parte dentro de la obra.'},
+      {n:'Escaleras metálicas', d:'Escaleras metálicas pedidas según imagen con presupuesto ya facilitado.'}
+    ]}
+  ]
+};
+
+var PINS = {'Paco':'0006','Carlos':'0005','Andi':'0001','José':'0002','Jimy':'0003','Mynor':'0004','Samanta':'0007','Miguel':'2409'};
+
+// Poblar capítulos vacío al inicio — se carga al seleccionar obra
+var selCap = document.getElementById('selCapitulo');
+
+var trabajador='', tipo='obra', horas=8, pinActual='', workerPendiente='';
+var hoy=new Date(), fechaSel=hoy.toISOString().split('T')[0];
+var entradas=[], pendientes=[];
+var calMesActual=new Date(hoy.getFullYear(),hoy.getMonth(),1);
+
+var esIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+var esAndroid=/android/i.test(navigator.userAgent);
+var esPWA=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone;
+
+try{entradas=JSON.parse(localStorage.getItem('ctrl_entradas')||'[]');}catch(e){}
+try{pendientes=JSON.parse(localStorage.getItem('ctrl_pendientes')||'[]');}catch(e){}
+
+// ===== PIN =====
+function entrar(nombre) {
+  workerPendiente = nombre;
+  pinActual = '';
+  document.getElementById('pinNombreTexto').textContent = nombre;
+  document.getElementById('pinError').textContent = '';
+  actualizarDots();
+  document.getElementById('pantallaWorker').style.display = 'none';
+  document.getElementById('pantallaPin').style.display = 'flex';
+}
+
+function pulsarPin(val) {
+  if (val==='⌫') { pinActual=pinActual.slice(0,-1); }
+  else if (pinActual.length<4) { pinActual+=val; }
+  actualizarDots();
+  if (pinActual.length===4) {
+    setTimeout(function(){
+      if (pinActual===PINS[workerPendiente]) {
+        document.getElementById('pantallaPin').style.display='none';
+        entrarDirecto(workerPendiente);
+      } else {
+        document.getElementById('pinError').textContent='❌ PIN incorrecto, inténtalo de nuevo';
+        pinActual='';
+        actualizarDots();
+        setTimeout(function(){ document.getElementById('pinError').textContent=''; },2500);
+      }
+    },150);
+  }
+}
+
+function actualizarDots() {
+  document.querySelectorAll('.pin-dot').forEach(function(d,i){
+    d.style.background = i<pinActual.length ? '#f5a623' : '#252540';
+    d.style.borderColor = i<pinActual.length ? '#f5a623' : '#2e2e50';
+  });
+}
+
+function cancelarPin() {
+  pinActual=''; workerPendiente='';
+  document.getElementById('pantallaPin').style.display='none';
+  document.getElementById('pantallaWorker').style.display='flex';
+}
+
+function entrarDirecto(nombre) {
+  trabajador=nombre;
+  document.getElementById('pantallaApp').style.display='block';
+  document.getElementById('badgeWorker').textContent=nombre;
+  document.getElementById('inputFecha').value=fechaSel;
+  actualizarFechaTexto();
+  mostrarBannerInstalar();
+  renderEntradas();
+  actualizarTotal();
+  actualizarSync();
+}
+
+function cambiarWorker() {
+  document.getElementById('pantallaWorker').style.display='flex';
+  document.getElementById('pantallaApp').style.display='none';
+  trabajador='';
+}
+
+// ===== FECHA =====
+function actualizarFechaTexto() {
+  var d=new Date(fechaSel+'T12:00:00');
+  var dias=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  var meses=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  document.getElementById('textoFecha').textContent=dias[d.getDay()]+', '+d.getDate()+' de '+meses[d.getMonth()]+' de '+d.getFullYear();
+}
+
+function cambiarFecha() {
+  fechaSel=document.getElementById('inputFecha').value;
+  actualizarFechaTexto(); renderEntradas(); actualizarTotal();
+}
+
+// ===== TIPO =====
+function setTipo(el,t) {
+  tipo=t;
+  document.querySelectorAll('.btn-tipo').forEach(function(b){b.classList.remove('activo');});
+  el.classList.add('activo');
+  document.getElementById('camposObra').style.display=(t==='obra')?'block':'none';
+  document.getElementById('campoOtros').style.display=(t==='otros')?'block':'none';
+  document.getElementById('campoDescOpcional').style.display=(t==='obra')?'block':'none';
+  document.getElementById('campoHoras').style.display=(t==='vacaciones')?'none':'block';
+  document.getElementById('campoRapidas').style.display=(t==='vacaciones')?'none':'flex';
+  if(t==='vacaciones'){horas=8;mostrarHoras();}
+}
+
+// ===== HORAS =====
+function cambiarHoras(delta) {
+  horas=Math.max(0.5,Math.min(24,horas+delta)); mostrarHoras();
+  document.querySelectorAll('.btn-rapida').forEach(function(b){b.classList.remove('activo');});
+}
+function setHoras(h,el) {
+  horas=h; mostrarHoras();
+  document.querySelectorAll('.btn-rapida').forEach(function(b){b.classList.remove('activo');});
+  if(el)el.classList.add('activo');
+}
+function mostrarHoras() {
+  var v=horas%1===0?horas:horas.toFixed(1);
+  document.getElementById('valHoras').innerHTML=v+' <span>h</span>';
+}
+
+// ===== PARTIDAS =====
+function cargarCapitulos() {
+  var obraId=document.getElementById('selObra').value;
+  var selCap2=document.getElementById('selCapitulo');
+  var selPar=document.getElementById('selPartida');
+  selCap2.innerHTML='<option value="">— Capítulo —</option>';
+  selPar.innerHTML='<option value="">— Partida —</option>';
+  if(!obraId)return;
+  var caps=OBRAS_CAPITULOS[obraId]||[];
+  caps.forEach(function(c){var op=document.createElement('option');op.value=c.id;op.textContent=c.nombre;selCap2.appendChild(op);});
+}
+
+function cargarPartidas() {
+  var obraId=document.getElementById('selObra').value;
+  var capId=document.getElementById('selCapitulo').value;
+  var sel=document.getElementById('selPartida');
+  sel.innerHTML='<option value="">— Partida —</option>';
+  document.getElementById('btnInfoPartida').style.display='none';
+  if(!obraId||!capId)return;
+  var caps=OBRAS_CAPITULOS[obraId]||[];
+  var cap=caps.find(function(c){return c.id===capId;});
+  if(cap)cap.partidas.forEach(function(p){
+    var op=document.createElement('option');
+    op.value=p.n; op.textContent=p.n;
+    sel.appendChild(op);
+  });
+  sel.onchange=function(){ mostrarBtnInfo(); };
+}
+
+function mostrarBtnInfo() {
+  var obraId=document.getElementById('selObra').value;
+  var capId=document.getElementById('selCapitulo').value;
+  var partida=document.getElementById('selPartida').value;
+  var btn=document.getElementById('btnInfoPartida');
+  if(!partida){btn.style.display='none';return;}
+  btn.style.display='flex';
+}
+
+function verDescripcion() {
+  var obraId=document.getElementById('selObra').value;
+  var capId=document.getElementById('selCapitulo').value;
+  var partida=document.getElementById('selPartida').value;
+  if(!partida)return;
+  var caps=OBRAS_CAPITULOS[obraId]||[];
+  var cap=caps.find(function(c){return c.id===capId;});
+  if(!cap)return;
+  var p=cap.partidas.find(function(x){return x.n===partida;});
+  if(!p)return;
+  document.getElementById('infoTitulo').textContent=p.n;
+  document.getElementById('infoTexto').textContent=p.d;
+  document.getElementById('infoOverlay').style.display='flex';
+}
+
+function cerrarInfo() {
+  document.getElementById('infoOverlay').style.display='none';
+}
+
+// ===== AÑADIR =====
+function anadir() {
+  var etiqueta='', subt='', desc='';
+  if(tipo==='obra'){
+    var obraEl=document.getElementById('selObra');
+    if(!obraEl.value){toast('Selecciona una obra',true);return;}
+    etiqueta=obraEl.options[obraEl.selectedIndex].text;
+    var capEl=document.getElementById('selCapitulo');
+    var partida=document.getElementById('selPartida').value;
+    if(capEl.value)subt=capEl.options[capEl.selectedIndex].text;
+    if(partida)subt+=(subt?' › ':'')+partida;
+    document.getElementById('btnInfoPartida').style.display='none';
+    desc=document.getElementById('inputDesc').value.trim();
+    document.getElementById('inputDesc').value='';
+  } else if(tipo==='otros'){
+    var descOtros=document.getElementById('inputOtros').value.trim();
+    if(!descOtros){toast('La descripción es obligatoria en Otros trabajos',true);return;}
+    etiqueta='🔧 Otros trabajos';
+    desc=descOtros;
+    document.getElementById('inputOtros').value='';
+  } else if(tipo==='vacaciones'){
+    etiqueta='🏖️ Vacaciones';
+    horas=8;
+  } else if(tipo==='enfermedad'){
+    etiqueta='🤒 Baja médica';
+  } else if(tipo==='asuntos'){
+    etiqueta='📋 Asuntos propios';
+  }
+  var horasTexto = tipo==='vacaciones' ? 'Día completo' : horas+'h';
+  var entrada={id:Date.now(),trabajador:trabajador,fecha:fechaSel,tipo:tipo,etiqueta:etiqueta,subt:subt,desc:desc,horas:tipo==='vacaciones'?8:horas,sync:false,ts:new Date().toISOString()};
+  entradas.push(entrada);
+  pendientes.push(entrada.id);
+  guardar(); renderEntradas(); actualizarTotal(); actualizarSync();
+  toast('✓ '+horasTexto+' añadidas');
+}
+
+function borrar(id) {
+  entradas=entradas.filter(function(e){return e.id!==id;});
+  pendientes=pendientes.filter(function(i){return i!==id;});
+  guardar(); renderEntradas(); actualizarTotal(); actualizarSync();
+}
+
+function renderEntradas() {
+  var lista=document.getElementById('listaEntradas');
+  var hoyE=entradas.filter(function(e){return e.trabajador===trabajador&&e.fecha===fechaSel;});
+  if(hoyE.length===0){lista.innerHTML='<div class="sin-entradas">📋 Aún no hay entradas para este día</div>';return;}
+  lista.innerHTML=hoyE.map(function(e){
+    var v=e.horas%1===0?e.horas:e.horas.toFixed(1);
+    return '<div class="entrada '+e.tipo+'"><div class="entrada-cabecera"><div class="entrada-info"><div class="entrada-nombre">'+e.etiqueta+'</div>'+(e.subt?'<div class="entrada-sub">'+e.subt+'</div>':'')+(e.desc?'<div class="entrada-desc">📝 '+e.desc+'</div>':'')+'<div class="entrada-sub">'+(e.sync?'✓ Sincronizado':'⏳ Pendiente')+'</div></div><div style="display:flex;align-items:center"><div class="entrada-horas">'+v+'<span>h</span></div><button class="btn-borrar" onclick="borrar('+e.id+')">✕</button></div></div></div>';
+  }).join('');
+}
+
+function actualizarTotal() {
+  var hoyE=entradas.filter(function(e){return e.trabajador===trabajador&&e.fecha===fechaSel;});
+  var total=hoyE.reduce(function(s,e){return s+e.horas;},0);
+  var v=total%1===0?total:total.toFixed(1);
+  document.getElementById('totalHoras').innerHTML=v+'<span>h</span>';
+  document.getElementById('textoEntradas').textContent=hoyE.length+(hoyE.length===1?' entrada':' entradas');
+}
+
+function actualizarSync() {
+  var btn=document.getElementById('btnSync'),txt=document.getElementById('textoSync');
+  if(pendientes.length>0){btn.classList.add('pendiente');txt.textContent='Sincronizar ('+pendientes.length+')';}
+  else{btn.classList.remove('pendiente');txt.textContent='Sincronizado ✓';}
+}
+
+function sincronizar() {
+  if(pendientes.length===0){toast('Todo sincronizado ✓');return;}
+  toast('⏳ Conectando...');
+  setTimeout(function(){
+    entradas=entradas.map(function(e){return Object.assign({},e,{sync:true});});
+    pendientes=[];
+    guardar(); renderEntradas(); actualizarSync();
+    toast('✓ Sincronizado correctamente');
+  },1500);
+}
+
+// ===== HISTORIAL / CALENDARIO =====
+function abrirHistorial() {
+  document.getElementById('overlay').classList.add('visible');
+  setTimeout(function(){document.getElementById('panel').classList.add('visible');},10);
+  renderCalendario();
+}
+function cerrarHistorial() {
+  document.getElementById('panel').classList.remove('visible');
+  setTimeout(function(){document.getElementById('overlay').classList.remove('visible');},300);
+}
+function cambiarMes(delta) {
+  calMesActual=new Date(calMesActual.getFullYear(),calMesActual.getMonth()+delta,1);
+  renderCalendario();
+}
+function renderCalendario() {
+  var año=calMesActual.getFullYear(), mes=calMesActual.getMonth();
+  var meses=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  document.getElementById('calMes').textContent=meses[mes]+' '+año;
+  var hoyStr=new Date().toISOString().split('T')[0];
+  var diasMes=new Date(año,mes+1,0).getDate();
+  var primerDia=new Date(año,mes,1).getDay(); primerDia=primerDia===0?6:primerDia-1;
+  var mesStr=(mes+1<10?'0':'')+(mes+1);
+  var entradasMes={};
+  entradas.filter(function(e){return e.trabajador===trabajador&&e.fecha.startsWith(año+'-'+mesStr);})
+    .forEach(function(e){if(!entradasMes[e.fecha])entradasMes[e.fecha]=0;entradasMes[e.fecha]+=e.horas;});
+  var html='';
+  ['L','M','X','J','V','S','D'].forEach(function(d){html+='<div class="cal-dia-nombre">'+d+'</div>';});
+  for(var i=0;i<primerDia;i++)html+='<div class="cal-dia vacio"></div>';
+  var totalH=0,diasAp=0,diasFalt=0;
+  for(var dia=1;dia<=diasMes;dia++){
+    var dStr=año+'-'+mesStr+'-'+(dia<10?'0':'')+dia;
+    var dow=new Date(año,mes,dia).getDay();
+    var esFinde=dow===0||dow===6;
+    var esFuturo=dStr>hoyStr;
+    var ap=entradasMes[dStr];
+    var esHoy=dStr===hoyStr;
+    var cls='cal-dia',cont=''+dia;
+    if(esFuturo){cls+=' futuro';}
+    else if(esFinde){cls+=' finde';}
+    else if(ap){cls+=' apuntado';cont='<span>'+dia+'</span><span class="cal-h">'+ap+'h</span>';totalH+=ap;diasAp++;}
+    else{cls+=' falta';diasFalt++;}
+    if(esHoy)cls+=' hoy';
+    html+='<div class="'+cls+'">'+cont+'</div>';
+  }
+  document.getElementById('calGrid').innerHTML=html;
+  document.getElementById('resumenMes').innerHTML=
+    '<div class="resumen-item"><div class="resumen-label">Horas mes</div><div class="resumen-num" style="color:#4caf82">'+totalH+'<span style="font-size:14px;color:#7ab89a">h</span></div></div>'+
+    '<div class="resumen-item"><div class="resumen-label">Días apuntados</div><div class="resumen-num" style="color:#4caf82">'+diasAp+'</div></div>'+
+    '<div class="resumen-item"><div class="resumen-label">Sin apuntar</div><div class="resumen-num" style="color:'+(diasFalt>0?'#e85555':'#4caf82')+'">'+diasFalt+'</div></div>';
+  var porFecha={};
+  entradas.filter(function(e){return e.trabajador===trabajador&&e.fecha.startsWith(año+'-'+mesStr);})
+    .forEach(function(e){if(!porFecha[e.fecha])porFecha[e.fecha]=[];porFecha[e.fecha].push(e);});
+  var fechas=Object.keys(porFecha).sort().reverse();
+  var dias2=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  document.getElementById('contenidoHistorial').innerHTML=fechas.length===0?
+    '<div style="text-align:center;color:#8888aa;padding:20px">No hay entradas este mes</div>':
+    fechas.map(function(f){
+      var dArr=porFecha[f],tot=dArr.reduce(function(s,e){return s+e.horas;},0);
+      var d=new Date(f+'T12:00:00'),tv=tot%1===0?tot:tot.toFixed(1);
+      return '<div class="hist-dia"><div class="hist-dia-cabecera"><div class="hist-dia-fecha">'+dias2[d.getDay()]+' '+d.getDate()+'/'+mesStr+'/'+año+'</div><div class="hist-dia-total">'+tv+'h</div></div>'+
+        dArr.map(function(e){return '<div class="hist-entrada"><div class="hist-entrada-izq">'+e.etiqueta+(e.subt?' — '+e.subt:'')+(e.desc?'<div class="hist-entrada-desc">📝 '+e.desc+'</div>':'')+'</div><strong style="color:#f5a623;white-space:nowrap">'+e.horas+'h</strong></div>';}).join('')+'</div>';
+    }).join('');
+}
+
+function mostrarBannerInstalar() {
+  if(esPWA)return;
+  var b=document.getElementById('bannerInstalar'),t=document.getElementById('textoInstalar');
+  if(esIOS){b.style.display='block';t.textContent='Pulsa ⬆️ en Safari y elige "Añadir a pantalla de inicio"';}
+  else if(esAndroid){b.style.display='block';t.textContent='Pulsa ⋮ en Chrome y elige "Añadir a pantalla de inicio"';}
+}
+
+function exportarCSV() {
+  var mias=entradas.filter(function(e){return e.trabajador===trabajador;});
+  if(mias.length===0){toast('No hay entradas para exportar',true);return;}
+  var filas=[['Trabajador','Fecha','Tipo','Obra/Actividad','Capitulo-Partida','Descripcion','Horas','Sincronizado']];
+  mias.sort(function(a,b){return a.fecha>b.fecha?1:-1;}).forEach(function(e){
+    filas.push([e.trabajador,e.fecha,e.tipo,e.etiqueta||'',e.subt||'',e.desc||'',e.horas,e.sync?'Si':'No']);
+  });
+  var csv=filas.map(function(r){return r.map(function(c){var s=String(c).replace(/"/g,'""');return '"'+s+'"';}).join(',');}).join('\r\n');
+  var blob=new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8;'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url;
+  var hoy=new Date().toISOString().split('T')[0];
+  a.download='horas_'+trabajador+'_'+hoy+'.csv';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  toast('Archivo descargado - mandalo por WhatsApp');
+}
+
+function guardar() {
+  try{localStorage.setItem('ctrl_entradas',JSON.stringify(entradas));localStorage.setItem('ctrl_pendientes',JSON.stringify(pendientes));}catch(e){}
+}
+
+function toast(msg,error) {
+  var t=document.getElementById('toast');
+  t.textContent=msg; t.className='toast'+(error?' error':'');
+  t.classList.add('visible');
+  setTimeout(function(){t.classList.remove('visible');},2500);
+}
+</script>
+</body>
+</html>
