@@ -68,7 +68,7 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.6); cur
 select { width: 100%; background: #252540; border: 1.5px solid #2e2e50; border-radius: 10px; color: #f0f0f8; font-family: inherit; font-size: 15px; padding: 12px 14px; outline: none; -webkit-appearance: none; appearance: none; cursor: pointer; }
 select:focus { border-color: #f5a623; }
 .select-wrap { position: relative; margin-bottom: 10px; }
-.select-wrap::after { content: 'â¾'; position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: #8888aa; pointer-events: none; }
+.select-wrap::after { content: '▾'; position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: #8888aa; pointer-events: none; }
 .fila-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
 .campo-desc { margin-bottom: 10px; }
@@ -161,43 +161,43 @@ select:focus { border-color: #f5a623; }
 .toast.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
 .toast.error { background: #e85555; }
 
-    .conexion-indicator { position: fixed; top: 8px; right: 8px; z-index: 9999; display: flex; align-items: center; gap: 4px; font-size: 10px; color: #888; padding: 2px 8px; border-radius: 10px; background: rgba(0,0,0,0.3); }
-    .conexion-dot { width: 8px; height: 8px; border-radius: 50%; }
-    .conexion-dot.online { background: #4caf50; box-shadow: 0 0 4px #4caf50; }
-    .conexion-dot.offline { background: #f44336; box-shadow: 0 0 4px #f44336; }
-  </style>
+.conexion-indicator { position: fixed; top: 8px; right: 8px; z-index: 9999; display: flex; align-items: center; gap: 4px; font-size: 10px; color: #888; padding: 2px 8px; border-radius: 10px; background: rgba(0,0,0,0.3); }
+.conexion-dot { width: 8px; height: 8px; border-radius: 50%; }
+.conexion-dot.online { background: #4caf50; box-shadow: 0 0 4px #4caf50; }
+.conexion-dot.offline { background: #f44336; box-shadow: 0 0 4px #f44336; }
+</style>
 </head>
 <body>
 
 <div class="toast" id="toast"></div>
 
-<!-- OVERLAY DESCRIPCIÃN TÃCNICA -->
+<!-- OVERLAY DESCRIPCIÓN TÉCNICA -->
 <div id="infoOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:200;align-items:flex-end;justify-content:center;">
   <div style="background:#1a1a2e;border-radius:20px 20px 0 0;padding:24px 20px;width:100%;max-width:480px;max-height:75vh;overflow-y:auto;">
     <div style="width:40px;height:4px;background:#2e2e50;border-radius:2px;margin:0 auto 16px;"></div>
-    <div style="font-size:11px;color:#f5a623;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">DescripciÃ³n tÃ©cnica</div>
+    <div style="font-size:11px;color:#f5a623;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Descripción técnica</div>
     <div id="infoTitulo" style="font-size:17px;font-weight:900;color:#f0f0f8;margin-bottom:14px;"></div>
     <div id="infoTexto" style="font-size:14px;color:#c0c0d8;line-height:1.6;margin-bottom:20px;"></div>
     <button onclick="cerrarInfo()" style="width:100%;background:#252540;border:1.5px solid #2e2e50;border-radius:12px;padding:14px;color:#f0f0f8;font-size:15px;font-weight:700;cursor:pointer;">Cerrar</button>
   </div>
 </div>
 
-<!-- PANTALLA SELECCIÃN TRABAJADOR -->
+<!-- PANTALLA SELECCIÓN TRABAJADOR -->
 <div id="pantallaWorker">
   <div>
-    <div style="font-size:52px;text-align:center">ðï¸</div>
+    <div style="font-size:52px;text-align:center">🏗️</div>
     <div class="titulo-app">Control de Horas</div>
-    <div class="subtitulo">Â¿QuiÃ©n eres?</div>
+    <div class="subtitulo">¿Quién eres?</div>
   </div>
   <div class="grid-workers">
-    <div class="btn-worker" onclick="entrar('Paco')"><span class="ico">ð·</span>Paco</div>
-    <div class="btn-worker" onclick="entrar('Carlos')"><span class="ico">ð¨</span>Carlos</div>
-    <div class="btn-worker" onclick="entrar('Andi')"><span class="ico">â¡</span>Andi</div>
-    <div class="btn-worker" onclick="entrar('JosÃ©')"><span class="ico">ð§</span>JosÃ©</div>
-    <div class="btn-worker" onclick="entrar('Jimy')"><span class="ico">ðª</span>Jimy</div>
-    <div class="btn-worker" onclick="entrar('Mynor')"><span class="ico">ðï¸</span>Mynor</div>
-    <div class="btn-worker" onclick="entrar('Samanta')"><span class="ico">ð</span>Samanta</div>
-    <div class="btn-worker" onclick="entrar('Miguel')"><span class="ico">ðª</span>Miguel</div>
+    <div class="btn-worker" onclick="entrar('Paco')"><span class="ico">👷</span>Paco</div>
+    <div class="btn-worker" onclick="entrar('Carlos')"><span class="ico">🔨</span>Carlos</div>
+    <div class="btn-worker" onclick="entrar('Andi')"><span class="ico">⚡</span>Andi</div>
+    <div class="btn-worker" onclick="entrar('José')"><span class="ico">🔧</span>José</div>
+    <div class="btn-worker" onclick="entrar('Jimy')"><span class="ico">🪚</span>Jimy</div>
+    <div class="btn-worker" onclick="entrar('Mynor')"><span class="ico">🏗️</span>Mynor</div>
+    <div class="btn-worker" onclick="entrar('Samanta')"><span class="ico">📋</span>Samanta</div>
+    <div class="btn-worker" onclick="entrar('Miguel')"><span class="ico">🪛</span>Miguel</div>
   </div>
   <div style="font-size:12px;color:#8888aa">Pulsa tu nombre para entrar</div>
 </div>
@@ -205,9 +205,9 @@ select:focus { border-color: #f5a623; }
 <!-- PANTALLA PIN -->
 <div id="pantallaPin">
   <div class="pin-box">
-    <div class="pin-ico">ð</div>
+    <div class="pin-ico">🔒</div>
     <div class="pin-nombre" id="pinNombreTexto"></div>
-    <div class="pin-subtitulo">Introduce tu PIN de 4 dÃ­gitos</div>
+    <div class="pin-subtitulo">Introduce tu PIN de 4 dígitos</div>
     <div class="pin-dots">
       <div class="pin-dot"></div>
       <div class="pin-dot"></div>
@@ -227,9 +227,9 @@ select:focus { border-color: #f5a623; }
       <button class="pin-btn" onclick="pulsarPin('9')">9</button>
       <button class="pin-btn" style="visibility:hidden">.</button>
       <button class="pin-btn" onclick="pulsarPin('0')">0</button>
-      <button class="pin-btn borrar" onclick="pulsarPin('â«')">â«</button>
+      <button class="pin-btn borrar" onclick="pulsarPin('⌫')">⌫</button>
     </div>
-    <button class="pin-cancelar" onclick="cancelarPin()">â Volver</button>
+    <button class="pin-cancelar" onclick="cancelarPin()">← Volver</button>
   </div>
 </div>
 
@@ -237,20 +237,20 @@ select:focus { border-color: #f5a623; }
 <div id="pantallaApp">
   <div class="header">
     <div class="header-fila">
-      <div class="app-nombre">â Horas</div>
-      <div class="badge-worker" id="badgeWorker" onclick="cambiarWorker()">â</div>
+      <div class="app-nombre">⚒ Horas</div>
+      <div class="badge-worker" id="badgeWorker" onclick="cambiarWorker()">—</div>
     </div>
     <div class="fecha-texto" id="textoFecha"></div>
   </div>
 
   <div class="contenido">
     <div class="banner" id="bannerInstalar">
-      <strong>ð² Instalar como app</strong>
+      <strong>📲 Instalar como app</strong>
       <span id="textoInstalar"></span>
     </div>
 
     <div class="caja">
-      <div class="caja-titulo">ð Fecha</div>
+      <div class="caja-titulo">📅 Fecha</div>
       <div class="fila-fecha">
         <input type="date" id="inputFecha" onchange="cambiarFecha()">
       </div>
@@ -258,7 +258,7 @@ select:focus { border-color: #f5a623; }
 
     <div class="total-dia">
       <div>
-        <div class="total-label">Total horas del dÃ­a</div>
+        <div class="total-label">Total horas del día</div>
         <div class="total-entradas" id="textoEntradas">0 entradas</div>
       </div>
       <div class="total-numero" id="totalHoras">0<span>h</span></div>
@@ -267,50 +267,50 @@ select:focus { border-color: #f5a623; }
     <div class="caja">
       <div class="caja-titulo">+ Nueva entrada</div>
       <div class="grid-tipos">
-        <div class="btn-tipo activo" onclick="setTipo(this,'obra')"><span class="ico2">ðï¸</span>Obra</div>
-        <div class="btn-tipo" onclick="setTipo(this,'otros')"><span class="ico2">ð§</span>Otros trabajos</div>
-        <div class="btn-tipo" onclick="setTipo(this,'vacaciones')"><span class="ico2">ðï¸</span>Vacaciones</div>
-        <div class="btn-tipo" onclick="setTipo(this,'enfermedad')"><span class="ico2">ð¤</span>Baja</div>
-        <div class="btn-tipo" onclick="setTipo(this,'asuntos')"><span class="ico2">ð</span>Asuntos</div>
+        <div class="btn-tipo activo" onclick="setTipo(this,'obra')"><span class="ico2">🏗️</span>Obra</div>
+        <div class="btn-tipo" onclick="setTipo(this,'otros')"><span class="ico2">🔧</span>Otros trabajos</div>
+        <div class="btn-tipo" onclick="setTipo(this,'vacaciones')"><span class="ico2">🏖️</span>Vacaciones</div>
+        <div class="btn-tipo" onclick="setTipo(this,'enfermedad')"><span class="ico2">🤒</span>Baja</div>
+        <div class="btn-tipo" onclick="setTipo(this,'asuntos')"><span class="ico2">📋</span>Asuntos</div>
       </div>
       <div id="camposObra">
         <div class="select-wrap">
           <select id="selObra" onchange="cargarCapitulos()">
-            <option value="">â Selecciona obra â</option>
+            <option value="">— Selecciona obra —</option>
             <option value="paco_teruel">Obra Paco Teruel</option>
-            <option value="angeles_aldaya">Obra Ãngeles Aldaya</option>
+            <option value="angeles_aldaya">Obra Ángeles Aldaya</option>
           </select>
         </div>
         <div class="fila-2">
           <div class="select-wrap">
             <select id="selCapitulo" onchange="cargarPartidas()">
-              <option value="">â CapÃ­tulo â</option>
+              <option value="">— Capítulo —</option>
             </select>
           </div>
           <div class="select-wrap">
             <select id="selPartida">
-              <option value="">â Partida â</option>
+              <option value="">— Partida —</option>
             </select>
           </div>
         </div>
         <button id="btnInfoPartida" onclick="verDescripcion()" style="display:none;width:100%;background:#252540;border:1.5px solid #2e2e50;border-radius:10px;padding:10px 14px;color:#8888aa;font-size:13px;font-weight:700;cursor:pointer;align-items:center;gap:8px;margin-bottom:10px;">
-          <span style="font-size:16px">â¹ï¸</span> Ver descripciÃ³n tÃ©cnica de esta partida
+          <span style="font-size:16px">ℹ️</span> Ver descripción técnica de esta partida
         </button>
       </div>
       <!-- Campo Otros trabajos (obligatorio) -->
       <div id="campoOtros" style="display:none;margin-bottom:10px;">
-        <label style="display:block;font-size:11px;color:#e85555;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">ð DescripciÃ³n del trabajo <span style="color:#e85555">* obligatorio</span></label>
+        <label style="display:block;font-size:11px;color:#e85555;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">📝 Descripción del trabajo <span style="color:#e85555">* obligatorio</span></label>
         <textarea id="inputOtros" placeholder="Describe el trabajo realizado..." style="width:100%;background:#252540;border:1.5px solid #e85555;border-radius:10px;color:#f0f0f8;font-family:inherit;font-size:14px;padding:10px 14px;outline:none;resize:none;height:80px;"></textarea>
       </div>
 
-      <!-- Campo descripciÃ³n opcional (solo obra) -->
+      <!-- Campo descripción opcional (solo obra) -->
       <div class="campo-desc" id="campoDescOpcional">
-        <label>ð DescripciÃ³n (opcional)</label>
-        <textarea id="inputDesc" placeholder="Si quieres explicar algo fuera de lo normal, escrÃ­belo aquÃ­..."></textarea>
+        <label>📝 Descripción (opcional)</label>
+        <textarea id="inputDesc" placeholder="Si quieres explicar algo fuera de lo normal, escríbelo aquí..."></textarea>
       </div>
 
       <div class="control-horas" id="campoHoras">
-        <button class="btn-h" onclick="cambiarHoras(-0.5)">â</button>
+        <button class="btn-h" onclick="cambiarHoras(-0.5)">−</button>
         <div class="horas-val" id="valHoras">8 <span>h</span></div>
         <button class="btn-h" onclick="cambiarHoras(0.5)">+</button>
       </div>
@@ -322,11 +322,11 @@ select:focus { border-color: #f5a623; }
         <div class="btn-rapida" onclick="setHoras(11,this)">11h</div>
         <div class="btn-rapida" onclick="setHoras(12,this)">12h</div>
       </div>
-      <button class="btn-anadir" onclick="anadir()">â AÃ±adir entrada</button>
+      <button class="btn-anadir" onclick="anadir()">✓ Añadir entrada</button>
     </div>
 
-    <div class="titulo-seccion">Entradas del dÃ­a</div>
-    <div id="listaEntradas"><div class="sin-entradas">ð AÃºn no hay entradas para este dÃ­a</div></div>
+    <div class="titulo-seccion">Entradas del día</div>
+    <div id="listaEntradas"><div class="sin-entradas">📋 Aún no hay entradas para este día</div></div>
   </div>
 
   <div class="barra-bottom">
@@ -334,8 +334,8 @@ select:focus { border-color: #f5a623; }
       <div class="punto-sync"></div>
       <span id="textoSync">Sin pendientes</span>
     </button>
-    <button class="btn-hist" onclick="exportarCSV()" title="Exportar mis datos">ð¤</button>
-    <button class="btn-hist" onclick="abrirHistorial()">ð</button>
+    <button class="btn-hist" onclick="exportarCSV()" title="Exportar mis datos">📤</button>
+    <button class="btn-hist" onclick="abrirHistorial()">📅</button>
   </div>
 </div>
 
@@ -343,11 +343,11 @@ select:focus { border-color: #f5a623; }
 <div class="overlay" id="overlay" onclick="cerrarHistorial()">
   <div class="panel" id="panel" onclick="event.stopPropagation()">
     <div class="panel-handle"></div>
-    <div class="panel-titulo">ð Mi registro</div>
+    <div class="panel-titulo">📅 Mi registro</div>
     <div class="cal-header">
-      <button class="cal-nav" onclick="cambiarMes(-1)">â¹</button>
+      <button class="cal-nav" onclick="cambiarMes(-1)">‹</button>
       <div class="cal-mes" id="calMes"></div>
-      <button class="cal-nav" onclick="cambiarMes(1)">âº</button>
+      <button class="cal-nav" onclick="cambiarMes(1)">›</button>
     </div>
     <div class="cal-leyenda">
       <div class="cal-leyenda-item"><div class="cal-leyenda-dot" style="background:#1a2e1e;border:1px solid #2e5040"></div>Apuntado</div>
@@ -363,196 +363,196 @@ select:focus { border-color: #f5a623; }
 <script>
 const API_URL = 'https://sistema-gestion-obras-production.up.railway.app';
 
-    async function cargarConfigDesdeAPI() {
-      try {
-        var resp = await fetch(API_URL + '/api/pwa/config');
-        if (!resp.ok) throw new Error('API no disponible');
-        var data = await resp.json();
-        var obrasConfig = {};
-        if (data.obras) {
-          data.obras.forEach(function(obra) {
-            var caps = [];
-            if (obra.capitulos) {
-              obra.capitulos.forEach(function(cap) {
-                caps.push({ id: cap.id || cap.nombre, nombre: cap.nombre, partidas: (cap.partidas || []).map(function(p) { return {n: p.nombre, d: p.descripcion || ''}; }) });
-              });
-            }
-            obrasConfig[obra.nombre.toLowerCase().replace(/\\s+/g,'_')] = caps;
+async function cargarConfigDesdeAPI() {
+  try {
+    var resp = await fetch(API_URL + '/api/pwa/config');
+    if (!resp.ok) throw new Error('API no disponible');
+    var data = await resp.json();
+    var obrasConfig = {};
+    if (data.obras) {
+      data.obras.forEach(function(obra) {
+        var caps = [];
+        if (obra.capitulos) {
+          obra.capitulos.forEach(function(cap) {
+            caps.push({ id: cap.id || cap.nombre, nombre: cap.nombre, partidas: (cap.partidas || []).map(function(p) { return {n: p.nombre, d: p.descripcion || ''}; }) });
           });
         }
-        if (Object.keys(obrasConfig).length > 0) OBRAS_CAPITULOS = obrasConfig;
-        try { localStorage.setItem('OBRAS_CACHE', JSON.stringify(OBRAS_CAPITULOS)); localStorage.setItem('CACHE_FECHA', new Date().toISOString()); } catch(e) {}
-        var dot = document.getElementById('conexionDot'); var txt = document.getElementById('conexionTexto');
-        if (dot) dot.className = 'conexion-dot online'; if (txt) txt.textContent = 'online';
-      } catch(e) {
-        try { var cache = localStorage.getItem('OBRAS_CACHE'); if (cache) OBRAS_CAPITULOS = JSON.parse(cache); } catch(e2) {}
-        var dot = document.getElementById('conexionDot'); var txt = document.getElementById('conexionTexto');
-        if (dot) dot.className = 'conexion-dot offline'; if (txt) txt.textContent = 'offline';
-      }
+        obrasConfig[obra.nombre.toLowerCase().replace(/\s+/g,'_')] = caps;
+      });
     }
+    if (Object.keys(obrasConfig).length > 0) OBRAS_CAPITULOS = obrasConfig;
+    try { localStorage.setItem('OBRAS_CACHE', JSON.stringify(OBRAS_CAPITULOS)); localStorage.setItem('CACHE_FECHA', new Date().toISOString()); } catch(e) {}
+    var dot = document.getElementById('conexionDot'); var txt = document.getElementById('conexionTexto');
+    if (dot) dot.className = 'conexion-dot online'; if (txt) txt.textContent = 'online';
+  } catch(e) {
+    try { var cache = localStorage.getItem('OBRAS_CACHE'); if (cache) OBRAS_CAPITULOS = JSON.parse(cache); } catch(e2) {}
+    var dot = document.getElementById('conexionDot'); var txt = document.getElementById('conexionTexto');
+    if (dot) dot.className = 'conexion-dot offline'; if (txt) txt.textContent = 'offline';
+  }
+}
 
-    var OBRAS_CAPITULOS = {
+var OBRAS_CAPITULOS = {
   'angeles_aldaya': [
     {id:'C001', nombre:'Reforma cocina', partidas:[
-      {n:'DemoliciÃ³n alicatado', d:'DemoliciÃ³n de alicatado, por medios manuales, incluyendo picado de morteros de cemento de agarre, retirada de escombros a pie de carga y medios auxiliares de obra.'},
-      {n:'EvacuaciÃ³n escombros en sacos', d:'EvacuaciÃ³n manual de escombros mediante sacos para distancias hasta 40 m desde el tajo de demoliciÃ³n al pie de carga o contenedor, incluido llenado y vaciado de sacos.'},
-      {n:'Transporte escombros a vertedero', d:'Transporte de escombros a vertedero en furgÃ³n, a una distancia menor de 10 km.'},
-      {n:'InstalaciÃ³n fontanerÃ­a multicapa', d:'InstalaciÃ³n de red de agua frÃ­a y caliente con tuberÃ­a multicapa y red de desagÃ¼e de PVC, incluyendo bote sifÃ³nico, manguetÃ³n hasta bajantes, sin aparatos sanitarios, segÃºn CTE/DB-HS 4.'},
-      {n:'InstalaciÃ³n elÃ©ctrica cocina', d:'Red elÃ©ctrica de distribuciÃ³n interior de cocina con electrificaciÃ³n media, compuesta de 5 a 7 puntos de luz, circuitos interiores con cableado bajo tubo protector C1, C2, C3, C4, C5, C7, mecanismos gama bÃ¡sica.'},
-      {n:'Alicatado azulejo gres', d:'Alicatado de plaqueta de gres 1Âª calidad 20x20 cm, recibido con cemento cola Weber classic blanco sobre base de mortero de cemento, incluyendo piezas especiales, ingletes, rejuntado con mortero decorativo y limpieza.'},
-      {n:'Ayudas albaÃ±ilerÃ­a', d:'Ayuda de albaÃ±ilerÃ­a para correcta ejecuciÃ³n de instalaciones de fontanerÃ­a, electricidad, techo, etc. Incluye regatas, encuentros, autonivelantes y pequeÃ±o material auxiliar.'},
-      {n:'Desmontaje mobiliario y electrodomÃ©sticos', d:'Desmontaje completo de mobiliario de cocina existente incluyendo muebles altos y bajos, zÃ³calos, copetes, electrodomÃ©sticos (frigorÃ­fico, horno, microondas, placa, campana, lavavajillas), encimera y desconexiÃ³n de instalaciones. Incluye retirada manual y acopio en zona designada.'},
-      {n:'Pintura techos', d:'Pintura plÃ¡stica blanca en techos.'},
-      {n:'Mobiliario cocina nuevo', d:'Suministro e instalaciÃ³n de mobiliario completo de cocina nuevo segÃºn relaciÃ³n de mÃ³dulos especificados, incluyendo muebles bajos, altos, columnas, cajones con autocierre, frentes, encimera laminada, zÃ³calos e instalaciÃ³n de campana extractora y cocina de gas.'}
+      {n:'Demolición alicatado', d:'Demolición de alicatado, por medios manuales, incluyendo picado de morteros de cemento de agarre, retirada de escombros a pie de carga y medios auxiliares de obra.'},
+      {n:'Evacuación escombros en sacos', d:'Evacuación manual de escombros mediante sacos para distancias hasta 40 m desde el tajo de demolición al pie de carga o contenedor, incluido llenado y vaciado de sacos.'},
+      {n:'Transporte escombros a vertedero', d:'Transporte de escombros a vertedero en furgón, a una distancia menor de 10 km.'},
+      {n:'Instalación fontanería multicapa', d:'Instalación de red de agua fría y caliente con tubería multicapa y red de desagüe de PVC, incluyendo bote sifónico, manguetón hasta bajantes, sin aparatos sanitarios, según CTE/DB-HS 4.'},
+      {n:'Instalación eléctrica cocina', d:'Red eléctrica de distribución interior de cocina con electrificación media, compuesta de 5 a 7 puntos de luz, circuitos interiores con cableado bajo tubo protector C1, C2, C3, C4, C5, C7, mecanismos gama básica.'},
+      {n:'Alicatado azulejo gres', d:'Alicatado de plaqueta de gres 1ª calidad 20x20 cm, recibido con cemento cola Weber classic blanco sobre base de mortero de cemento, incluyendo piezas especiales, ingletes, rejuntado con mortero decorativo y limpieza.'},
+      {n:'Ayudas albañilería', d:'Ayuda de albañilería para correcta ejecución de instalaciones de fontanería, electricidad, techo, etc. Incluye regatas, encuentros, autonivelantes y pequeño material auxiliar.'},
+      {n:'Desmontaje mobiliario y electrodomésticos', d:'Desmontaje completo de mobiliario de cocina existente incluyendo muebles altos y bajos, zócalos, copetes, electrodomésticos (frigorífico, horno, microondas, placa, campana, lavavajillas), encimera y desconexión de instalaciones. Incluye retirada manual y acopio en zona designada.'},
+      {n:'Pintura techos', d:'Pintura plástica blanca en techos.'},
+      {n:'Mobiliario cocina nuevo', d:'Suministro e instalación de mobiliario completo de cocina nuevo según relación de módulos especificados, incluyendo muebles bajos, altos, columnas, cajones con autocierre, frentes, encimera laminada, zócalos e instalación de campana extractora y cocina de gas.'}
     ]}
   ],
   'paco_teruel': [
     {id:'A', nombre:'Actuaciones previas', partidas:[
-      {n:'Informe vigas de madera', d:'Informe tÃ©cnico sobre el estado de las vigas de madera existentes en la estructura del edificio, con recomendaciones de tratamiento y actuaciÃ³n.'}
+      {n:'Informe vigas de madera', d:'Informe técnico sobre el estado de las vigas de madera existentes en la estructura del edificio, con recomendaciones de tratamiento y actuación.'}
     ]},
     {id:'D', nombre:'Demoliciones', partidas:[
-      {n:'DemoliciÃ³n tabiques', d:'DemoliciÃ³n de particiÃ³n interior de fÃ¡brica revestida formada por ladrillo macizo a panderete de 5 cm de espesor, con medios manuales, sin afectar a la estabilidad de los elementos constructivos contiguos. Incluye fragmentaciÃ³n de escombros, retirada, acopio y carga manual sobre camiÃ³n o contenedor.'},
-      {n:'DemoliciÃ³n muros de piedra', d:'DemoliciÃ³n por medios manuales de fÃ¡brica de piedra ejecutada en seco o ligeramente recibida con morteros pobres. Incluye retirada de escombros a pie de carga. Afecta a pared separaciÃ³n salÃ³n-cocina, muro piedra cuadra, bebedero, parte muro entrada y huecos de puertas y ventanas.'},
-      {n:'DemoliciÃ³n escalera', d:'DemoliciÃ³n de escalera de fÃ¡brica con bÃ³veda tabicada o catalana, peldaÃ±eado y revestimientos, con medios manuales. Incluye fragmentaciÃ³n de escombros, retirada, acopio y carga manual sobre camiÃ³n o contenedor.'},
-      {n:'Levantado carpinterÃ­a exterior', d:'Levantado de carpinterÃ­a acristalada de madera de cualquier tipo situada en fachada, con medios manuales, sin deteriorar los elementos constructivos a los que estÃ¡ sujeta. Incluye levantado de hojas, marcos, tapajuntas y herrajes.'},
-      {n:'Desmontaje instalaciÃ³n elÃ©ctrica', d:'Desmontaje de red de instalaciÃ³n elÃ©ctrica interior fija en superficie en vivienda unifamiliar de 167 mÂ², con medios manuales. Incluye desmontaje del cuadro elÃ©ctrico, cableado, mecanismos, cajas y accesorios superficiales.'},
-      {n:'Desmontaje instalaciÃ³n agua', d:'Desmontaje de red de instalaciÃ³n interior de agua colocada superficialmente, que da servicio a 167 mÂ², desde la toma de cada aparato sanitario hasta el montante. Incluye desmontaje de vÃ¡lvulas, accesorios, soportes de fijaciÃ³n y obturaciÃ³n de conducciones.'},
-      {n:'DemoliciÃ³n alicatado', d:'DemoliciÃ³n de alicatado de azulejo con medios manuales. Incluye picado del material de agarre adherido al soporte, fragmentaciÃ³n de escombros y carga manual sobre camiÃ³n o contenedor.'},
+      {n:'Demolición tabiques', d:'Demolición de partición interior de fábrica revestida formada por ladrillo macizo a panderete de 5 cm de espesor, con medios manuales, sin afectar a la estabilidad de los elementos constructivos contiguos. Incluye fragmentación de escombros, retirada, acopio y carga manual sobre camión o contenedor.'},
+      {n:'Demolición muros de piedra', d:'Demolición por medios manuales de fábrica de piedra ejecutada en seco o ligeramente recibida con morteros pobres. Incluye retirada de escombros a pie de carga. Afecta a pared separación salón-cocina, muro piedra cuadra, bebedero, parte muro entrada y huecos de puertas y ventanas.'},
+      {n:'Demolición escalera', d:'Demolición de escalera de fábrica con bóveda tabicada o catalana, peldañeado y revestimientos, con medios manuales. Incluye fragmentación de escombros, retirada, acopio y carga manual sobre camión o contenedor.'},
+      {n:'Levantado carpintería exterior', d:'Levantado de carpintería acristalada de madera de cualquier tipo situada en fachada, con medios manuales, sin deteriorar los elementos constructivos a los que está sujeta. Incluye levantado de hojas, marcos, tapajuntas y herrajes.'},
+      {n:'Desmontaje instalación eléctrica', d:'Desmontaje de red de instalación eléctrica interior fija en superficie en vivienda unifamiliar de 167 m², con medios manuales. Incluye desmontaje del cuadro eléctrico, cableado, mecanismos, cajas y accesorios superficiales.'},
+      {n:'Desmontaje instalación agua', d:'Desmontaje de red de instalación interior de agua colocada superficialmente, que da servicio a 167 m², desde la toma de cada aparato sanitario hasta el montante. Incluye desmontaje de válvulas, accesorios, soportes de fijación y obturación de conducciones.'},
+      {n:'Demolición alicatado', d:'Demolición de alicatado de azulejo con medios manuales. Incluye picado del material de agarre adherido al soporte, fragmentación de escombros y carga manual sobre camión o contenedor.'},
       {n:'Desmontaje cocina', d:'Desmontaje de cocina en su estado actual. El alicatado existente se conserva.'},
-      {n:'Desmontaje lavabo', d:'Desmontaje de lavabo con pedestal con medios manuales, sin afectar a la estabilidad de los elementos constructivos. Incluye desmontaje de griferÃ­a, accesorios y obturaciÃ³n de conducciones conectadas.'},
-      {n:'Desmontaje inodoro', d:'Desmontaje de inodoro con tanque bajo con medios manuales, sin afectar a la estabilidad de los elementos constructivos. Incluye desmontaje de accesorios y obturaciÃ³n de conducciones conectadas.'},
-      {n:'Desmontaje baÃ±era', d:'Desmontaje de baÃ±era acrÃ­lica con medios manuales, sin afectar a la estabilidad de los elementos constructivos. Incluye desmontaje de griferÃ­a, accesorios y obturaciÃ³n de conducciones conectadas.'},
-      {n:'Desmontaje griferÃ­a', d:'Desmontaje de griferÃ­a de lavabo, baÃ±era, fregadero, etc., con medios manuales. Incluye obturaciÃ³n de conducciones conectadas, retirada y acopio del material desmontado.'},
-      {n:'Desmontaje puertas interiores', d:'Desmontaje de hoja de puerta interior de carpinterÃ­a de madera con medios manuales. Incluye desmontaje de galces, tapajuntas y herrajes.'},
-      {n:'DemoliciÃ³n losa hormigÃ³n', d:'DemoliciÃ³n de losa de hormigÃ³n armado hasta 25 cm de espesor y peldaÃ±os, con medios manuales, martillo neumÃ¡tico y equipo de oxicorte. Incluye corte de armaduras, fragmentaciÃ³n y carga manual sobre camiÃ³n.'},
-      {n:'DemoliciÃ³n forjado madera', d:'DemoliciÃ³n de forjado de viguetas de madera y entrevigado de revoltÃ³n cerÃ¡mico con martillo neumÃ¡tico y motosierra, previo levantado del pavimento. Incluye apeos, trabajos de estabilidad, fragmentaciÃ³n y retirada de escombros.'},
-      {n:'Quitar vigas madera', d:'Retirada de vigas de madera picando alrededor de cada viga para poder extraerlas con sumo cuidado para no perjudicar al vecino. Afecta a vigas de revoltones en 2Âª planta zona fachada, hueco nueva escalera y 1Âª planta.'},
-      {n:'EvacuaciÃ³n escombros', d:'Traslado y evacuaciÃ³n manual de escombros mediante capazo naranjero para distancias hasta 40 m desde el tajo de demoliciÃ³n al pie de carga o contenedor.'},
-      {n:'DemoliciÃ³n solera', d:'DemoliciÃ³n de solera de hormigÃ³n en masa de 15 cm de espesor con martillo compresor de 2.000 L/min. Incluye retirada de escombros a pie de carga y maquinaria auxiliar.'},
-      {n:'Apuntalamiento', d:'Apeo de estructura mediante sopandas y durmientes de madera y puntales metÃ¡licos hasta una altura mÃ¡xima de 3 m. Incluye replanteo y apuntalamiento general de la casa.'},
-      {n:'Retirada muebles y enseres', d:'Retirada y transporte a lugar limpio de muebles y enseres de toda la casa. Incluye retirada de muebles, sofÃ¡, todo lo que habÃ­a en la cuadra, somieres y colchones.'},
-      {n:'DemoliciÃ³n pilares', d:'DemoliciÃ³n de estructura de pilar de piedra con martillo compresor de 2.000 L/min, incluyendo anclaje previo y apuntalamientos necesarios. Afecta al pilar de fachada, pilar central de la casa y pilar soporte viga vecino en cocina nueva.'},
-      {n:'Picar suelos', d:'DemoliciÃ³n de solera o pavimento de mortero con cal en masa de hasta 10 cm de espesor de manera manual, con corte previo en puntos crÃ­ticos. Para descubrir vigas de madera en 2Âª y 1Âª planta.'},
-      {n:'Apertura huecos', d:'Se abrieron huecos en la base del tabique de ladrillo panal para limpiar la parte de atrÃ¡s del tabique y poder colocar el plÃ¡stico correctamente. Los huecos se volvieron a tapar despuÃ©s.'},
-      {n:'Picado enlucidos', d:'Picado de todo el enlucido en la pared del salÃ³n que hace tripa. Se hicieron pruebas quitando piedras para ver quÃ© habÃ­a detrÃ¡s.'},
-      {n:'Cortar pilar', d:'Cortar pilar central de la casa desde la 2Âª planta hasta la planta baja, quitÃ¡ndole 20 cm al pilar. Cortado con radial con cuidado extremo para no producir vibraciones en la estructura general de la casa.'}
+      {n:'Desmontaje lavabo', d:'Desmontaje de lavabo con pedestal con medios manuales, sin afectar a la estabilidad de los elementos constructivos. Incluye desmontaje de grifería, accesorios y obturación de conducciones conectadas.'},
+      {n:'Desmontaje inodoro', d:'Desmontaje de inodoro con tanque bajo con medios manuales, sin afectar a la estabilidad de los elementos constructivos. Incluye desmontaje de accesorios y obturación de conducciones conectadas.'},
+      {n:'Desmontaje bañera', d:'Desmontaje de bañera acrílica con medios manuales, sin afectar a la estabilidad de los elementos constructivos. Incluye desmontaje de grifería, accesorios y obturación de conducciones conectadas.'},
+      {n:'Desmontaje grifería', d:'Desmontaje de grifería de lavabo, bañera, fregadero, etc., con medios manuales. Incluye obturación de conducciones conectadas, retirada y acopio del material desmontado.'},
+      {n:'Desmontaje puertas interiores', d:'Desmontaje de hoja de puerta interior de carpintería de madera con medios manuales. Incluye desmontaje de galces, tapajuntas y herrajes.'},
+      {n:'Demolición losa hormigón', d:'Demolición de losa de hormigón armado hasta 25 cm de espesor y peldaños, con medios manuales, martillo neumático y equipo de oxicorte. Incluye corte de armaduras, fragmentación y carga manual sobre camión.'},
+      {n:'Demolición forjado madera', d:'Demolición de forjado de viguetas de madera y entrevigado de revoltón cerámico con martillo neumático y motosierra, previo levantado del pavimento. Incluye apeos, trabajos de estabilidad, fragmentación y retirada de escombros.'},
+      {n:'Quitar vigas madera', d:'Retirada de vigas de madera picando alrededor de cada viga para poder extraerlas con sumo cuidado para no perjudicar al vecino. Afecta a vigas de revoltones en 2ª planta zona fachada, hueco nueva escalera y 1ª planta.'},
+      {n:'Evacuación escombros', d:'Traslado y evacuación manual de escombros mediante capazo naranjero para distancias hasta 40 m desde el tajo de demolición al pie de carga o contenedor.'},
+      {n:'Demolición solera', d:'Demolición de solera de hormigón en masa de 15 cm de espesor con martillo compresor de 2.000 L/min. Incluye retirada de escombros a pie de carga y maquinaria auxiliar.'},
+      {n:'Apuntalamiento', d:'Apeo de estructura mediante sopandas y durmientes de madera y puntales metálicos hasta una altura máxima de 3 m. Incluye replanteo y apuntalamiento general de la casa.'},
+      {n:'Retirada muebles y enseres', d:'Retirada y transporte a lugar limpio de muebles y enseres de toda la casa. Incluye retirada de muebles, sofá, todo lo que había en la cuadra, somieres y colchones.'},
+      {n:'Demolición pilares', d:'Demolición de estructura de pilar de piedra con martillo compresor de 2.000 L/min, incluyendo anclaje previo y apuntalamientos necesarios. Afecta al pilar de fachada, pilar central de la casa y pilar soporte viga vecino en cocina nueva.'},
+      {n:'Picar suelos', d:'Demolición de solera o pavimento de mortero con cal en masa de hasta 10 cm de espesor de manera manual, con corte previo en puntos críticos. Para descubrir vigas de madera en 2ª y 1ª planta.'},
+      {n:'Apertura huecos', d:'Se abrieron huecos en la base del tabique de ladrillo panal para limpiar la parte de atrás del tabique y poder colocar el plástico correctamente. Los huecos se volvieron a tapar después.'},
+      {n:'Picado enlucidos', d:'Picado de todo el enlucido en la pared del salón que hace tripa. Se hicieron pruebas quitando piedras para ver qué había detrás.'},
+      {n:'Cortar pilar', d:'Cortar pilar central de la casa desde la 2ª planta hasta la planta baja, quitándole 20 cm al pilar. Cortado con radial con cuidado extremo para no producir vibraciones en la estructura general de la casa.'}
     ]},
     {id:'E', nombre:'Estructuras', partidas:[
-      {n:'Forjado viguetas madera', d:'Forjado tradicional con intereje de 50 cm compuesto por viguetas de madera aserrada de pino silvestre de 150x250 mm, clase resistente C24, con entrevigado de revoltÃ³n de ladrillo cerÃ¡mico cara vista macizo, malla electrosoldada y capa de compresiÃ³n de hormigÃ³n ligero HL-25 de 4 cm. Incluye apuntalamiento y desapuntalamiento.'},
-      {n:'Refuerzo forjado', d:'Refuerzo de forjado de viguetas de madera mediante conectores de acero galvanizado fijados con resina epoxi-acrilato, malla electrosoldada y capa de compresiÃ³n de 5 cm de hormigÃ³n ligero. Incluye apuntalamiento y desapuntalamiento.'},
-      {n:'HormigÃ³n ligero', d:'HormigÃ³n HNE-15 con cemento CEM II/B-P 32,5R, Ã¡rido ligero tipo Arlita F-3 y arena de rÃ­o, confeccionado con hormigonera de 250 L. Para compensar diferencias de altura entre plantas.'},
-      {n:'Aislamiento poliestireno extruido', d:'Aislamiento tÃ©rmico XPS de 40 mm de espesor, medidas 1,25x0,6 m, conductividad 0,034 W/mk. Colocado encima de capa de mortero para compensar niveles en planta baja, 1Âª y 2Âª planta.'},
-      {n:'Losa escalera', d:'Losa de escalera de hormigÃ³n armado de 15 cm de espesor con peldaÃ±eado de hormigÃ³n, realizada con HA-25/F/20/XC2 y acero B 500 S con cuantÃ­a aproximada de 18 kg/mÂ². Incluye montaje y desmontaje de encofrado.'},
-      {n:'Solera hormigÃ³n', d:'Solera de hormigÃ³n con malla electrosoldada de 10 cm de espesor realizada con HM-20/B/20/X0, malla electrosoldada superior ME 20x20, vibrado manual mediante regla vibrante y acabado con fratasadora mecÃ¡nica. Incluye juntas de retracciÃ³n.'},
-      {n:'Losa maciza', d:'Losa maciza de hormigÃ³n armado inclinada de 15 cm de canto, realizada con HA-25/F/20/XC2 y acero B 500 S con cuantÃ­a aproximada de 21 kg/mÂ². Incluye encofrado continuo con tableros de madera y puntales metÃ¡licos.'},
-      {n:'Zapatas y zunchos hormigÃ³n', d:'HormigÃ³n armado HA-25/P/40/XC3 para relleno de zapatas de cimentaciÃ³n con armadura B-500 S (50 kg/mÂ³), vertido por medios manuales y vibrado. Incluye zapata para pilar en cocina nueva y zunchos soporte tabiques de carga.'},
-      {n:'Tabique de carga ladrillo', d:'FÃ¡brica de 7 cm de espesor de ladrillo macizo de 24x12x7 cm sentado con mortero de cemento Portland M7,5. Para soporte de vigas de cocina, salÃ³n y escalÃ³n subida cocina a salÃ³n.'},
-      {n:'ReconstrucciÃ³n pilar', d:'ReconstrucciÃ³n de pilar en cocina, base y parte de arriba, tras la demoliciÃ³n del pilar original.'},
-      {n:'Zunchos escalera', d:'Zunchos de uniÃ³n con forjado de 2Âª planta, ejecutados de menos a mÃ¡s para alinear la escalera recta. Incluye encofrado y hormigÃ³n armado con acero necesario, cogiendo la viga de madera lateral.'},
-      {n:'HormigÃ³n limpieza', d:'HormigÃ³n en masa HL-150/P/20 de dosificaciÃ³n 150 kg/mÂ³ para limpieza y nivelado. Echado detrÃ¡s de las paredes de tabique de panal por fases (60-80 cm por dÃ­a) para no volcar el tabique por el peso.'},
-      {n:'Dinteles prefabricados', d:'Dintel prefabricado de hormigÃ³n pretensado 200x11x7 cm con tres barras de acero de 8 mm, apoyado sobre capa de mortero M-7,5. Para puerta baÃ±o planta baja, puerta de entrada y ventana salÃ³n.'},
-      {n:'Zuncho ventana salÃ³n', d:'Zuncho armado para soporte de ventana del salÃ³n a la calle.'},
-      {n:'Zuncho ventana habitaciÃ³n', d:'Zuncho armado en habitaciÃ³n de pilar a pilar, fabricado montando andamios para poder hacer huecos en fachada y echar el hormigÃ³n. Incluye tratamiento previo de la viga de madera con 2 manos de fungicida y 2 manos de pulimento de PVC.'}
+      {n:'Forjado viguetas madera', d:'Forjado tradicional con intereje de 50 cm compuesto por viguetas de madera aserrada de pino silvestre de 150x250 mm, clase resistente C24, con entrevigado de revoltón de ladrillo cerámico cara vista macizo, malla electrosoldada y capa de compresión de hormigón ligero HL-25 de 4 cm. Incluye apuntalamiento y desapuntalamiento.'},
+      {n:'Refuerzo forjado', d:'Refuerzo de forjado de viguetas de madera mediante conectores de acero galvanizado fijados con resina epoxi-acrilato, malla electrosoldada y capa de compresión de 5 cm de hormigón ligero. Incluye apuntalamiento y desapuntalamiento.'},
+      {n:'Hormigón ligero', d:'Hormigón HNE-15 con cemento CEM II/B-P 32,5R, árido ligero tipo Arlita F-3 y arena de río, confeccionado con hormigonera de 250 L. Para compensar diferencias de altura entre plantas.'},
+      {n:'Aislamiento poliestireno extruido', d:'Aislamiento térmico XPS de 40 mm de espesor, medidas 1,25x0,6 m, conductividad 0,034 W/mk. Colocado encima de capa de mortero para compensar niveles en planta baja, 1ª y 2ª planta.'},
+      {n:'Losa escalera', d:'Losa de escalera de hormigón armado de 15 cm de espesor con peldañeado de hormigón, realizada con HA-25/F/20/XC2 y acero B 500 S con cuantía aproximada de 18 kg/m². Incluye montaje y desmontaje de encofrado.'},
+      {n:'Solera hormigón', d:'Solera de hormigón con malla electrosoldada de 10 cm de espesor realizada con HM-20/B/20/X0, malla electrosoldada superior ME 20x20, vibrado manual mediante regla vibrante y acabado con fratasadora mecánica. Incluye juntas de retracción.'},
+      {n:'Losa maciza', d:'Losa maciza de hormigón armado inclinada de 15 cm de canto, realizada con HA-25/F/20/XC2 y acero B 500 S con cuantía aproximada de 21 kg/m². Incluye encofrado continuo con tableros de madera y puntales metálicos.'},
+      {n:'Zapatas y zunchos hormigón', d:'Hormigón armado HA-25/P/40/XC3 para relleno de zapatas de cimentación con armadura B-500 S (50 kg/m³), vertido por medios manuales y vibrado. Incluye zapata para pilar en cocina nueva y zunchos soporte tabiques de carga.'},
+      {n:'Tabique de carga ladrillo', d:'Fábrica de 7 cm de espesor de ladrillo macizo de 24x12x7 cm sentado con mortero de cemento Portland M7,5. Para soporte de vigas de cocina, salón y escalón subida cocina a salón.'},
+      {n:'Reconstrucción pilar', d:'Reconstrucción de pilar en cocina, base y parte de arriba, tras la demolición del pilar original.'},
+      {n:'Zunchos escalera', d:'Zunchos de unión con forjado de 2ª planta, ejecutados de menos a más para alinear la escalera recta. Incluye encofrado y hormigón armado con acero necesario, cogiendo la viga de madera lateral.'},
+      {n:'Hormigón limpieza', d:'Hormigón en masa HL-150/P/20 de dosificación 150 kg/m³ para limpieza y nivelado. Echado detrás de las paredes de tabique de panal por fases (60-80 cm por día) para no volcar el tabique por el peso.'},
+      {n:'Dinteles prefabricados', d:'Dintel prefabricado de hormigón pretensado 200x11x7 cm con tres barras de acero de 8 mm, apoyado sobre capa de mortero M-7,5. Para puerta baño planta baja, puerta de entrada y ventana salón.'},
+      {n:'Zuncho ventana salón', d:'Zuncho armado para soporte de ventana del salón a la calle.'},
+      {n:'Zuncho ventana habitación', d:'Zuncho armado en habitación de pilar a pilar, fabricado montando andamios para poder hacer huecos en fachada y echar el hormigón. Incluye tratamiento previo de la viga de madera con 2 manos de fungicida y 2 manos de pulimento de PVC.'}
     ]},
     {id:'F', nombre:'Fachadas y particiones', partidas:[
       {n:'Tabique pladur 2 placas normal', d:'Tabique sencillo (15+48+15)/600 con dos placas de yeso laminado tipo normal de 15 mm en cada cara, estructura simple de perfiles de acero galvanizado de 48 mm, montantes separados 600 mm. Espesor total 78 mm, nivel de acabado Q2.'},
       {n:'Tabique pladur 1 normal + 1 hidrofugada', d:'Tabique sencillo (15+48+15)/600 con una placa tipo normal de 15 mm en una cara y una placa tipo hidrofugada de 15 mm en la otra cara, estructura simple de perfiles de acero galvanizado de 48 mm. Espesor total 78 mm.'},
       {n:'Tabique pladur 2 placas hidrofugadas', d:'Tabique sencillo (15+48+15)/600 con dos placas de yeso laminado tipo hidrofugado de 15 mm en cada cara, estructura simple de perfiles de acero galvanizado de 48 mm. Espesor total 78 mm, nivel de acabado Q2.'},
-      {n:'Apertura huecos en muro', d:'Apertura de hueco en muro de fÃ¡brica de ladrillo cerÃ¡mico hueco con medios manuales, sin afectar a la estabilidad del muro. Incluye corte previo del contorno, demoliciÃ³n, fragmentaciÃ³n y carga manual. No incluye montaje de apeo ni colocaciÃ³n de dinteles.'},
-      {n:'Cosido pared medianera', d:'Cosido de pared medianera con vecina y otros cosidos en paredes para garantizar la estabilidad y uniÃ³n entre elementos constructivos.'},
-      {n:'Regularizar paredes con mortero', d:'RegularizaciÃ³n de paredes con mortero para obtener una superficie plana y apta para recibir los acabados o la perfilerÃ­a de pladur.'},
-      {n:'Regularizar pilar cortado', d:'RegularizaciÃ³n del pilar cortado rellenando los huecos con ladrillo panal o mortero segÃºn lo necesario, dejando la superficie apta para recibir acabados.'}
+      {n:'Apertura huecos en muro', d:'Apertura de hueco en muro de fábrica de ladrillo cerámico hueco con medios manuales, sin afectar a la estabilidad del muro. Incluye corte previo del contorno, demolición, fragmentación y carga manual. No incluye montaje de apeo ni colocación de dinteles.'},
+      {n:'Cosido pared medianera', d:'Cosido de pared medianera con vecina y otros cosidos en paredes para garantizar la estabilidad y unión entre elementos constructivos.'},
+      {n:'Regularizar paredes con mortero', d:'Regularización de paredes con mortero para obtener una superficie plana y apta para recibir los acabados o la perfilería de pladur.'},
+      {n:'Regularizar pilar cortado', d:'Regularización del pilar cortado rellenando los huecos con ladrillo panal o mortero según lo necesario, dejando la superficie apta para recibir acabados.'}
     ]},
-    {id:'L', nombre:'CarpinterÃ­a y PVC', partidas:[
-      {n:'Puerta entrada blindada', d:'Puerta interior blindada de entrada a vivienda 203x82,5x4,5 cm con dos chapas de acero galvanizado de 0,80 mm, hoja de tablero aglomerado chapado con nogal barnizada, precerco de pino de 130x40 mm, galces y tapajuntas de MDF rechapado de nogal. Incluye herrajes de colgar, cierre y manivela de latÃ³n color negro.'},
-      {n:'Puertas interiores madera', d:'Puerta interior abatible ciega de una hoja 203x82,5x3,5 cm de tablero aglomerado chapado con sapeli barnizada, precerco de pino de 90x35 mm, galces y tapajuntas de MDF rechapado de sapeli. Incluye bisagras, herrajes de colgar, cierre y manivela de latÃ³n color negro.'},
-      {n:'Puertas PVC', d:'Puerta de PVC una hoja practicable 700x1400 mm, acabado foliado en dos caras, perfiles de 70 mm con cinco cÃ¡maras interiores, transmitancia tÃ©rmica Uh,m=1,3 W/(mÂ²K), con persiana enrollable de lamas de PVC con accionamiento manual. ClasificaciÃ³n: aire clase 4, agua E750, viento C3.'},
-      {n:'Ventanas PVC fijo inferior', d:'Ventana de PVC una hoja practicable con fijo inferior 700x1400 mm (altura fijo 500 mm), perfiles de 70 mm con cinco cÃ¡maras, transmitancia Uh,m=1,3 W/(mÂ²K), con persiana enrollable de lamas de PVC. ClasificaciÃ³n: aire clase 4, agua E750, viento C5.'},
-      {n:'Ventanas PVC abatible pequeÃ±a', d:'Ventana de PVC una hoja abatible 500x800 mm, perfiles de 70 mm con cinco cÃ¡maras interiores, transmitancia Uh,m=1,3 W/(mÂ²K), con persiana enrollable de lamas de PVC. ClasificaciÃ³n: aire clase 4, agua clase 9A, viento C5.'},
-      {n:'Ventanas PVC 2 hojas', d:'Ventana de PVC dos hojas practicables 800x1000 mm, perfiles de 70 mm con cinco cÃ¡maras interiores, transmitancia Uh,m=1,3 W/(mÂ²K), con persiana enrollable de lamas de PVC. ClasificaciÃ³n: aire clase 4, agua clase 9A, viento C5.'},
-      {n:'Ventanas PVC grande 2 hojas', d:'Ventana de PVC dos hojas practicables 1400x1100 mm, perfiles de 70 mm con cinco cÃ¡maras interiores, transmitancia Uh,m=1,3 W/(mÂ²K), con persiana enrollable de lamas de PVC. ClasificaciÃ³n: aire clase 4, agua clase 9A, viento C5.'}
+    {id:'L', nombre:'Carpintería y PVC', partidas:[
+      {n:'Puerta entrada blindada', d:'Puerta interior blindada de entrada a vivienda 203x82,5x4,5 cm con dos chapas de acero galvanizado de 0,80 mm, hoja de tablero aglomerado chapado con nogal barnizada, precerco de pino de 130x40 mm, galces y tapajuntas de MDF rechapado de nogal. Incluye herrajes de colgar, cierre y manivela de latón color negro.'},
+      {n:'Puertas interiores madera', d:'Puerta interior abatible ciega de una hoja 203x82,5x3,5 cm de tablero aglomerado chapado con sapeli barnizada, precerco de pino de 90x35 mm, galces y tapajuntas de MDF rechapado de sapeli. Incluye bisagras, herrajes de colgar, cierre y manivela de latón color negro.'},
+      {n:'Puertas PVC', d:'Puerta de PVC una hoja practicable 700x1400 mm, acabado foliado en dos caras, perfiles de 70 mm con cinco cámaras interiores, transmitancia térmica Uh,m=1,3 W/(m²K), con persiana enrollable de lamas de PVC con accionamiento manual. Clasificación: aire clase 4, agua E750, viento C3.'},
+      {n:'Ventanas PVC fijo inferior', d:'Ventana de PVC una hoja practicable con fijo inferior 700x1400 mm (altura fijo 500 mm), perfiles de 70 mm con cinco cámaras, transmitancia Uh,m=1,3 W/(m²K), con persiana enrollable de lamas de PVC. Clasificación: aire clase 4, agua E750, viento C5.'},
+      {n:'Ventanas PVC abatible pequeña', d:'Ventana de PVC una hoja abatible 500x800 mm, perfiles de 70 mm con cinco cámaras interiores, transmitancia Uh,m=1,3 W/(m²K), con persiana enrollable de lamas de PVC. Clasificación: aire clase 4, agua clase 9A, viento C5.'},
+      {n:'Ventanas PVC 2 hojas', d:'Ventana de PVC dos hojas practicables 800x1000 mm, perfiles de 70 mm con cinco cámaras interiores, transmitancia Uh,m=1,3 W/(m²K), con persiana enrollable de lamas de PVC. Clasificación: aire clase 4, agua clase 9A, viento C5.'},
+      {n:'Ventanas PVC grande 2 hojas', d:'Ventana de PVC dos hojas practicables 1400x1100 mm, perfiles de 70 mm con cinco cámaras interiores, transmitancia Uh,m=1,3 W/(m²K), con persiana enrollable de lamas de PVC. Clasificación: aire clase 4, agua clase 9A, viento C5.'}
     ]},
     {id:'H', nombre:'Remates y ayudas', partidas:[
-      {n:'Ayudas albaÃ±ilerÃ­a instalaciones', d:'Ayuda por vivienda unifamiliar de los trabajos conjuntos de albaÃ±ilerÃ­a necesarios para la correcta ejecuciÃ³n y montaje de las instalaciones de electricidad, fontanerÃ­a, calefacciÃ³n o climatizaciÃ³n y especiales. Incluye porcentaje estimado para consumo de pequeÃ±o material y medios auxiliares.'}
+      {n:'Ayudas albañilería instalaciones', d:'Ayuda por vivienda unifamiliar de los trabajos conjuntos de albañilería necesarios para la correcta ejecución y montaje de las instalaciones de electricidad, fontanería, calefacción o climatización y especiales. Incluye porcentaje estimado para consumo de pequeño material y medios auxiliares.'}
     ]},
     {id:'I', nombre:'Instalaciones', partidas:[
-      {n:'InstalaciÃ³n elÃ©ctrica completa', d:'Red elÃ©ctrica completa de distribuciÃ³n interior de vivienda unifamiliar con electrificaciÃ³n elevada: acceso, 2 escaleras, comedor 30 mÂ², 4 dormitorios dobles, 4 baÃ±os, cocina 12 mÂ², terraza 25 mÂ². Incluye cuadro general de mando y protecciÃ³n con IGA, diferenciales, magnetotÃ©rmicos y circuitos C1 a C13. Mecanismos gama bÃ¡sica.'},
-      {n:'InstalaciÃ³n fontanerÃ­a baÃ±os', d:'InstalaciÃ³n interior de fontanerÃ­a para cuarto de baÃ±o con dotaciÃ³n para inodoro, lavabo sencillo, baÃ±era y bidÃ©, con tubo de polietileno reticulado PE-X para red de agua frÃ­a y caliente. Incluye llaves de paso, material auxiliar y accesorios de derivaciones.'},
-      {n:'InstalaciÃ³n fontanerÃ­a cocina', d:'InstalaciÃ³n interior de fontanerÃ­a para cocina con dotaciÃ³n para fregadero, toma y llave para lavavajillas y toma y llave para lavadora, con tubo de polietileno reticulado PE-X. Incluye llaves de paso de cuarto hÃºmedo y accesorios de derivaciones.'},
-      {n:'Colector PVC', d:'Colector con tuberÃ­a insonorizada Phonoblack de 200 mm de diÃ¡metro y 5,5 mm de espesor, con alto grado de reducciÃ³n de sonoridad 13 dB, resistente al fuego Euroclase B s1 d0. UniÃ³n mediante juntas EPDM y abrazaderas fonoabsorbentes Phonoklip.'}
+      {n:'Instalación eléctrica completa', d:'Red eléctrica completa de distribución interior de vivienda unifamiliar con electrificación elevada: acceso, 2 escaleras, comedor 30 m², 4 dormitorios dobles, 4 baños, cocina 12 m², terraza 25 m². Incluye cuadro general de mando y protección con IGA, diferenciales, magnetotérmicos y circuitos C1 a C13. Mecanismos gama básica.'},
+      {n:'Instalación fontanería baños', d:'Instalación interior de fontanería para cuarto de baño con dotación para inodoro, lavabo sencillo, bañera y bidé, con tubo de polietileno reticulado PE-X para red de agua fría y caliente. Incluye llaves de paso, material auxiliar y accesorios de derivaciones.'},
+      {n:'Instalación fontanería cocina', d:'Instalación interior de fontanería para cocina con dotación para fregadero, toma y llave para lavavajillas y toma y llave para lavadora, con tubo de polietileno reticulado PE-X. Incluye llaves de paso de cuarto húmedo y accesorios de derivaciones.'},
+      {n:'Colector PVC', d:'Colector con tubería insonorizada Phonoblack de 200 mm de diámetro y 5,5 mm de espesor, con alto grado de reducción de sonoridad 13 dB, resistente al fuego Euroclase B s1 d0. Unión mediante juntas EPDM y abrazaderas fonoabsorbentes Phonoklip.'}
     ]},
     {id:'N', nombre:'Aislamientos', partidas:[
-      {n:'Aislamiento lana mineral entre montantes', d:'Aislamiento tÃ©rmico intermedio en tabique de placas con panel semirrÃ­gido de lana mineral de 45 mm de espesor segÃºn UNE-EN 13162, colocado entre los montantes de la estructura portante del pladur.'}
+      {n:'Aislamiento lana mineral entre montantes', d:'Aislamiento térmico intermedio en tabique de placas con panel semirrígido de lana mineral de 45 mm de espesor según UNE-EN 13162, colocado entre los montantes de la estructura portante del pladur.'}
     ]},
     {id:'R', nombre:'Revestimientos y trasdosados', partidas:[
-      {n:'Mortero de cal humedades', d:'Capa de mortero a base de conglomerantes hidrÃ¡ulicos, Ã¡ridos seleccionados, aditivos porÃ³genos e inhibidores de eflorescencias salinas (Morcemrest MUR R CSII o similar). Mortero de renovaciÃ³n para tratamiento de humedades por capilaridad, de 20 mm de espesor, maestreado con acabado fratasado.'},
-      {n:'Trasdosado autoportante pladur', d:'Trasdosado autoportante libre de 63 mm de espesor, nivel de calidad Q2, formado por placa de yeso laminado tipo normal de 15 mm atornillada a estructura autoportante de acero galvanizado con canales horizontales y montantes verticales de 48 mm modulaciÃ³n 600 mm.'},
-      {n:'Trasdosado directo pladur', d:'Trasdosado directo de 30 mm de espesor total, nivel de calidad Q2, formado por placa de yeso laminado tipo normal de 15 mm atornillada a estructura metÃ¡lica de maestras de 90x50 mm anclada al paramento cada 600 mm.'},
-      {n:'Alicatado gres baÃ±os', d:'Revestimiento interior con piezas de gres porcelÃ¡nico esmaltado acabado pulido 60x30 mm, gama media, absorciÃ³n E<0,5%, grupo BIa. ColocaciÃ³n en capa fina con adhesivo en dispersiÃ³n normal D1. Rejuntado con mortero cementoso mejorado CG 2 W A color blanco juntas 3 mm.'},
-      {n:'Falso techo pladur baÃ±os', d:'Falso techo continuo suspendido liso 12,5+27+27, altura menor de 4 m, nivel Q2. Estructura metÃ¡lica de maestras primarias 60/27 mm modulaciÃ³n 1000 mm suspendidas con cuelgues combinados cada 900 mm y maestras secundarias con conectores tipo caballete modulaciÃ³n 500 mm.'},
-      {n:'Pavimento gres porcelÃ¡nico', d:'Pavimento interior de gres porcelÃ¡nico tÃ©cnico 600x600x10 mm, gama media, absorciÃ³n E<0,1%, grupo BIa, resistencia al deslizamiento 35<Rd<=45, carga de rotura >3000 N. ColocaciÃ³n en capa fina con adhesivo cementoso C1 TE. Rejuntado con mortero tipo L color blanco juntas 2 mm.'},
-      {n:'RodapiÃ© cerÃ¡mico', d:'RodapiÃ© de gres esmaltado de 80 cm, gama bÃ¡sica. ColocaciÃ³n en capa fina con adhesivo cementoso de fraguado normal C1. Rejuntado con mortero cementoso mejorado CG 2 W A color blanco para juntas de 2 a 15 mm.'},
-      {n:'Mortero monocapa fachada', d:'Revestimiento continuo de fachada de 12 mm de espesor impermeable al agua de lluvia, con mortero monocapa hidrÃ³fobo OC CSIII W2, acabado liso color arena. Aplicado manualmente sobre ladrillo cerÃ¡mico con capa previa de mortero impermeable. Incluye malla de fibra de vidrio en encuentros.'},
-      {n:'Revestimiento escalera cerÃ¡mica', d:'Revestimiento de escalera con piezas de gres porcelÃ¡nico acabado pulido 420x180 mm con zanquÃ­n lateral, recibido con mortero M-5 y rejuntado con mortero CG 2 W A color blanco. Incluye revestimiento de mesetas.'},
-      {n:'Enfoscado regularizaciÃ³n', d:'Enfoscado sin maestrear de 10 mm de espesor para regularizaciÃ³n de soporte con mortero de cemento M-5. Para enlucidos en 2Âª planta, paredes picadas, pilar, paredes medianeras y paredes vecino.'},
-      {n:'RegularizaciÃ³n suelo', d:'RegularizaciÃ³n del suelo para poder colocar los paneles de poliestireno extruido de aislamiento tÃ©rmico.'},
-      {n:'Falso techo entre vigas hormigÃ³n', d:'Falso techo de placas de yeso laminado PYL instalado entre vigas estructurales de hormigÃ³n existentes, con estructura auxiliar metÃ¡lica galvanizada anclada mecÃ¡nicamente a las vigas. Incluye tramos independientes entre vigas, cortes especiales en geometrÃ­as en punta, planos inclinados y huecos para instalaciones elÃ©ctricas.'},
-      {n:'ReconstrucciÃ³n revoltones y saneado vigas madera', d:'Trabajos de rehabilitaciÃ³n de forjado de vigas de madera con revoltones. Incluye saneado de vigas, reconstrucciÃ³n de revoltones daÃ±ados, limpieza, tratamiento anti-xilÃ³fagos y consolidaciÃ³n estructural.'}
+      {n:'Mortero de cal humedades', d:'Capa de mortero a base de conglomerantes hidráulicos, áridos seleccionados, aditivos porógenos e inhibidores de eflorescencias salinas (Morcemrest MUR R CSII o similar). Mortero de renovación para tratamiento de humedades por capilaridad, de 20 mm de espesor, maestreado con acabado fratasado.'},
+      {n:'Trasdosado autoportante pladur', d:'Trasdosado autoportante libre de 63 mm de espesor, nivel de calidad Q2, formado por placa de yeso laminado tipo normal de 15 mm atornillada a estructura autoportante de acero galvanizado con canales horizontales y montantes verticales de 48 mm modulación 600 mm.'},
+      {n:'Trasdosado directo pladur', d:'Trasdosado directo de 30 mm de espesor total, nivel de calidad Q2, formado por placa de yeso laminado tipo normal de 15 mm atornillada a estructura metálica de maestras de 90x50 mm anclada al paramento cada 600 mm.'},
+      {n:'Alicatado gres baños', d:'Revestimiento interior con piezas de gres porcelánico esmaltado acabado pulido 60x30 mm, gama media, absorción E<0,5%, grupo BIa. Colocación en capa fina con adhesivo en dispersión normal D1. Rejuntado con mortero cementoso mejorado CG 2 W A color blanco juntas 3 mm.'},
+      {n:'Falso techo pladur baños', d:'Falso techo continuo suspendido liso 12,5+27+27, altura menor de 4 m, nivel Q2. Estructura metálica de maestras primarias 60/27 mm modulación 1000 mm suspendidas con cuelgues combinados cada 900 mm y maestras secundarias con conectores tipo caballete modulación 500 mm.'},
+      {n:'Pavimento gres porcelánico', d:'Pavimento interior de gres porcelánico técnico 600x600x10 mm, gama media, absorción E<0,1%, grupo BIa, resistencia al deslizamiento 35<Rd<=45, carga de rotura >3000 N. Colocación en capa fina con adhesivo cementoso C1 TE. Rejuntado con mortero tipo L color blanco juntas 2 mm.'},
+      {n:'Rodapié cerámico', d:'Rodapié de gres esmaltado de 80 cm, gama básica. Colocación en capa fina con adhesivo cementoso de fraguado normal C1. Rejuntado con mortero cementoso mejorado CG 2 W A color blanco para juntas de 2 a 15 mm.'},
+      {n:'Mortero monocapa fachada', d:'Revestimiento continuo de fachada de 12 mm de espesor impermeable al agua de lluvia, con mortero monocapa hidrófobo OC CSIII W2, acabado liso color arena. Aplicado manualmente sobre ladrillo cerámico con capa previa de mortero impermeable. Incluye malla de fibra de vidrio en encuentros.'},
+      {n:'Revestimiento escalera cerámica', d:'Revestimiento de escalera con piezas de gres porcelánico acabado pulido 420x180 mm con zanquín lateral, recibido con mortero M-5 y rejuntado con mortero CG 2 W A color blanco. Incluye revestimiento de mesetas.'},
+      {n:'Enfoscado regularización', d:'Enfoscado sin maestrear de 10 mm de espesor para regularización de soporte con mortero de cemento M-5. Para enlucidos en 2ª planta, paredes picadas, pilar, paredes medianeras y paredes vecino.'},
+      {n:'Regularización suelo', d:'Regularización del suelo para poder colocar los paneles de poliestireno extruido de aislamiento térmico.'},
+      {n:'Falso techo entre vigas hormigón', d:'Falso techo de placas de yeso laminado PYL instalado entre vigas estructurales de hormigón existentes, con estructura auxiliar metálica galvanizada anclada mecánicamente a las vigas. Incluye tramos independientes entre vigas, cortes especiales en geometrías en punta, planos inclinados y huecos para instalaciones eléctricas.'},
+      {n:'Reconstrucción revoltones y saneado vigas madera', d:'Ref. RHB-FM01. Trabajos de rehabilitación de forjado de vigas de madera con revoltones. Incluye: picado completo del material existente en revoltones hasta dejar las vigas al descubierto; saneado, decapado y eliminación de capas de pintura antiguas en vigas mediante medios manuales y mecánicos; lijado completo de cada viga hasta dejar la madera en su estado natural; colocación de maestras de referencia apoyadas sobre las vigas para guiar la curvatura; reconstrucción de revoltones con yeso proyectado o aplicado manualmente, formando la curva original entre vigas con acabado liso y líneas de apoyo perfectamente definidas sobre las caras de las vigas. REF. NORM.: CTE DB-SE-M. NTE-RPG. NTE-FFM. UNE-EN 13279-1. RD 1627/1997.'}
     ]},
     {id:'S', nombre:'Sanitarios y equipamiento', partidas:[
-      {n:'Lavabos', d:'Lavabo de porcelana sanitaria sobre encimera, gama media, color blanco, 500x250 mm con desagÃ¼e acabado cromado. Incluye juego de fijaciÃ³n y silicona. No incluye encimera ni griferÃ­a.'},
-      {n:'Inodoros', d:'Inodoro de porcelana sanitaria con tanque bajo, gama bÃ¡sica, color blanco, con asiento y tapa lacados, mecanismo de descarga 3/6 litros. Incluye llave de regulaciÃ³n, enlace de alimentaciÃ³n flexible y silicona.'},
-      {n:'Platos de ducha', d:'Plato de ducha acrÃ­lico gama media color, de 160x80 cm (cambiado a 0,80 de ancho), con juego de desagÃ¼e. No incluye griferÃ­a.'},
-      {n:'BaÃ±era', d:'BaÃ±era rectangular acrÃ­lica con hidromasaje Total, jets de agua y aire, panel digital, modelo Vythos ROCA, color blanco, 1800x900x420 mm, con desagÃ¼e, faldÃ³n frontal y griferÃ­a monomando mural Thesis acabado cromado.'},
-      {n:'GriferÃ­a lavabos', d:'Grifo mezclador monomando de repisa para lavabo, gama media, latÃ³n acabado cromado, con cartucho cerÃ¡mico, aireador y desagÃ¼e automÃ¡tico. Incluye conexiones, enlaces flexibles 3/8, vÃ¡lvula antirretorno y dos llaves de paso.'},
-      {n:'GriferÃ­a baÃ±era', d:'Grifo mezclador termostÃ¡tico mural para baÃ±o/ducha de 1/2, acabado cromado, con mandos, cartucho compacto con termoelemento de cera, limitador de caudal, limitador de temperatura a 43Â°C con tope de seguridad a 38Â°C, filtros e inversor.'},
-      {n:'GriferÃ­a duchas', d:'Grifo mezclador monomando mural para ducha, gama bÃ¡sica, latÃ³n acabado cromado, con cartucho cerÃ¡mico, aireador, inversor y equipo de ducha con mango y flexible de latÃ³n. Incluye vÃ¡lvula antirretorno y dos llaves de paso.'},
-      {n:'Termo elÃ©ctrico 150L', d:'Termo elÃ©ctrico vertical/horizontal 150L COINTRA horizontal, potencia 2,4 kW, ajuste de temperatura en intervalos de 10Â°C, tensiÃ³n 230V, tiempo de calentamiento 207 minutos. DepÃ³sito de acero vitrificado, aislamiento de espuma de poliuretano sin CFC, resistencia envainada para aguas duras, presiÃ³n mÃ¡xima 8 bar.'}
+      {n:'Lavabos', d:'Lavabo de porcelana sanitaria sobre encimera, gama media, color blanco, 500x250 mm con desagüe acabado cromado. Incluye juego de fijación y silicona. No incluye encimera ni grifería.'},
+      {n:'Inodoros', d:'Inodoro de porcelana sanitaria con tanque bajo, gama básica, color blanco, con asiento y tapa lacados, mecanismo de descarga 3/6 litros. Incluye llave de regulación, enlace de alimentación flexible y silicona.'},
+      {n:'Platos de ducha', d:'Plato de ducha acrílico gama media color, de 160x80 cm (cambiado a 0,80 de ancho), con juego de desagüe. No incluye grifería.'},
+      {n:'Bañera', d:'Bañera rectangular acrílica con hidromasaje Total, jets de agua y aire, panel digital, modelo Vythos ROCA, color blanco, 1800x900x420 mm, con desagüe, faldón frontal y grifería monomando mural Thesis acabado cromado.'},
+      {n:'Grifería lavabos', d:'Grifo mezclador monomando de repisa para lavabo, gama media, latón acabado cromado, con cartucho cerámico, aireador y desagüe automático. Incluye conexiones, enlaces flexibles 3/8, válvula antirretorno y dos llaves de paso.'},
+      {n:'Grifería bañera', d:'Grifo mezclador termostático mural para baño/ducha de 1/2, acabado cromado, con mandos, cartucho compacto con termoelemento de cera, limitador de caudal, limitador de temperatura a 43°C con tope de seguridad a 38°C, filtros e inversor.'},
+      {n:'Grifería duchas', d:'Grifo mezclador monomando mural para ducha, gama básica, latón acabado cromado, con cartucho cerámico, aireador, inversor y equipo de ducha con mango y flexible de latón. Incluye válvula antirretorno y dos llaves de paso.'},
+      {n:'Termo eléctrico 150L', d:'Termo eléctrico vertical/horizontal 150L COINTRA horizontal, potencia 2,4 kW, ajuste de temperatura en intervalos de 10°C, tensión 230V, tiempo de calentamiento 207 minutos. Depósito de acero vitrificado, aislamiento de espuma de poliuretano sin CFC, resistencia envainada para aguas duras, presión máxima 8 bar.'}
     ]},
     {id:'TJD', nombre:'Tejado', partidas:[
-      {n:'DemoliciÃ³n teja curva', d:'DemoliciÃ³n de cubierta de teja curva vieja con aprovechamiento 100% de las piezas, por medios manuales. Incluye desmontado de cumbreras, limahoyas, canalones y encuentros con paramentos, apilado y traslado de teja vÃ¡lida a planta baja.'},
-      {n:'DemoliciÃ³n cubierta madera', d:'DemoliciÃ³n completa de cubierta de vigas de madera con tableros y caÃ±izo, por medios manuales, con acopio de material aprovechable y retirada de material desechable.'},
-      {n:'Zuncho perimetral soporte cubierta', d:'FormaciÃ³n de hueco de encofrado para colocaciÃ³n de zuncho perimetral como recercado y apoyo de viguetas, con encofrado necesario y elementos auxiliares. Incluye encofrados aÃ©reos para soporte del tejado en ambas partes.'},
-      {n:'Muro hormigÃ³n soporte vigas', d:'Muro de carga de 20 cm de espesor de fÃ¡brica de bloque de hormigÃ³n liso estÃ¡ndar color gris 40x20x20 cm, resistencia normalizada R10, para revestir. Murete de hormigÃ³n soporte vigas.'},
-      {n:'Vigas soporte tejado', d:'ColocaciÃ³n de vigas transversales y vigas soporte para tejado y suelo, incluyendo vigas de soporte en parte alta e inferior y viga soporte suelo donde se tirÃ³ la pared.'},
-      {n:'Tabique ladrillo doble hueco', d:'TabicÃ³n de ladrillo doble hueco de 29x14x10 cm para revestir, recibido con mortero de cemento M-5. Incluye tabique separaciÃ³n vecino y soporte tejado, subida de tabique separaciÃ³n, tabique entre las 2 alturas del tejado, terminaciÃ³n Ãºltima viga y tabique balcÃ³n.'},
-      {n:'ReconstrucciÃ³n pilares', d:'ReconstrucciÃ³n de pilares con ladrillo macizo para soporte de polares del tejado.'},
-      {n:'RecolocaciÃ³n vigas madera', d:'RecolocaciÃ³n de vigas de madera para tejado segÃºn las medidas necesarias como estaban anteriormente, haciÃ©ndoles cama de soporte a cada una en parte superior e inferior.'},
-      {n:'Panel sÃ¡ndwich poliuretano', d:'Cubierta formada por panel autoportante de 50 mm con capacidad portante hasta 2,55 m entre luces para 100 kg/mÂ², con 50 mm de poliuretano inyectado densidad 41 kg/mÂ³ y cabrios laterales de 80x25 mm, fijado sobre correas de madera.'},
-      {n:'LÃ¡mina asfÃ¡ltica', d:'LÃ¡mina asfÃ¡ltica de 4 kg/mÂ² acabado de pizarra roja. LÃ¡mina bituminosa autoprotegida tipo LBM-40/G-FV (APP -15Â°C) con armadura de fieltro de fibra de vidrio, recubierta en ambas caras con mÃ¡stico de betÃºn modificado con plastÃ³meros.'},
-      {n:'Capa mortero regularizaciÃ³n', d:'Capa de mortero de cemento industrial M-5 de 2-3 cm de espesor, acabado fratasado, para regularizaciÃ³n de faldÃ³n en cubierta inclinada.'},
-      {n:'Limpieza tejas viejas', d:'Limpieza de tejas viejas con moho, musgo y otras incrustaciones como tierra y polvo, lavÃ¡ndolas para su reutilizaciÃ³n.'},
+      {n:'Demolición teja curva', d:'Demolición de cubierta de teja curva vieja con aprovechamiento 100% de las piezas, por medios manuales. Incluye desmontado de cumbreras, limahoyas, canalones y encuentros con paramentos, apilado y traslado de teja válida a planta baja.'},
+      {n:'Demolición cubierta madera', d:'Demolición completa de cubierta de vigas de madera con tableros y cañizo, por medios manuales, con acopio de material aprovechable y retirada de material desechable.'},
+      {n:'Zuncho perimetral soporte cubierta', d:'Formación de hueco de encofrado para colocación de zuncho perimetral como recercado y apoyo de viguetas, con encofrado necesario y elementos auxiliares. Incluye encofrados aéreos para soporte del tejado en ambas partes.'},
+      {n:'Muro hormigón soporte vigas', d:'Muro de carga de 20 cm de espesor de fábrica de bloque de hormigón liso estándar color gris 40x20x20 cm, resistencia normalizada R10, para revestir. Murete de hormigón soporte vigas.'},
+      {n:'Vigas soporte tejado', d:'Colocación de vigas transversales y vigas soporte para tejado y suelo, incluyendo vigas de soporte en parte alta e inferior y viga soporte suelo donde se tiró la pared.'},
+      {n:'Tabique ladrillo doble hueco', d:'Tabicón de ladrillo doble hueco de 29x14x10 cm para revestir, recibido con mortero de cemento M-5. Incluye tabique separación vecino y soporte tejado, subida de tabique separación, tabique entre las 2 alturas del tejado, terminación última viga y tabique balcón.'},
+      {n:'Reconstrucción pilares', d:'Reconstrucción de pilares con ladrillo macizo para soporte de polares del tejado.'},
+      {n:'Recolocación vigas madera', d:'Recolocación de vigas de madera para tejado según las medidas necesarias como estaban anteriormente, haciéndoles cama de soporte a cada una en parte superior e inferior.'},
+      {n:'Panel sándwich poliuretano', d:'Cubierta formada por panel autoportante de 50 mm con capacidad portante hasta 2,55 m entre luces para 100 kg/m², con 50 mm de poliuretano inyectado densidad 41 kg/m³ y cabrios laterales de 80x25 mm, fijado sobre correas de madera.'},
+      {n:'Lámina asfáltica', d:'Lámina asfáltica de 4 kg/m² acabado de pizarra roja. Lámina bituminosa autoprotegida tipo LBM-40/G-FV (APP -15°C) con armadura de fieltro de fibra de vidrio, recubierta en ambas caras con mástico de betún modificado con plastómeros.'},
+      {n:'Capa mortero regularización', d:'Capa de mortero de cemento industrial M-5 de 2-3 cm de espesor, acabado fratasado, para regularización de faldón en cubierta inclinada.'},
+      {n:'Limpieza tejas viejas', d:'Limpieza de tejas viejas con moho, musgo y otras incrustaciones como tierra y polvo, lavándolas para su reutilización.'},
       {n:'Cobertura teja curva recuperada', d:'Cobertura de teja curva vieja recuperada aportada en su totalidad, recibida con mortero de cemento M-2,5. Incluye piezas especiales, caballetes y limatesas.'},
-      {n:'Claraboya', d:'Claraboya de polimetacrilato de metilo (PMMA) color blanco 70x90 cm con zÃ³calo de poliÃ©ster h=15 cm, practicable con sistema de apertura mediante mecanismo telescÃ³pico para manivela. Precio incluye ventana de tejado 70x90 (497â¬), kit tapajuntas/impermeabilizaciÃ³n (115â¬) y mano de obra instalaciÃ³n (250â¬).'},
-      {n:'LÃ­nea de vida', d:'Sistema de anclaje horizontal permanente instalado sobre cubierta para trabajo seguro en altura de 13 metros. Cumple normativa EN 795 Clase C. Compuesto por cable de acero, tensores, soportes, puntos intermedios, carro de traslaciÃ³n y anclajes extremos.'},
-      {n:'Bloque termoarcilla', d:'FÃ¡brica de bloques de arcilla expansiva TermOARCILLA 40x20x20 cm para posterior terminaciÃ³n, con relleno de hormigÃ³n HNE-20/P/20 y armadura en zona segÃºn normativa, recibido con mortero M-7,5.'},
-      {n:'Cerramiento entre vigas', d:'Cerramiento entre vigas con bloque o cerÃ¡mico para cerrar los espacios entre las vigas del tejado.'}
+      {n:'Claraboya', d:'Claraboya de polimetacrilato de metilo (PMMA) color blanco 70x90 cm con zócalo de poliéster h=15 cm, practicable con sistema de apertura mediante mecanismo telescópico para manivela. Precio incluye ventana de tejado 70x90 (497€), kit tapajuntas/impermeabilización (115€) y mano de obra instalación (250€).'},
+      {n:'Línea de vida', d:'Sistema de anclaje horizontal permanente instalado sobre cubierta para trabajo seguro en altura de 13 metros. Cumple normativa EN 795 Clase C. Compuesto por cable de acero, tensores, soportes, puntos intermedios, carro de traslación y anclajes extremos.'},
+      {n:'Bloque termoarcilla', d:'Fábrica de bloques de arcilla expansiva TermOARCILLA 40x20x20 cm para posterior terminación, con relleno de hormigón HNE-20/P/20 y armadura en zona según normativa, recibido con mortero M-7,5.'},
+      {n:'Cerramiento entre vigas', d:'Cerramiento entre vigas con bloque o cerámico para cerrar los espacios entre las vigas del tejado.'}
     ]},
-    {id:'G', nombre:'GestiÃ³n de residuos', partidas:[
-      {n:'Contenedor escombros', d:'Cambio de contenedor para escombros de 3,5 mÂ³ de capacidad, colocado en obra a pie de carga. Incluye servicio de entrega, alquiler y tasas por ocupaciÃ³n de vÃ­a pÃºblica.'}
+    {id:'G', nombre:'Gestión de residuos', partidas:[
+      {n:'Contenedor escombros', d:'Cambio de contenedor para escombros de 3,5 m³ de capacidad, colocado en obra a pie de carga. Incluye servicio de entrega, alquiler y tasas por ocupación de vía pública.'}
     ]},
     {id:'Y', nombre:'Seguridad y salud', partidas:[
-      {n:'Plan de seguridad y salud', d:'EjecuciÃ³n del Plan de Seguridad y Salud o estudio bÃ¡sico por mÂ² construido de vivienda unifamiliar de tamaÃ±o medio (aproximadamente 200 mÂ²) con nivel de exigencia alto. Incluye instalaciones provisionales de obra, seÃ±alizaciones, protecciones personales y colectivas.'}
+      {n:'Plan de seguridad y salud', d:'Ejecución del Plan de Seguridad y Salud o estudio básico por m² construido de vivienda unifamiliar de tamaño medio (aproximadamente 200 m²) con nivel de exigencia alto. Incluye instalaciones provisionales de obra, señalizaciones, protecciones personales y colectivas.'}
     ]},
     {id:'EXT', nombre:'Partidas varias', partidas:[
-      {n:'Localizar desagÃ¼e', d:'Para encontrar la salida de desagÃ¼e de la casa se abriÃ³ un hueco fuera del baÃ±o de 1,8x0,5 m y otro hueco dentro del baÃ±o hasta localizar la salida general de desagÃ¼e de la casa.'},
-      {n:'Andamios', d:'Montaje, desmontaje, transporte y alquiler en obra (30 dÃ­as) de andamio metÃ¡lico tubular homologado para trabajos mayores de 12 m de altura, con malla de protecciÃ³n de tejido sintÃ©tico y ejecuciÃ³n de apoyos y arriostramiento.'},
-      {n:'Dintel baÃ±o', d:'ColocaciÃ³n de dintel con viga de hormigÃ³n sobre puerta de baÃ±o de planta inferior. Incluye apuntalamiento de techos y formaciÃ³n del hueco. La viga sujeta 3 vigas de madera.'},
-      {n:'Colector cocina', d:'Colector de cocina con tuberÃ­a de PVC de 90 mm para recibir todas las aguas producidas por la cocina y sacarlas hasta el patio.'},
-      {n:'ReparaciÃ³n grietas', d:'ReparaciÃ³n de grietas no profundas en paredes de 1Âº y 2Âº piso para poder atornillar la perfilerÃ­a y que no se descascarille en el futuro despuÃ©s de poner el pladur.'},
-      {n:'ReparaciÃ³n paredes', d:'ReparaciÃ³n de paredes en 1Âº y 2Âº piso donde se estaba cayendo el enlucido y otras donde estaba la piedra vista. Se reforzaron todas esas paredes y enlucieron de forma que queden fuertes para poder atornillar la perfilerÃ­a.'},
-      {n:'Huecos ventanas', d:'FormaciÃ³n de huecos de ventanas, cerrando los huecos anteriores y formando nuevo hueco. Incluye demoliciÃ³n de pared, reconstrucciÃ³n con doble tabique, dintel de viga de hormigÃ³n, dintel exterior de zuncho de hormigÃ³n armado y remates enlucidos para carpinterÃ­a.'},
-      {n:'Cerrar ventana', d:'Cerrar ventana de 1Âª planta de medidas 1,20x1,20 m con ladrillo del 7 y enlucida por la parte interior.'},
-      {n:'RegularizaciÃ³n huecos muros', d:'RegularizaciÃ³n de los huecos de piedra rellenando con ladrillo o mortero segÃºn lo necesario, dejando los huecos perfectamente hechos. Incluye tapar espacios de suelo hasta la altura indicada para ventanales. Los huecos se tapan con ladrillos de panal.'},
+      {n:'Localizar desagüe', d:'Para encontrar la salida de desagüe de la casa se abrió un hueco fuera del baño de 1,8x0,5 m y otro hueco dentro del baño hasta localizar la salida general de desagüe de la casa.'},
+      {n:'Andamios', d:'Montaje, desmontaje, transporte y alquiler en obra (30 días) de andamio metálico tubular homologado para trabajos mayores de 12 m de altura, con malla de protección de tejido sintético y ejecución de apoyos y arriostramiento.'},
+      {n:'Dintel baño', d:'Colocación de dintel con viga de hormigón sobre puerta de baño de planta inferior. Incluye apuntalamiento de techos y formación del hueco. La viga sujeta 3 vigas de madera.'},
+      {n:'Colector cocina', d:'Colector de cocina con tubería de PVC de 90 mm para recibir todas las aguas producidas por la cocina y sacarlas hasta el patio.'},
+      {n:'Reparación grietas', d:'Reparación de grietas no profundas en paredes de 1º y 2º piso para poder atornillar la perfilería y que no se descascarille en el futuro después de poner el pladur.'},
+      {n:'Reparación paredes', d:'Reparación de paredes en 1º y 2º piso donde se estaba cayendo el enlucido y otras donde estaba la piedra vista. Se reforzaron todas esas paredes y enlucieron de forma que queden fuertes para poder atornillar la perfilería.'},
+      {n:'Huecos ventanas', d:'Formación de huecos de ventanas, cerrando los huecos anteriores y formando nuevo hueco. Incluye demolición de pared, reconstrucción con doble tabique, dintel de viga de hormigón, dintel exterior de zuncho de hormigón armado y remates enlucidos para carpintería.'},
+      {n:'Cerrar ventana', d:'Cerrar ventana de 1ª planta de medidas 1,20x1,20 m con ladrillo del 7 y enlucida por la parte interior.'},
+      {n:'Regularización huecos muros', d:'Regularización de los huecos de piedra rellenando con ladrillo o mortero según lo necesario, dejando los huecos perfectamente hechos. Incluye tapar espacios de suelo hasta la altura indicada para ventanales. Los huecos se tapan con ladrillos de panal.'},
       {n:'Pletina refuerzo viga', d:'Refuerzo de viga en zona cocina con acero A-42B en perfil plano de 5 m de largo, 10 cm de ancho y 1 cm de grueso. Colocado con una pletina por cada lado de la viga sujeta con tornillos pasantes, anclada a pared 10 cm por parte dentro de la obra.'},
-      {n:'Escaleras metÃ¡licas', d:'Escaleras metÃ¡licas pedidas segÃºn imagen con presupuesto ya facilitado.'}
+      {n:'Escaleras metálicas', d:'Escaleras metálicas pedidas según imagen con presupuesto ya facilitado.'}
     ]}
   ]
 };
 
-var PINS = {'Paco':'0006','Carlos':'0005','Andi':'0001','JosÃ©':'0002','Jimy':'0003','Mynor':'0004','Samanta':'0007','Miguel':'2409'};
+var PINS = {'Paco':'0006','Carlos':'0005','Andi':'0001','José':'0002','Jimy':'0003','Mynor':'0004','Samanta':'0007','Miguel':'2409'};
 
-// Poblar capÃ­tulos vacÃ­o al inicio â se carga al seleccionar obra
+// Poblar capítulos vacío al inicio — se carga al seleccionar obra
 var selCap = document.getElementById('selCapitulo');
 
 var trabajador='', tipo='obra', horas=8, pinActual='', workerPendiente='';
@@ -579,7 +579,7 @@ function entrar(nombre) {
 }
 
 function pulsarPin(val) {
-  if (val==='â«') { pinActual=pinActual.slice(0,-1); }
+  if (val==='⌫') { pinActual=pinActual.slice(0,-1); }
   else if (pinActual.length<4) { pinActual+=val; }
   actualizarDots();
   if (pinActual.length===4) {
@@ -588,7 +588,7 @@ function pulsarPin(val) {
         document.getElementById('pantallaPin').style.display='none';
         entrarDirecto(workerPendiente);
       } else {
-        document.getElementById('pinError').textContent='â PIN incorrecto, intÃ©ntalo de nuevo';
+        document.getElementById('pinError').textContent='❌ PIN incorrecto, inténtalo de nuevo';
         pinActual='';
         actualizarDots();
         setTimeout(function(){ document.getElementById('pinError').textContent=''; },2500);
@@ -632,7 +632,7 @@ function cambiarWorker() {
 // ===== FECHA =====
 function actualizarFechaTexto() {
   var d=new Date(fechaSel+'T12:00:00');
-  var dias=['Domingo','Lunes','Martes','MiÃ©rcoles','Jueves','Viernes','SÃ¡bado'];
+  var dias=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
   var meses=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
   document.getElementById('textoFecha').textContent=dias[d.getDay()]+', '+d.getDate()+' de '+meses[d.getMonth()]+' de '+d.getFullYear();
 }
@@ -675,8 +675,8 @@ function cargarCapitulos() {
   var obraId=document.getElementById('selObra').value;
   var selCap2=document.getElementById('selCapitulo');
   var selPar=document.getElementById('selPartida');
-  selCap2.innerHTML='<option value="">â CapÃ­tulo â</option>';
-  selPar.innerHTML='<option value="">â Partida â</option>';
+  selCap2.innerHTML='<option value="">— Capítulo —</option>';
+  selPar.innerHTML='<option value="">— Partida —</option>';
   if(!obraId)return;
   var caps=OBRAS_CAPITULOS[obraId]||[];
   caps.forEach(function(c){var op=document.createElement('option');op.value=c.id;op.textContent=c.nombre;selCap2.appendChild(op);});
@@ -686,7 +686,7 @@ function cargarPartidas() {
   var obraId=document.getElementById('selObra').value;
   var capId=document.getElementById('selCapitulo').value;
   var sel=document.getElementById('selPartida');
-  sel.innerHTML='<option value="">â Partida â</option>';
+  sel.innerHTML='<option value="">— Partida —</option>';
   document.getElementById('btnInfoPartida').style.display='none';
   if(!obraId||!capId)return;
   var caps=OBRAS_CAPITULOS[obraId]||[];
@@ -727,7 +727,7 @@ function cerrarInfo() {
   document.getElementById('infoOverlay').style.display='none';
 }
 
-// ===== AÃADIR =====
+// ===== AÑADIR =====
 function anadir() {
   var etiqueta='', subt='', desc='';
   if(tipo==='obra'){
@@ -737,30 +737,30 @@ function anadir() {
     var capEl=document.getElementById('selCapitulo');
     var partida=document.getElementById('selPartida').value;
     if(capEl.value)subt=capEl.options[capEl.selectedIndex].text;
-    if(partida)subt+=(subt?' âº ':'')+partida;
+    if(partida)subt+=(subt?' › ':'')+partida;
     document.getElementById('btnInfoPartida').style.display='none';
     desc=document.getElementById('inputDesc').value.trim();
     document.getElementById('inputDesc').value='';
   } else if(tipo==='otros'){
     var descOtros=document.getElementById('inputOtros').value.trim();
-    if(!descOtros){toast('La descripciÃ³n es obligatoria en Otros trabajos',true);return;}
-    etiqueta='ð§ Otros trabajos';
+    if(!descOtros){toast('La descripción es obligatoria en Otros trabajos',true);return;}
+    etiqueta='🔧 Otros trabajos';
     desc=descOtros;
     document.getElementById('inputOtros').value='';
   } else if(tipo==='vacaciones'){
-    etiqueta='ðï¸ Vacaciones';
+    etiqueta='🏖️ Vacaciones';
     horas=8;
   } else if(tipo==='enfermedad'){
-    etiqueta='ð¤ Baja mÃ©dica';
+    etiqueta='🤒 Baja médica';
   } else if(tipo==='asuntos'){
-    etiqueta='ð Asuntos propios';
+    etiqueta='📋 Asuntos propios';
   }
-  var horasTexto = tipo==='vacaciones' ? 'DÃ­a completo' : horas+'h';
+  var horasTexto = tipo==='vacaciones' ? 'Día completo' : horas+'h';
   var entrada={id:Date.now(),trabajador:trabajador,fecha:fechaSel,tipo:tipo,etiqueta:etiqueta,subt:subt,desc:desc,horas:tipo==='vacaciones'?8:horas,sync:false,ts:new Date().toISOString()};
   entradas.push(entrada);
   pendientes.push(entrada.id);
   guardar(); renderEntradas(); actualizarTotal(); actualizarSync();
-  toast('â '+horasTexto+' aÃ±adidas');
+  toast('✓ '+horasTexto+' añadidas');
 }
 
 function borrar(id) {
@@ -772,10 +772,10 @@ function borrar(id) {
 function renderEntradas() {
   var lista=document.getElementById('listaEntradas');
   var hoyE=entradas.filter(function(e){return e.trabajador===trabajador&&e.fecha===fechaSel;});
-  if(hoyE.length===0){lista.innerHTML='<div class="sin-entradas">ð AÃºn no hay entradas para este dÃ­a</div>';return;}
+  if(hoyE.length===0){lista.innerHTML='<div class="sin-entradas">📋 Aún no hay entradas para este día</div>';return;}
   lista.innerHTML=hoyE.map(function(e){
     var v=e.horas%1===0?e.horas:e.horas.toFixed(1);
-    return '<div class="entrada '+e.tipo+'"><div class="entrada-cabecera"><div class="entrada-info"><div class="entrada-nombre">'+e.etiqueta+'</div>'+(e.subt?'<div class="entrada-sub">'+e.subt+'</div>':'')+(e.desc?'<div class="entrada-desc">ð '+e.desc+'</div>':'')+'<div class="entrada-sub">'+(e.sync?'â Sincronizado':'â³ Pendiente')+'</div></div><div style="display:flex;align-items:center"><div class="entrada-horas">'+v+'<span>h</span></div><button class="btn-borrar" onclick="borrar('+e.id+')">â</button></div></div></div>';
+    return '<div class="entrada '+e.tipo+'"><div class="entrada-cabecera"><div class="entrada-info"><div class="entrada-nombre">'+e.etiqueta+'</div>'+(e.subt?'<div class="entrada-sub">'+e.subt+'</div>':'')+(e.desc?'<div class="entrada-desc">📝 '+e.desc+'</div>':'')+'<div class="entrada-sub">'+(e.sync?'✓ Sincronizado':'⏳ Pendiente')+'</div></div><div style="display:flex;align-items:center"><div class="entrada-horas">'+v+'<span>h</span></div><button class="btn-borrar" onclick="borrar('+e.id+')">✕</button></div></div></div>';
   }).join('');
 }
 
@@ -790,7 +790,7 @@ function actualizarTotal() {
 function actualizarSync() {
   var btn=document.getElementById('btnSync'),txt=document.getElementById('textoSync');
   if(pendientes.length>0){btn.classList.add('pendiente');txt.textContent='Sincronizar ('+pendientes.length+')';}
-  else{btn.classList.remove('pendiente');txt.textContent='Sincronizado â';}
+  else{btn.classList.remove('pendiente');txt.textContent='Sincronizado ✓';}
 }
 
 function sincronizar() {
@@ -834,23 +834,23 @@ function cambiarMes(delta) {
   renderCalendario();
 }
 function renderCalendario() {
-  var aÃ±o=calMesActual.getFullYear(), mes=calMesActual.getMonth();
+  var año=calMesActual.getFullYear(), mes=calMesActual.getMonth();
   var meses=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  document.getElementById('calMes').textContent=meses[mes]+' '+aÃ±o;
+  document.getElementById('calMes').textContent=meses[mes]+' '+año;
   var hoyStr=new Date().toISOString().split('T')[0];
-  var diasMes=new Date(aÃ±o,mes+1,0).getDate();
-  var primerDia=new Date(aÃ±o,mes,1).getDay(); primerDia=primerDia===0?6:primerDia-1;
+  var diasMes=new Date(año,mes+1,0).getDate();
+  var primerDia=new Date(año,mes,1).getDay(); primerDia=primerDia===0?6:primerDia-1;
   var mesStr=(mes+1<10?'0':'')+(mes+1);
   var entradasMes={};
-  entradas.filter(function(e){return e.trabajador===trabajador&&e.fecha.startsWith(aÃ±o+'-'+mesStr);})
+  entradas.filter(function(e){return e.trabajador===trabajador&&e.fecha.startsWith(año+'-'+mesStr);})
     .forEach(function(e){if(!entradasMes[e.fecha])entradasMes[e.fecha]=0;entradasMes[e.fecha]+=e.horas;});
   var html='';
   ['L','M','X','J','V','S','D'].forEach(function(d){html+='<div class="cal-dia-nombre">'+d+'</div>';});
   for(var i=0;i<primerDia;i++)html+='<div class="cal-dia vacio"></div>';
   var totalH=0,diasAp=0,diasFalt=0;
   for(var dia=1;dia<=diasMes;dia++){
-    var dStr=aÃ±o+'-'+mesStr+'-'+(dia<10?'0':'')+dia;
-    var dow=new Date(aÃ±o,mes,dia).getDay();
+    var dStr=año+'-'+mesStr+'-'+(dia<10?'0':'')+dia;
+    var dow=new Date(año,mes,dia).getDay();
     var esFinde=dow===0||dow===6;
     var esFuturo=dStr>hoyStr;
     var ap=entradasMes[dStr];
@@ -866,28 +866,28 @@ function renderCalendario() {
   document.getElementById('calGrid').innerHTML=html;
   document.getElementById('resumenMes').innerHTML=
     '<div class="resumen-item"><div class="resumen-label">Horas mes</div><div class="resumen-num" style="color:#4caf82">'+totalH+'<span style="font-size:14px;color:#7ab89a">h</span></div></div>'+
-    '<div class="resumen-item"><div class="resumen-label">DÃ­as apuntados</div><div class="resumen-num" style="color:#4caf82">'+diasAp+'</div></div>'+
+    '<div class="resumen-item"><div class="resumen-label">Días apuntados</div><div class="resumen-num" style="color:#4caf82">'+diasAp+'</div></div>'+
     '<div class="resumen-item"><div class="resumen-label">Sin apuntar</div><div class="resumen-num" style="color:'+(diasFalt>0?'#e85555':'#4caf82')+'">'+diasFalt+'</div></div>';
   var porFecha={};
-  entradas.filter(function(e){return e.trabajador===trabajador&&e.fecha.startsWith(aÃ±o+'-'+mesStr);})
+  entradas.filter(function(e){return e.trabajador===trabajador&&e.fecha.startsWith(año+'-'+mesStr);})
     .forEach(function(e){if(!porFecha[e.fecha])porFecha[e.fecha]=[];porFecha[e.fecha].push(e);});
   var fechas=Object.keys(porFecha).sort().reverse();
-  var dias2=['Dom','Lun','Mar','MiÃ©','Jue','Vie','SÃ¡b'];
+  var dias2=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
   document.getElementById('contenidoHistorial').innerHTML=fechas.length===0?
     '<div style="text-align:center;color:#8888aa;padding:20px">No hay entradas este mes</div>':
     fechas.map(function(f){
       var dArr=porFecha[f],tot=dArr.reduce(function(s,e){return s+e.horas;},0);
       var d=new Date(f+'T12:00:00'),tv=tot%1===0?tot:tot.toFixed(1);
-      return '<div class="hist-dia"><div class="hist-dia-cabecera"><div class="hist-dia-fecha">'+dias2[d.getDay()]+' '+d.getDate()+'/'+mesStr+'/'+aÃ±o+'</div><div class="hist-dia-total">'+tv+'h</div></div>'+
-        dArr.map(function(e){return '<div class="hist-entrada"><div class="hist-entrada-izq">'+e.etiqueta+(e.subt?' â '+e.subt:'')+(e.desc?'<div class="hist-entrada-desc">ð '+e.desc+'</div>':'')+'</div><strong style="color:#f5a623;white-space:nowrap">'+e.horas+'h</strong></div>';}).join('')+'</div>';
+      return '<div class="hist-dia"><div class="hist-dia-cabecera"><div class="hist-dia-fecha">'+dias2[d.getDay()]+' '+d.getDate()+'/'+mesStr+'/'+año+'</div><div class="hist-dia-total">'+tv+'h</div></div>'+
+        dArr.map(function(e){return '<div class="hist-entrada"><div class="hist-entrada-izq">'+e.etiqueta+(e.subt?' — '+e.subt:'')+(e.desc?'<div class="hist-entrada-desc">📝 '+e.desc+'</div>':'')+'</div><strong style="color:#f5a623;white-space:nowrap">'+e.horas+'h</strong></div>';}).join('')+'</div>';
     }).join('');
 }
 
 function mostrarBannerInstalar() {
   if(esPWA)return;
   var b=document.getElementById('bannerInstalar'),t=document.getElementById('textoInstalar');
-  if(esIOS){b.style.display='block';t.textContent='Pulsa â¬ï¸ en Safari y elige "AÃ±adir a pantalla de inicio"';}
-  else if(esAndroid){b.style.display='block';t.textContent='Pulsa â® en Chrome y elige "AÃ±adir a pantalla de inicio"';}
+  if(esIOS){b.style.display='block';t.textContent='Pulsa ⬆️ en Safari y elige "Añadir a pantalla de inicio"';}
+  else if(esAndroid){b.style.display='block';t.textContent='Pulsa ⋮ en Chrome y elige "Añadir a pantalla de inicio"';}
 }
 
 function exportarCSV() {
@@ -898,7 +898,7 @@ function exportarCSV() {
     filas.push([e.trabajador,e.fecha,e.tipo,e.etiqueta||'',e.subt||'',e.desc||'',e.horas,e.sync?'Si':'No']);
   });
   var csv=filas.map(function(r){return r.map(function(c){var s=String(c).replace(/"/g,'""');return '"'+s+'"';}).join(',');}).join('\r\n');
-  var blob=new Blob(['ï»¿'+csv],{type:'text/csv;charset=utf-8;'});
+  var blob=new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8;'});
   var url=URL.createObjectURL(blob);
   var a=document.createElement('a');
   a.href=url;
@@ -920,15 +920,13 @@ function toast(msg,error) {
   setTimeout(function(){t.classList.remove('visible');},2500);
 }
 
-
     setInterval(function() {
       fetch(API_URL + '/api/pwa/ping').then(function(r) {
         if (r.ok) { var d=document.getElementById('conexionDot'),t=document.getElementById('conexionTexto'); if(d)d.className='conexion-dot online'; if(t)t.textContent='online'; }
       }).catch(function() { var d=document.getElementById('conexionDot'),t=document.getElementById('conexionTexto'); if(d)d.className='conexion-dot offline'; if(t)t.textContent='offline'; });
     }, 30000);
-  </script>
-  <div class="conexion-indicator" id="conexionIndicator"><span class="conexion-dot offline" id="conexionDot"></span><span id="conexionTexto">offline</span></div>
-  </body>
-</html>
- 
+</script>
 
+<div class="conexion-indicator" id="conexionIndicator"><span class="conexion-dot offline" id="conexionDot"></span><span id="conexionTexto">offline</span></div>
+</body>
+</html>
