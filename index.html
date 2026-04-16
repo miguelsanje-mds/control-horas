@@ -328,12 +328,8 @@ select:focus { border-color: #f5a623; }
     <div id="listaEntradas"><div class="sin-entradas">📋 Aún no hay entradas para este día</div></div>
   </div>
 
-  <div class="barra-bottom">
-    <button class="btn-sync" id="btnSync" onclick="sincronizar()">
-      <div class="punto-sync"></div>
-      <span id="textoSync">Sin pendientes</span>
-    </button>
-    <button class="btn-hist" onclick="abrirHistorial()">📅</button>
+  <div class="barra-bottom" style="justify-content:center">
+    <button class="btn-hist" onclick="abrirHistorial()">📅 Historial</button>
   </div>
 </div>
 
@@ -458,6 +454,19 @@ var esPWA=window.matchMedia('(display-mode: standalone)').matches||window.naviga
 try{entradas=JSON.parse(localStorage.getItem('ctrl_entradas')||'[]');}catch(e){}
 try{pendientes=JSON.parse(localStorage.getItem('ctrl_pendientes')||'[]');}catch(e){}
 
+// Limpiar entradas de meses anteriores (solo las ya sincronizadas)
+var mesActualStr = hoy.getFullYear() + '-' + String(hoy.getMonth()+1).padStart(2,'0');
+var antesLimpieza = entradas.length;
+entradas = entradas.filter(function(e) {
+  var esMesActual = e.fecha && e.fecha.startsWith(mesActualStr);
+  var estaPendiente = pendientes.indexOf(e.id) >= 0;
+  return esMesActual || estaPendiente;
+});
+if (entradas.length < antesLimpieza) {
+  console.log('[PWA] Limpieza mensual: ' + (antesLimpieza - entradas.length) + ' entradas antiguas eliminadas del móvil');
+  try{localStorage.setItem('ctrl_entradas',JSON.stringify(entradas));}catch(e){}
+}
+
 // Cargar trabajadores y datos al iniciar
 cargarConfigDesdeAPI();
 
@@ -467,6 +476,9 @@ window.addEventListener('online', function() {
   sincronizar();
   cargarConfigDesdeAPI();
 });
+
+// Sincronización automática cada 15 segundos
+setInterval(function() { sincronizar(); }, 15000);
 
 // ===== PIN =====
 function entrar(nombre) {
@@ -748,9 +760,7 @@ function actualizarTotal() {
 }
 
 function actualizarSync() {
-  var btn=document.getElementById('btnSync'),txt=document.getElementById('textoSync');
-  if(pendientes.length>0){btn.classList.add('pendiente');txt.textContent='Sincronizar ('+pendientes.length+')';}
-  else{btn.classList.remove('pendiente');txt.textContent='Sincronizado ✓';}
+  // Sincronización automática cada 15s — no hay botón
 }
 
 function sincronizar() {
@@ -807,7 +817,10 @@ function cerrarHistorial() {
   setTimeout(function(){document.getElementById('overlay').classList.remove('visible');},300);
 }
 function cambiarMes(delta) {
-  calMesActual=new Date(calMesActual.getFullYear(),calMesActual.getMonth()+delta,1);
+  var nuevo=new Date(calMesActual.getFullYear(),calMesActual.getMonth()+delta,1);
+  var minimo=new Date(hoy.getFullYear(),hoy.getMonth(),1);
+  if(nuevo<minimo) return;
+  calMesActual=nuevo;
   renderCalendario();
 }
 function renderCalendario() {
