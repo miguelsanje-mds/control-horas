@@ -1,13 +1,11 @@
-const CACHE_NAME = 'control-horas-v1';
+const CACHE_NAME = 'control-horas-v2';
 const ASSETS = [
-  '/',
-  '/index.html',
   '/icon-192.png',
   '/icon-512.png',
   '/manifest.json'
 ];
 
-// Instalar — cachear archivos esenciales
+// Instalar — cachear solo iconos y manifest, NO index.html
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -25,24 +23,29 @@ self.addEventListener('activate', event => {
   );
 });
 
-// Fetch — network first, caché como fallback
+// Fetch — index.html siempre desde red, resto network-first con cache fallback
 self.addEventListener('fetch', event => {
   // No cachear peticiones a la API
   if (event.request.url.includes('/api/')) {
     return;
   }
 
+  // index.html — siempre red, sin caché
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request).catch(() => caches.match('/'))
+    );
+    return;
+  }
+
+  // Resto — network first, cache fallback
   event.respondWith(
     fetch(event.request)
       .then(response => {
-        // Guardar copia en caché
         const clone = response.clone();
         caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
         return response;
       })
-      .catch(() => {
-        // Sin red — servir desde caché
-        return caches.match(event.request);
-      })
+      .catch(() => caches.match(event.request))
   );
 });
