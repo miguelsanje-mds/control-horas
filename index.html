@@ -901,7 +901,16 @@ function toast(msg,error) {
 <div class="conexion-indicator" id="conexionIndicator"><span class="conexion-dot offline" id="conexionDot"></span><span id="conexionTexto">offline</span></div>
 <script>
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').catch(() => {});
+  // Desregistrar cualquier SW antiguo y limpiar cachés
+  navigator.serviceWorker.getRegistrations().then(function(regs) {
+    regs.forEach(function(r) { r.unregister(); });
+  });
+  // Limpiar cachés directamente
+  if (window.caches) {
+    caches.keys().then(function(keys) {
+      keys.forEach(function(k) { caches.delete(k); });
+    });
+  }
 }
 </script>
 </body>
