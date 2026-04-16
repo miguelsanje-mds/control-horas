@@ -337,7 +337,10 @@ select:focus { border-color: #f5a623; }
 <div class="overlay" id="overlay" onclick="cerrarHistorial()">
   <div class="panel" id="panel" onclick="event.stopPropagation()">
     <div class="panel-handle"></div>
-    <div class="panel-titulo">📅 Mi registro</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div class="panel-titulo" style="margin-bottom:0">📅 Mi registro</div>
+      <button onclick="cerrarHistorial()" style="background:#252540;border:1px solid #2e2e50;border-radius:10px;padding:8px 16px;color:#f0f0f8;font-size:16px;font-weight:700;cursor:pointer">✕ Cerrar</button>
+    </div>
     <div class="cal-header">
       <button class="cal-nav" onclick="cambiarMes(-1)">‹</button>
       <div class="cal-mes" id="calMes"></div>
@@ -570,7 +573,7 @@ function setTipo(el,t) {
 
 // ===== HORAS =====
 function cambiarHoras(delta) {
-  horas=Math.max(0.5,Math.min(24,horas+delta)); mostrarHoras();
+  horas=Math.max(0.5,Math.min(10,horas+delta)); mostrarHoras();
   document.querySelectorAll('.btn-rapida').forEach(function(b){b.classList.remove('activo');});
 }
 function setHoras(h,el) {
@@ -674,6 +677,13 @@ function anadir() {
     etiqueta='📋 Asuntos propios';
   }
   var horasTexto = tipo==='vacaciones' ? 'Día completo' : horas+'h';
+  // Validar máximo 10h por día
+  var horasHoy = entradas.filter(function(e){return e.trabajador===trabajador&&e.fecha===fechaSel;}).reduce(function(s,e){return s+e.horas;},0);
+  var horasNuevas = tipo==='vacaciones' ? 8 : horas;
+  if(horasHoy + horasNuevas > 10){
+    toast('Supera las horas permitidas (máximo 10h/día). Ya tienes '+horasHoy+'h apuntadas.',true);
+    return;
+  }
   // Obtener IDs para la API
   var obraSelVal = document.getElementById('selObra').value;
   var capSelVal = document.getElementById('selCapitulo').value;
